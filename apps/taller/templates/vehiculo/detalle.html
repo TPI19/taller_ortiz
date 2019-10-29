@@ -1,0 +1,18 @@
+<h3>Detalle de Vehiculo</h3>
+
+<form action="{% url 'edicion_vehiculo' vehiculo.id %}" method="POST">
+
+	{% csrf_token %}
+	<label for="placa">Placa: </label><br>
+	<input type="text" name="placa" id="placa" value="{{vehiculo.placa}}"><br><br>
+	<label for="placa">Tipo: </label><br>
+	<input type="text" name="tipo" id="tipo" value="{{vehiculo.tipo}}"><br><br>
+	<label for="placa">Marca: </label><br>
+	<input type="text" name="marca" id="marca" value="{{vehiculo.marca}}"><br><br>
+	<label for="placa">Modelo: </label><br>
+	<input type="text" name="modelo" id="modelo" value="{{vehiculo.modelo}}"><br><br>
+	<label for="placa">Año: </label><br>
+	<input type="text" name="anio" id="anio" value="{{vehiculo.anio}}"><br><br>
+	<input type="submit" value="Editar">
+	
+</form>

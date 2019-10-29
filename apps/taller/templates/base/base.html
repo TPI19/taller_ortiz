@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+	{% block extra_head %}{% endblock %}
+
+	<title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+	{% block header %}
+		{% include 'base/header.html' %}
+	{% endblock %}
+
+	<main>
+		<div class="wrap">
+			<div class="w-100 mx-0 row">
+				{%block main_container%}
+				{% endblock %}
+			</div>
+		</div>
+	</main>
+
+	{% block footer %}
+		{% include 'base/footer.html' %}
+	{% endblock%}
+
+	{% block extra_js %}
+	{% endblock %}
+
+</body>
+</html>

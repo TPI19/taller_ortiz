@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+
+{% block main_container %}
+	
+	<div class="col-8"></div>
+
+	<div class="col-4 border-left">
+
+		<form method="POST" action="{% url 'login' %}" class="post-form px-2 py-2 my-3 mx-2 w-100">
+
+			<fieldset>
+				<legend class="mb-4">Ingrese.</legend>
+				<div class="form-group row">
+					<label for="username" class="col-sm-3 col-form-label">Usuario</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" id="username" name="username" placeholder="">					
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="password" class="col-sm-3 col-form-label">Contraseña</label>
+					<div class="col-sm-9">
+						<input type="password" class="form-control" id="password" name="password" placeholder="">					
+					</div>
+				</div>
+				<div class="form-group row justify-content-md-center">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Ingresar</button>
+				</div>		    
+			</fieldset>
+
+		</form>
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% if vehiculos %}
+    <ul>
+    {% for v in vehiculos %}
+        <li><a href="{% url 'detalle_vehiculo' v.id %}">{{v.marca}}: {{ v.modelo }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No vehicles are available.</p>
+{% endif %}
