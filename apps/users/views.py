@@ -25,20 +25,31 @@ def almacenar_cliente(request):
 	staff = True
 	rol = 2
 
-	cliente = User()
-
-	cliente.first_name = nombre
-	cliente.last_name = apellido
-	cliente.username = usuario
-	cliente.email = correo
-	cliente.password = password
-	cliente.telefono = telefono
-	cliente.direccion = direccion
-	cliente.rol = rol
-	cliente.is_active = activo
-	cliente.is_staff = staff
-
-	cliente.save()
+	user, cliente = User.objects.get_or_create(
+		username = usuario,
+		first_name = nombre,
+		last_name = apellido,
+		email = correo,
+		password = password,
+		telefono = telefono,
+		direccion = direccion,
+		rol = rol,
+		is_active = activo,
+		is_staff = staff
+	)
+	# cliente.first_name = nombre
+	# cliente.last_name = apellido
+	# cliente.username = usuario
+	# cliente.email = correo
+	# cliente.set_password(password)
+	# cliente.telefono = telefono
+	# cliente.direccion = direccion
+	# cliente.rol = rol
+	# cliente.is_active = activo
+	# cliente.is_staff = staff
+	if cliente:
+		user.set_password(password)
+		user.save()
 
 	contexto={}
 
