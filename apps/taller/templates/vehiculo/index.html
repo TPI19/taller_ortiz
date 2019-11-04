@@ -1,9 +1,40 @@
-{% if vehiculos %}
-    <ul>
-    {% for v in vehiculos %}
-        <li><a href="{% url 'detalle_vehiculo' v.id %}">{{v.marca}}: {{ v.modelo }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No vehicles are available.</p>
-{% endif %}
+{% extends 'base/base.html' %}
+{% block main_container %}
+
+
+
+<table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>#</td>
+                <td>Marca</td>
+                <td>Modelo</td>
+                <td>Año</td>
+                <td>
+                    <a href="" class="btn btn-success">Agregar vehiculo</a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+    
+            {% if vehiculos %}
+            {% for v in vehiculos %}
+            <tr>
+                <td>{{ v.id }}</td>
+                <td>{{ v.marca }}</td>
+                <td>{{ v.modelo }}</td>
+                <td>{{ v.anio }}</td>
+                
+                <td>
+                    <a href="" class="btn btn-warning">Editar</a>
+                    <a href="" class="btn btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <h1>No se encuentran registros de vehiculos</h1>
+            {% endif %}
+        </tbody>
+    </table>
+
+{% endblock %}

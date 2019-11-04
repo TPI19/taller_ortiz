@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import auth
 from django.contrib import messages
 from .models import User
+from django.core import mail
 
 # Create your views here.
 
@@ -50,7 +51,7 @@ def almacenar_cliente(request):
 	if cliente:
 		user.set_password(password)
 		user.save()
-
+	
 	contexto={}
 
 	return render(request, 'users/registro_cliente.html', contexto)

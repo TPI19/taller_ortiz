@@ -4,7 +4,7 @@
 
 			<nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
 
-				<a class="navbar-brand px-1" href="#">
+				<a class="navbar-brand px-1" href="{% url 'index' %}">
 					<img src="{% static 'img/logo.png' %}" alt="Taller Logo" class="logo">
 					Taller Ortiz
 				</a>
@@ -32,6 +32,10 @@
 					<form class="form-inline my-2 my-lg-0">
 						<input class="form-control mr-sm-2" type="text" placeholder="Search">
 						<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+					</form>
+					<form class="form-inline my-2 my-lg-0">
+						<a href="" class="btn btn-success">Login</a>
+						<a href="#" class="btn btn-success">Sing Up</a>
 					</form>
 				</div>
 
