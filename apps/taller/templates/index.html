@@ -1,9 +1,55 @@
 {% extends 'base/base.html' %}
 
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light w-100">
+
+				<a class="navbar-brand px-1" href="{% url 'index' %}">
+					<img src="" alt="Taller Logo" class="logo">
+					Taller Ortiz
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarColor03">
+
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="{% url 'index' %}">Inicio <span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Instalaciones</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Servicios</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Contacto</a>
+						</li>
+					</ul>
+						
+					<form class="form-inline my-2 my-lg-0">
+						<input class="form-control mr-sm-2" type="text" placeholder="Search">
+						<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+					</form>
+					<form class="form-inline my-2 my-lg-0">
+						<a href="{% url 'login' %}" class="btn btn-success">Login</a>
+						<a href="{% url 'registro_cliente' %}" class="btn btn-success">Sing Up</a>
+					</form>
+				</div>
+
+			</nav>
+	{% endblock %}
+					
+
 {% block title%}Taller Ortiz - Inicio{% endblock %}
 
 {% block main_container %}
 
+
+
 <h1>Index</h1>
+
+
 
 {% endblock %}
