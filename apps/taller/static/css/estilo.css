@@ -25,6 +25,7 @@ html,body{
 	border: solid;
 	background: rgba(24,188,156,1);
 	transition: 0.2s;
+	height: 100%;
 }
 
 .card-index:hover{
@@ -33,6 +34,10 @@ html,body{
 	border-radius: 5px;
 	border: solid rgba(24,188,156,1);
 	background: rgba(255,255,255,1);
+}
+
+.card-link:hover{
+	text-decoration: none;
 }
 
 .carousel-item {
@@ -99,3 +104,11 @@ html,body{
 	border-top: solid;
 	border-bottom: solid;
 }
+.nav-main{
+	height: 15%;
+}
+
+.main-container{
+	margin-top:;
+}
+

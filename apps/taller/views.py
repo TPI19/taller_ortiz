@@ -1,39 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from .models import Vehiculo, Visita
+from .models import Vehiculo, Visita, Cliente
 
 # Create your views here.
 def index(request):
-
-	if request.user.is_authenticated:
-		status=True
-		first_name = request.user.first_name
-		last_name = request.user.last_name
-		rol = request.user.rol
-	else:
-		status=False
-		first_name = ""
-		last_name = ""
-		rol = 3
-
-	contexto = {
-		'status' : status,
-		'first_name' : first_name,
-		'last_name' : last_name,
-		'rol' : rol,
-    }
-	
+	contexto = {}	
 	return render(request, 'index.html', contexto)
 
-def index_vehiculos(request):
+def vehiculos(request):
+
+	cliente = Cliente.objects.get(user=request.user.id)
 	
-	vehiculos = Vehiculo.objects.all()
+	vehiculos = Vehiculo.objects.filter(cliente=cliente)
 
 	contexto = {
         'vehiculos': vehiculos,
     }
 	
-	return render(request, 'vehiculo/index.html', contexto)
+	return render(request, 'vehiculo/vehiculos.html', contexto)
 
 def detalle_vehiculo(request,vehiculo_id):
 

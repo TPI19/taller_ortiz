@@ -4,6 +4,8 @@ from django.contrib import messages
 from .models import User
 from django.core import mail
 
+from apps.taller.models import Cliente
+
 # Create your views here.
 
 def registro_cliente(request):
@@ -42,10 +44,14 @@ def almacenar_cliente(request):
 	if cliente:
 		user.set_password(password)
 		user.save()
-	
-	contexto={}
 
-	return render(request, 'users/registro_cliente.html', contexto)
+	cliente_taller = Cliente()
+
+	cliente_taller.user = user
+
+	cliente_taller.save()
+
+	return redirect('/')
 
 def login(request):
 
