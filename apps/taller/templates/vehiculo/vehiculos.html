@@ -1,20 +1,48 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block main_container %}
+	<div class="col-md-11 m-2 py-3 px-4">
+		<h4>Vehiculos de {{request.user.first_name}} {{request.user.last_name}}</h4>
 
-<div class="col-md-12 h-100 main-container" style="border: solid gold;">
+		<p class="lead">Estos son los veh&iacute;culos que tienes registrados con nosotros.</p>		
 
-	Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui vel velit voluptatem dolorum et sapiente alias laboriosam praesentium magni nam perspiciatis iusto in, harum commodi id corrupti distinctio suscipit amet nostrum, asperiores quidem quibusdam aspernatur porro ipsum. Dolorem repellendus, id consectetur? Reiciendis eos, ad veritatis. Repellendus nesciunt reprehenderit magni distinctio eaque. Vitae, molestias excepturi consectetur. Voluptates deleniti, architecto, fugit neque ullam dignissimos natus. Nostrum natus, earum possimus doloremque praesentium ipsa quaerat illo ad id, facilis voluptatibus maxime rem tenetur! Modi voluptates, voluptatum error! Dicta autem harum molestias, nisi perspiciatis explicabo sint officiis eos. Placeat blanditiis modi adipisci temporibus perspiciatis, nulla ab exercitationem earum reiciendis dolores quo saepe praesentium natus nisi similique eum porro maxime voluptatum. Fugiat praesentium quos fuga quis? Sapiente facere, voluptas hic temporibus tempore ipsum? Repudiandae accusantium temporibus cupiditate, maiores itaque neque voluptatum earum doloribus voluptas ad adipisci nihil minus aliquid perspiciatis quo natus? Ab quia est, atque sint placeat, accusantium quas natus assumenda amet dignissimos vel odit sunt, cum eligendi quis deserunt eius nam voluptate dolore. Voluptatibus aliquid sed sunt a molestiae aliquam facilis repellat laboriosam numquam necessitatibus corrupti, omnis consequatur commodi tempora explicabo ut excepturi atque, quos harum esse quibusdam ipsa veniam iure. Et natus recusandae voluptatibus tenetur mollitia sunt, id quibusdam atque veritatis in. Quos non cumque dicta quibusdam distinctio eaque, possimus totam nostrum accusamus aliquid voluptas quam labore ipsa suscipit laborum necessitatibus excepturi a obcaecati placeat ullam natus optio dolorum ab iusto! Id perferendis doloremque adipisci nostrum, minima, ut labore impedit laboriosam alias, aliquam et quis soluta dolores autem culpa ipsam, vero cum! Dolore aperiam culpa, veritatis pariatur laudantium numquam exercitationem libero praesentium dolorem alias in ad, perspiciatis voluptas error. Quisquam fuga nulla ducimus blanditiis totam ipsum asperiores nam id, dignissimos distinctio minus accusamus natus eaque, quos. Alias fugit, nesciunt perspiciatis! Sunt quasi aliquid qui, sit culpa ipsam, quos corporis distinctio optio commodi aliquam officiis perferendis doloribus illum eveniet! Porro a esse necessitatibus architecto, natus doloremque dolores magni numquam odio inventore, ullam, magnam excepturi et odit deleniti laudantium molestias alias! Quod, repellendus, aspernatur. Nobis dignissimos quas sapiente est voluptate totam pariatur quasi eveniet quaerat porro voluptatibus blanditiis hic, dolorum delectus sint optio voluptatem iusto omnis earum alias non rem! Eaque, quo saepe doloribus, quam laboriosam dolore est accusamus illum error. Itaque architecto in cum repellat magnam assumenda laudantium fugit tenetur consectetur facilis minus numquam natus, dolorum saepe sunt, deleniti nobis delectus commodi omnis iure dolore quasi? Maiores molestias nisi, id dignissimos est dolores nesciunt explicabo non vero quam facere eligendi, repellendus hic possimus esse exercitationem iste quod debitis ex officia harum et nulla laborum error. Eaque molestias repellendus dolore doloremque praesentium, dolorum vitae quo reprehenderit sapiente harum nobis libero laborum illo ab ullam. Saepe accusamus optio debitis et nulla officiis esse non nisi eaque. Sed, magnam incidunt! Quia quibusdam, reprehenderit ipsa accusantium laboriosam iure tempore, blanditiis culpa, enim tempora nemo sint tenetur officiis. Dolorem eos aliquid libero tempora, dolorum harum ab quia consectetur temporibus nisi architecto deserunt, sunt nostrum minima voluptatem id, quae veritatis?
+		<div class="row text-center">
+			<div class="col-md-10"></div>
+			<button class="btn btn-info col-md-2">Agregar Veh&iacute;culo&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
+		</div>
+		
+		<div class="row mt-4 justify-content-md-center">
 
-    {{vehiculos}}
-    {%if user.is_authenticated %}
-    <p>Autenticated</p>
-    {% else %}
-    <p>NO autenticated</p>
-    {% endif %}
+			<table class="table table-hover col-12">
+				<thead>
+					<tr class="d-flex bg-primary text-white text-center">
+						<th class="col-1">N°</th>
+						<th class="col-2">Placa</th>
+						<th class="col-2">Marca</th>
+						<th class="col-2">Modelo</th>
+						<th class="col-2">Año</th>
+						<th class="col-3">Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for vehiculo in vehiculos %}
+					<tr class="d-flex text-center">
+						<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
+						<td class="col-2 font-weight-bold">{{vehiculo.placa}}</td>
+						<td class="col-2">{{vehiculo.marca}}</td>
+						<td class="col-2">{{vehiculo.modelo}}</td>
+						<td class="col-2">{{vehiculo.anio}}</td>
+						<td class="col-3">
+							<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
+							<button class="btn btn-success" title="Editar Información del Veh&iacute;culo">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
+							<button class="btn btn-danger" title="Eliminar el Veh&iacute;culo">Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i></button>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table> 
 
-</div>
-
-    
+		</div>
+	</div>
 
 {% endblock %}

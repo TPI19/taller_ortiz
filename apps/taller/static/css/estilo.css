@@ -5,6 +5,14 @@ html,body{
 	color:rgba(130,130,130,1);
 }
 
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 .logo{
 	width: 80px;
 	height: 50px;
@@ -104,11 +112,7 @@ html,body{
 	border-top: solid;
 	border-bottom: solid;
 }
-.nav-main{
-	height: 15%;
-}
 
-.main-container{
-	margin-top:;
+#main{
+	margin-top: 6.5%;
 }
-
