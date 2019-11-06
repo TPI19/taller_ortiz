@@ -1,4 +1,101 @@
+html,body{
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+	color:rgba(130,130,130,1);
+}
+
 .logo{
-	width: 50px;
+	width: 80px;
 	height: 50px;
+	margin-right: 10px;
+}
+
+.main-wrap{
+	min-height: 376px ! important ;
+	overflow:hidden;
+	position: relative;
+	display: flex;
+}
+
+.card-index{
+	color:rgb(250,250,250);
+	max-width: 24rem;
+	border-radius: 5px;
+	border: solid;
+	background: rgba(24,188,156,1);
+	transition: 0.2s;
+}
+
+.card-index:hover{
+	color: rgba(24,188,156,1);
+	max-width: 24rem;
+	border-radius: 5px;
+	border: solid rgba(24,188,156,1);
+	background: rgba(255,255,255,1);
+}
+
+.carousel-item {
+	height: 50vh;
+	background: no-repeat center center scroll;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+.carousel-message{
+	text-align: left;
+	padding: 1em 2em; 
+	border-radius: 5px;	
+	background: rgba(255,255,255,0.8);
+	color:rgba(80,80,80,1);
+	width: 500px;
+	position: absolute;
+ 	overflow: hidden;
+	left: 0;
+	bottom: 15%;
+	margin: 1% 1%;
+}
+
+.p-carousel{
+	font-size: 1.5em;
+}
+
+ /* The side navigation menu */
+.sidenav {
+	height: 100%; /* 100% Full-height */
+	width: 0; /* 0 width - change this with JavaScript */
+	position: fixed; /* Stay in place */
+	z-index: 100; /* Stay on top */
+	top: 0; /* Stay at the top */
+	right: 0;
+	background-color: rgba(44,62,80,1);
+	border-left: solid #fff 1px;
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	transition: 0.1s; /* 0.5 second transition effect to slide in the sidenav */
+	color:white;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	text-decoration: none;
+	font-size: 36px;
+	margin-left: 50px;
+	cursor: default;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}
+}
+
+.login-form{
+	border-top: solid;
+	border-bottom: solid;
 }

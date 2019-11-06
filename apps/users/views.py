@@ -38,16 +38,7 @@ def almacenar_cliente(request):
 		is_active = activo,
 		is_staff = staff
 	)
-	# cliente.first_name = nombre
-	# cliente.last_name = apellido
-	# cliente.username = usuario
-	# cliente.email = correo
-	# cliente.set_password(password)
-	# cliente.telefono = telefono
-	# cliente.direccion = direccion
-	# cliente.rol = rol
-	# cliente.is_active = activo
-	# cliente.is_staff = staff
+	
 	if cliente:
 		user.set_password(password)
 		user.save()
@@ -74,3 +65,7 @@ def login(request):
 
 	else:
 		return render(request,'users/login.html')
+
+def logout(request):
+	auth.logout(request)
+	return redirect('/')

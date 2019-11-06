@@ -5,7 +5,22 @@ from .models import Vehiculo, Visita
 # Create your views here.
 def index(request):
 
+	if request.user.is_authenticated:
+		status=True
+		first_name = request.user.first_name
+		last_name = request.user.last_name
+		rol = request.user.rol
+	else:
+		status=False
+		first_name = ""
+		last_name = ""
+		rol = 3
+
 	contexto = {
+		'status' : status,
+		'first_name' : first_name,
+		'last_name' : last_name,
+		'rol' : rol,
     }
 	
 	return render(request, 'index.html', contexto)

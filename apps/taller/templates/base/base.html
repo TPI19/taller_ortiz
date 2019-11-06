@@ -5,8 +5,16 @@
 
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<link rel="stylesheet" href="{% static 'bootstrap/bootstrap.min.css' %}">
 	<link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+
+	<script defer src="{%static 'fontawesome/js/all.js' %}"></script>
+	
+	<script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>
+	<script src="{% static 'js/popper.min.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
 
 	{% block extra_head %}{% endblock %}
 
@@ -14,17 +22,24 @@
 </head>
 <body>
 
-	{% block header %}
-		{% include 'base/header.html' %}
-	{% endblock %}
+	<header id="header">
+		{% block header %}
+			{% include 'base/header.html' %}
+		{% endblock %}
+		{% block extra_header %}
+		{% endblock %}
+	</header>
 
-	<main>
-		<div class="wrap">
-			<div class="w-100 mx-0 row">
+	<main id="main">
+
+		<div class="wrap main-wrap">
+
+			<div class="w-100 mx-0 justify-content-md-center row">
 				{%block main_container%}
 				{% endblock %}
 			</div>
 		</div>
+
 	</main>
 
 	{% block footer %}
