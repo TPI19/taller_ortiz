@@ -20,10 +20,13 @@ html,body{
 }
 
 .main-wrap{
-	min-height: 376px ! important ;
+	min-height: 118px ! important ;
 	overflow:hidden;
-	position: relative;
 	display: flex;
+}
+
+.main-container{
+	margin-top: 6.5%;
 }
 
 .card-index{
@@ -111,8 +114,4 @@ html,body{
 .login-form{
 	border-top: solid;
 	border-bottom: solid;
-}
-
-#main{
-	margin-top: 6.5%;
 }

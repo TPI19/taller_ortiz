@@ -1,14 +1,15 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block main_container %}
-	<div class="col-md-11 m-2 py-3 px-4">
+	<div class="col-md-11 py-3 px-4 main-container">
+
 		<h4>Vehiculos de {{request.user.first_name}} {{request.user.last_name}}</h4>
 
 		<p class="lead">Estos son los veh&iacute;culos que tienes registrados con nosotros.</p>		
 
 		<div class="row text-center">
 			<div class="col-md-10"></div>
-			<button class="btn btn-info col-md-2">Agregar Veh&iacute;culo&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
+			<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#agregar-vehiculo-modal">Agregar Veh&iacute;culo&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
 		</div>
 		
 		<div class="row mt-4 justify-content-md-center">
@@ -26,18 +27,26 @@
 				</thead>
 				<tbody>
 					{% for vehiculo in vehiculos %}
-					<tr class="d-flex text-center">
-						<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-						<td class="col-2 font-weight-bold">{{vehiculo.placa}}</td>
-						<td class="col-2">{{vehiculo.marca}}</td>
-						<td class="col-2">{{vehiculo.modelo}}</td>
-						<td class="col-2">{{vehiculo.anio}}</td>
-						<td class="col-3">
-							<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
-							<button class="btn btn-success" title="Editar Información del Veh&iacute;culo">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
-							<button class="btn btn-danger" title="Eliminar el Veh&iacute;culo">Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i></button>
-						</td>
-					</tr>
+						<tr class="d-flex text-center">
+							<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
+							<td class="col-2 font-weight-bold">{{vehiculo.placa}}</td>
+							<td class="col-2">{{vehiculo.marca}}</td>
+							<td class="col-2">{{vehiculo.modelo}}</td>
+							<td class="col-2">{{vehiculo.anio}}</td>
+							<td class="col-3">
+								<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
+
+								<button class="btn btn-success" title="Editar Información del Veh&iacute;culo" data-toggle="modal" data-target="#editar-vehiculo-modal" data-id="{{vehiculo.id}}" data-placa="{{vehiculo.placa}}" data-tipo="{{vehiculo.tipo}}" data-marca="{{vehiculo.marca}}" data-modelo="{{vehiculo.modelo}}" data-anio="{{vehiculo.anio}}">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
+
+								<button class="btn btn-danger" title="Eliminar el Veh&iacute;culo" data-toggle="modal" data-target="#eliminar-vehiculo-modal" data-id="{{vehiculo.id}}" data-placa="{{vehiculo.placa}}">Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i></button>
+							</td>
+						</tr>
+					{% empty %}
+						<tr>
+							<td colspan="6">
+								<h4>Aun no registras veh&iacute;culos.</h4>								
+							</td>
+						</tr>
 					{% endfor %}
 				</tbody>
 			</table> 
@@ -45,4 +54,158 @@
 		</div>
 	</div>
 
+	<!-- Modal Agregar Vehiculo -->
+	<div class="modal fade" id="agregar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="{% url 'agregar_vehiculo' %}" method="POST">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Agregar nuevo Veh&iacute;culo.</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{% csrf_token %}
+						<div class="form-group row">
+							<label for="placa" class="col-sm-2 col-form-label">Placa</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="placa" name="placa" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="tipo" class="col-sm-2 col-form-label">Tipo</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="tipo" name="tipo" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="marca" class="col-sm-2 col-form-label">Marca</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="marca" name="marca" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="modelo" name="modelo" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="anio" class="col-sm-2 col-form-label">Año</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="anio" name="anio" placeholder="">
+							</div>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class="btn btn-success" value="Guardar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Editar Vehiculo -->
+	<div class="modal fade" id="editar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="{% url 'editar_vehiculo' %}" method="POST">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Editar Veh&iacute;culo.</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{% csrf_token %}
+						<div class="form-group row d-none">
+							<label for="id-edit" class="col-sm-2 col-form-label">ID de Veh&iacute;culo</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="id-edit" name="id_edit" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="placa-edit" class="col-sm-2 col-form-label">Placa</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="placa-edit" name="placa_edit" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="tipo-edit" class="col-sm-2 col-form-label">Tipo</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="tipo-edit" name="tipo_edit" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="marca-edit" class="col-sm-2 col-form-label">Marca</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="marca-edit" name="marca_edit" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="modelo-edit" class="col-sm-2 col-form-label">Modelo</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="modelo-edit" name="modelo_edit" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="anio-edit" class="col-sm-2 col-form-label">Año</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="anio-edit" name="anio_edit" placeholder="">
+							</div>
+						</div>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class="btn btn-success" value="Editar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Eliminar Vehiculo -->
+	<div class="modal fade" id="eliminar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="{% url 'eliminar_vehiculo' %}" method="POST">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Eliminar Veh&iacute;culo.</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{% csrf_token %}
+						<div class="form-group row d-none">
+							<label for="id-delete" class="col-sm-2 col-form-label">ID de Veh&iacute;culo</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="id-delete" name="id_delete" placeholder="">
+							</div>
+						</div>
+						<div class="form-group row justify-content-md-center">
+							<h4>¿Estás seguro que quieres eliminar el veh&iacute;culo?</h4>
+							<label for="placa-delete" class="col-sm-2 col-form-label">Placa</label>
+							<div class="col-sm-3">
+								<input type="text" readonly="" class="form-control-plaintext" id="placa-delete" name="placa_delete" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class="btn btn-danger" value="Eliminar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{% static 'js/vehiculos/vehiculos.js' %}"></script>
 {% endblock %}
