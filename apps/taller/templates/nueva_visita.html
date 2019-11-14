@@ -1,0 +1,48 @@
+<form method="POST" action="{% url 'almacenar_visita' %}" class="post-form">
+
+	<fieldset>
+		<p>Ingrese una nueva visita</p>
+		<div class="form-group row">
+			<label for="vehiculo" class="col-sm-2 col-form-label">vehiculo</label>
+			<div class="col-sm-10">
+				<input type="number" class="form-control" id="vehiculo" name="vehiculo" placeholder="">					
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="tecnico" class="col-sm-2 col-form-label">tecnico</label>
+			<div class="col-sm-10">
+				<input type="number" class="form-control" id="tecnico" name="tecnico" placeholder="">					
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="slot" class="col-sm-2 col-form-label">slot</label>
+			<div class="col-sm-10">
+				<input type="number" class="form-control" id="slot" name="slot" placeholder="">					
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="fecha" class="col-sm-2 col-form-label">fecha</label>
+			<div class="col-sm-10">
+				<input type="datatime" class="form-control" id="fecha" name="fecha" placeholder="mm/dd/aa">				
+			</div>
+		</div>			
+		<div class="form-group row">
+			<label for="caracter" class="col-sm-2 col-form-label">caracter</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="caracter" name="caracter" placeholder="">					
+			</div>
+		</div>
+		<div class="form-group row align-items-center">
+			<label for="comentarios" class="col-sm-2 col-form-label">comentarios</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="comentarios" name="comentarios" placeholder="">					
+			</div>
+		</div>	   
+
+		<div class="form-group row justify-content-md-center">
+			{% csrf_token %}
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrar</button>
+		</div>	 
+	</fieldset>
+
+</form>

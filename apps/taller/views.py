@@ -55,13 +55,39 @@ def eliminar_vehiculo(request):
 def detalle_vehiculo(request,vehiculo_id):
 
 	try:
-
 		vehiculo = Vehiculo.objects.get(pk=vehiculo_id)
 
 	except Vehiculo.DoesNotExist:
 		return render(request, 'base/not_found.html')
 
 	return render(request, 'vehiculo/detalle.html', {'vehiculo': vehiculo})
+
+
+def nuevavisita(request):
+	return render(request, 'nueva_visita.html')
+
+
+def almacenar_visita(request):
+
+	fecha1 = request.POST['fecha']
+	caracter1 = request.POST['caracter']
+	comentarios1 = request.POST['comentarios']
+	slot_id1 = request.POST['slot']
+	tecnico_id1 = request.POST['tecnico']
+	vehiculo_id1 = request.POST['vehiculo']
+
+	visita = Visita()
+	
+	visita.fecha = fecha1,
+	visita.caracter = caracter1,
+	visita.comentarios = comentarios1,
+	visita.slot_id = slot_id1,
+	visita.tecnico_id = tecnico_id1,
+	visita.vehiculo_id = vehiculo_id1,
+
+	visita.save()
+
+	return redirect('/')
 
 
 
