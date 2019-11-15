@@ -1,0 +1,60 @@
+{% extends 'base/base.html' %}
+
+
+{% block title %}Servicios{% endblock %}
+
+
+
+
+{% block main_container %}
+
+
+
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Registrar nueva visita</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'nuevo_slot.html' %}
+			</div>
+		</div>
+	</div>
+</div>
+
+
+	<div class="row mt-4 justify-content-md-between">
+
+		<a href="" class="card-link" data-toggle="modal" data-target="#exampleModal2">
+			<div class="card-index border-success col-sm-4">
+				<div class="card-body">
+					<h4 class="card-title">Nuevo slot</h4>
+					<div class="row">
+						<p class="card-text col-sm-10 text-justify">Registre un unevo slot para el taller.</p>
+						<i class="fas fa-concierge-bell fa-3x"></i>
+					</div>
+				</div>
+			</div>
+		</a>
+
+		<a href="" class="card-link">
+			<div class="card-index border-success col-sm-4">
+				<div class="card-body">
+					<h4 class="card-title">Eliminar/Editar slot</h4>
+					<div class="row">
+						<p class="card-text col-sm-10 text-justify">Eliminar o editar los slots.</p>
+						<i class="fas fa-toolbox fa-3x"></i>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+
+
+{% endblock %}

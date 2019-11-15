@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from .models import Vehiculo, Visita, Cliente
+from .models import Vehiculo, Visita, Cliente, Slot
 
 # Create your views here.
 def index(request):
@@ -97,5 +97,36 @@ def instalaciones(request):
 
 def contactos(request):
 	return render(request, 'contactos.html')
+
+def gestionar_slots(request):
+	contexto = {}	
+	return render(request, 'gestionar_slots.html', contexto)
+
+
+def almacenar_slots(request):
+
+	disponible1 = request.POST['Disponible']
+	reservacion1 = request.POST['Reservacion']
+
+
+	if disponible1 == "Disponible":
+		variable = True
+	else:
+		variable = False
+
+	if reservacion1 == "Reservado":
+		variable2 = True
+	else:
+		variable2 = False
+
+	slot = Slot()
+	
+	slot.disponible = variable
+	slot.reservacion = variable2
+
+	slot.save()
+
+	return redirect('/')
+
 
 
