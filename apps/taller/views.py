@@ -89,5 +89,13 @@ def almacenar_visita(request):
 
 	return redirect('/')
 
+def servicios(request):
+	return render(request, 'servicios.html')
+
+def instalaciones(request):
+	return render(request, 'instalaciones.html')
+
+def contactos(request):
+	return render(request, 'contactos.html')
 
 
