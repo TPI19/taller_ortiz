@@ -3,7 +3,7 @@
 {% block main_container %}
 	<div class="col-md-11 py-3 px-4 main-container">
 
-		<h4>Vehiculos de {{request.user.first_name}} {{request.user.last_name}}</h4>
+		<h4>Vehiculos de {{request.user.first_name}} {{request.user.last_name}} </h4>
 
 		<p class="lead">Estos son los veh&iacute;culos que tienes registrados con nosotros.</p>		
 
@@ -26,13 +26,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for vehiculo in vehiculos %}
+					{% for vehiculor in vehiculos %}
 						<tr class="d-flex text-center">
 							<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-							<td class="col-2 font-weight-bold">{{vehiculo.placa}}</td>
-							<td class="col-2">{{vehiculo.marca}}</td>
-							<td class="col-2">{{vehiculo.modelo}}</td>
-							<td class="col-2">{{vehiculo.anio}}</td>
+							<td class="col-2 font-weight-bold">{{vehiculor.placa}}</td>
+							<td class="col-2">{{vehiculor.marca}}</td>
+							<td class="col-2">{{vehiculor.modelo}}</td>
+							<td class="col-2">{{vehiculor.anio}}</td>
 							<td class="col-3">
 								<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
 
@@ -50,7 +50,6 @@
 					{% endfor %}
 				</tbody>
 			</table> 
-
 		</div>
 	</div>
 

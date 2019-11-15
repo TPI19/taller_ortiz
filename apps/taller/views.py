@@ -19,6 +19,22 @@ def vehiculos(request):
 	
 	return render(request, 'vehiculo/vehiculos.html', contexto)
 
+
+
+
+def slot_list(request):
+	slot = Slot.objects.all()
+	contexto = {'slots' : slot, }
+	return render (request,'gestionar_slots.html', contexto)
+
+
+
+
+
+
+
+
+
 def agregar_vehiculo(request):
 
 	cliente = Cliente.objects.get(user = request.user.id)
@@ -105,9 +121,9 @@ def instalaciones(request):
 def contactos(request):
 	return render(request, 'contactos.html')
 
-def gestionar_slots(request):
-	contexto = {}	
-	return render(request, 'gestionar_slots.html', contexto)
+#def gestionar_slots(request):
+#	contexto = {}	
+#	return render(request, 'gestionar_slots.html', contexto)
 
 
 def almacenar_slots(request):
@@ -134,6 +150,9 @@ def almacenar_slots(request):
 	slot.save()
 
 	return redirect('/')
+
+
+
 
 
 
