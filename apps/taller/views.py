@@ -34,6 +34,36 @@ def agregar_vehiculo(request):
 
 	return redirect('vehiculos')
 
+def almacenar_visita(request):
+
+	fecha1 = request.POST['fecha_visita']
+	caracter1 = request.POST['caracter_visita']
+	comentarios1 = request.POST['comentarios_visita']
+	slot_id1 = request.POST['id_slot_visita']
+	tecnico_id1 = request.POST['id_tecnico_visita']
+	vehiculo_id1 = request.POST['id_vehiculo_visita']
+
+	visita = Visita()
+	
+	visita.fecha = fecha1
+	visita.caracter = caracter1
+	visita.comentarios = comentarios1
+	visita.slot_id = slot_id1
+	visita.tecnico_id = tecnico_id1
+	visita.vehiculo_id = vehiculo_id1
+
+	#visita.fecha = "2019-03-03"
+	#visita.caracter = "hola"
+	#visita.comentarios = "Esta es una prueba para ver como meter esta onda"
+	#visita.slot_id = "58"
+	#visita.tecnico_id = "1"
+	#visita.vehiculo_id = "1"
+
+	visita.save()
+
+	return redirect('/')
+
+
 def editar_vehiculo(request):
 
 	vehiculo = Vehiculo.objects.get(pk=request.POST['id_edit'])
@@ -65,29 +95,6 @@ def detalle_vehiculo(request,vehiculo_id):
 
 def nuevavisita(request):
 	return render(request, 'nueva_visita.html')
-
-
-def almacenar_visita(request):
-
-	fecha1 = request.POST['fecha']
-	caracter1 = request.POST['caracter']
-	comentarios1 = request.POST['comentarios']
-	slot_id1 = request.POST['slot']
-	tecnico_id1 = request.POST['tecnico']
-	vehiculo_id1 = request.POST['vehiculo']
-
-	visita = Visita()
-	
-	visita.fecha = fecha1,
-	visita.caracter = caracter1,
-	visita.comentarios = comentarios1,
-	visita.slot_id = slot_id1,
-	visita.tecnico_id = tecnico_id1,
-	visita.vehiculo_id = vehiculo_id1,
-
-	visita.save()
-
-	return redirect('/')
 
 def servicios(request):
 	return render(request, 'servicios.html')
