@@ -41,10 +41,19 @@
 				</thead>
 				<tbody>
 					{% for slot in slots %}
-						<tr class="d-flex text-center">
+						<tr class="d-flex text-center">							
 							<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-							<td class="col-2 font-weight-bold">{{slot.disponible}}</td>
-							<td class="col-2">{{slot.reservacion}}</td>
+							{% if slot.disponible == True %}
+							<td class="col-2 font-weight-bold">Disponible</td>
+							{% else %}
+							<td class="col-2 font-weight-bold">No disponible</td>
+							{% endif %}
+
+							{% if slot.reservacion == True %}
+							<td class="col-2">Reservado</td>
+							{% else %}
+							<td class="col-2">No reservado</td>
+							{% endif %}
 							<td class="col-3">
 								<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
 

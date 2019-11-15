@@ -19,21 +19,10 @@ def vehiculos(request):
 	
 	return render(request, 'vehiculo/vehiculos.html', contexto)
 
-
-
-
 def slot_list(request):
 	slot = Slot.objects.all()
 	contexto = {'slots' : slot, }
 	return render (request,'gestionar_slots.html', contexto)
-
-
-
-
-
-
-
-
 
 def agregar_vehiculo(request):
 
@@ -149,7 +138,7 @@ def almacenar_slots(request):
 
 	slot.save()
 
-	return redirect('/')
+	return redirect('gestionar_slots')
 
 
 
