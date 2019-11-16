@@ -1,27 +1,42 @@
 {% extends 'base/base.html' %}
 {% load static %}
 
-{% block title %}Gestionar Slot{% endblock %}
+{% block title %}Gestionar visitas{% endblock %}
 
 {% block main_container %}
+
+    <style>
+    #scroll{
+        border:1px solid;
+        height:500px;
+        width:1250px;
+        overflow-y:scroll;
+        overflow-x:hidden;
+    }
+    </style>
+
+
+
+
 	<div class="col-md-11 py-3 px-4 main-container">
 
-		<h4>Slots</h4>
+		<h4>Visitas</h4>
 
-		<p class="lead">Estos son los slots con los que cuenta la empresa.</p>	
+		<p class="lead">Estos son las visitas de la empresa.</p>	
 
-<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+	<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo slot</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Registrar nueva visita</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				{% include 'nuevo_slot.html' %}
+				{% include 'nueva_visita.html' %}
 			</div>
 		</div>
 	</div>
@@ -29,34 +44,34 @@
 
 		<div class="row text-center">
 			<div class="col-md-10"></div>
-			<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#exampleModal2">Agregar Slot<i class="fas fa-plus-circle"></i></button>
+			<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#exampleModal2">Agregar visita<i class="fas fa-plus-circle"></i></button>
 		</div>
-		
+		<div class="scroll">
 		<div class="row mt-4 justify-content-md-center">
+
 			<table class="table table-hover col-12">
 				<thead>
 					<tr class="d-flex bg-primary text-white text-center">
 						<th class="col-1">N°</th>
-						<th class="col-2">Disponible</th>
-						<th class="col-2">Reservacion</th>
-						<th class="col-3">Opciones</th>						
+						<th class="col-1">Vehiculo</th>
+						<th class="col-1">Tecnico</th>
+						<th class="col-1">Slot</th>
+						<th class="col-1">Fecha</th>
+						<th class="col-2">Caracter</th>
+						<th class="col-2">Comentario</th>
+						<th class="col-1">Opciones</th>
 					</tr>
 				</thead>
 				<tbody>
-					{% for slot in slots %}
-						<tr class="d-flex text-center">							
-							<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-							{% if slot.disponible == True %}
-							<td class="col-2 font-weight-bold">Disponible</td>
-							{% else %}
-							<td class="col-2 font-weight-bold">No disponible</td>
-							{% endif %}
-
-							{% if slot.reservacion == True %}
-							<td class="col-2">Reservado</td>
-							{% else %}
-							<td class="col-2">No reservado</td>
-							{% endif %}
+					{% for visita in visitas %}
+						<tr class="d-flex text-center">
+							<td class="col-1">{{ forloop.counter }}</td>
+							<td class="col-1 font-weight-bold">{{visita.vehiculo.placa}}</td>
+							<td class="col-1">{{visita.tecnico.user.first_name}}</td>
+							<td class="col-1">{{visita.slot.id}}</td>
+							<td class="col-1">{{visita.fecha}}</td>
+							<td class="col-2">{{visita.caracter}}</td>
+							<td class="col-2">{{visita.comentario}}</td>
 							<td class="col-3">
 								<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
 
@@ -68,12 +83,13 @@
 					{% empty %}
 						<tr>
 							<td colspan="6">
-								<h4>Aun no registras slots.</h4>								
+								<h4>Aun no registras visitas.</h4>								
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table> 
+		</div>
 		</div>
 	</div>
 
