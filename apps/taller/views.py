@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
-from .models import Vehiculo, Visita, Cliente, Slot
+from .models import Vehiculo, Visita, Cliente, Slot,Tecnico
 
 # Create your views here.
 def index(request):
@@ -23,6 +23,12 @@ def slot_list(request):
 	slot = Slot.objects.all()
 	contexto = {'slots' : slot, }
 	return render (request,'gestionar_slots.html', contexto)
+
+def visita_list(request):
+	#tecnico = Tecnico.objects.filter(username = request.user.id)
+	visita = Visita.objects.all()
+	contexto = {'visitas' : visita, }
+	return render (request,'gestionar_visitas.html', contexto)
 
 def agregar_vehiculo(request):
 
