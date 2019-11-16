@@ -26,9 +26,15 @@ def slot_list(request):
 	return render (request,'gestionar_slots.html', contexto)
 
 def visita_list(request):
+<<<<<<< HEAD
 	visita1 = Visita.objects.all()
 	slot = Slot.objects.all()
 	contexto = {'visitas' : visita1, 'slots' : slot, }
+=======
+	#tecnico = Tecnico.objects.filter(username = request.user.id)
+	visita = Visita.objects.all()
+	contexto = {'visitas' : visita, }
+>>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
 	return render (request,'gestionar_visitas.html', contexto)
 
 def agregar_vehiculo(request):
