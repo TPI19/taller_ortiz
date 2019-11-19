@@ -1,0 +1,27 @@
+<form action="{% url 'agregar_especialidad' %}" method="POST">
+	<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Agregar nueva especializaci&oacute;n.</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		{% csrf_token %}
+		<div class="form-group row">
+			<label for="especialidad" class="col-sm-2 col-form-label">Nombre</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="especialidad" name="especialidad" placeholder="Nombre de la especialidad">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="descripcion" class="col-sm-2 col-form-label">Descripción</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" rows="5" id="descripcion" name="descripcion"
+					placeholder="Descripcion de la especialidad"></textarea>
+			</div>
+		</div>
+		<div class="form-group row justify-content-md-center">
+			{% csrf_token %}
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Agregar</button>
+		</div>
+</form>

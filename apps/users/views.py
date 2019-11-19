@@ -53,6 +53,7 @@ def almacenar_cliente(request):
 
 	return redirect('/')
 
+
 def login(request):
 
 	if(request.method == 'POST'):

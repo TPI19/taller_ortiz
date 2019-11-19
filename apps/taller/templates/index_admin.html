@@ -44,12 +44,23 @@
 
 	<div class="row mt-4 justify-content-md-between">
 
-		<a href="" class="card-link">
+		<a href="{% url 'empleados' %}" class="card-link">
 			<div class="card-index border-success col-sm-4">
 				<div class="card-body">
 					<h4 class="card-title">Gesti&oacute;n de Personal</h4>
 					<div class="row">
 						<p class="card-text col-sm-10 text-justify">Gestione a sus empleados administrativos y técnicos.</p>
+						<i class="fas fa-users fa-3x"></i>
+					</div>
+				</div>
+			</div>
+		</a>
+		<a href="{% url 'especialidad' %}" class="card-link">
+			<div class="card-index border-success col-sm-4">
+				<div class="card-body">
+					<h4 class="card-title">Gesti&oacute;n de Especialidades</h4>
+					<div class="row">
+						<p class="card-text col-sm-10 text-justify">Gestione las diferentes especialidades de sus empleados.</p>
 						<i class="fas fa-users fa-3x"></i>
 					</div>
 				</div>
