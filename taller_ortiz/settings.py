@@ -77,23 +77,15 @@ WSGI_APPLICATION = 'taller_ortiz.wsgi.application'
 
 DATABASES = {
     'default': {
-         'ENGINE': 'django.db.backends.mysql',
-        #'ENGINE': 'mysql_cymysql',
+        # 'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql_cymysql',
         'NAME': 'taller',
         'USER': 'root',
-<<<<<<< HEAD
         'PASSWORD': '',
         # 'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT':3306,
-        # s'PORT':8889,
-=======
-         'PASSWORD': '',
-        #'PASSWORD': 'root',
-        'HOST': 'localhost',
-         'PORT':3306,
-       # 'PORT':8889,
->>>>>>> e7b238cdee5e653a2b830164b4f41996057d810b
+        #'PORT':8889,
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
