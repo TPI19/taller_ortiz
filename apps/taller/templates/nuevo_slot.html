@@ -1,0 +1,32 @@
+<form method="POST" action="{% url 'almacenar_slots' %}" class="post-form">
+
+	<fieldset>
+		<p>Ingrese un nuevo slot</p>
+
+		<div class="form-group row">
+			<label for="tecnico" class="col-sm-2 col-form-label">Disponible</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="Disponible" name="Disponible" placeholder="">
+  				<option value="Disponible">Disponible</option>
+ 				<option value="No-disponible">No disponible</option>
+				</select>				
+			</div>
+		</div>
+		
+		<div class="form-group row">
+			<label for="Reservacion" class="col-sm-2 col-form-label">Reservacion</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="Reservacion" name="Reservacion" placeholder="">
+  				<option value="Reservado">Reservado</option>
+ 				<option value="No-reservado">No reservado</option>
+				</select>				
+			</div>
+		</div>
+
+		<div class="form-group row justify-content-md-center">
+			{% csrf_token %}
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrar</button>
+		</div>	 
+	</fieldset>
+
+</form>

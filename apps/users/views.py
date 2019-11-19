@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import User
 from django.core import mail
 
-from apps.taller.models import Cliente
+from apps.taller.models import Cliente,Visita
 
 # Create your views here.
 
@@ -76,3 +76,6 @@ def login(request):
 def logout(request):
 	auth.logout(request)
 	return redirect('/')
+
+
+
