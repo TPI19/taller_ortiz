@@ -25,16 +25,21 @@ def slot_list(request):
 	#return render (request,'gestionar_visitas.html', contexto)
 	return render (request,'gestionar_slots.html', contexto)
 
+def slot_edit(request):
+	sloted = Slot.objects.get(pk=request.POST['id_edit'])
+	contexto = {'sloted' : sloted, }
+	#return render (request,'gestionar_visitas.html', contexto)
+	return render (request,'gestionar_slots.html', contexto)
+
+
 def visita_list(request):
-<<<<<<< HEAD
 	visita1 = Visita.objects.all()
 	slot = Slot.objects.all()
-	contexto = {'visitas' : visita1, 'slots' : slot, }
-=======
+	tecnico = Tecnico.objects.all()
+	contexto = {'visitas' : visita1, 'slots' : slot, 'tecnicos' : tecnico}
 	#tecnico = Tecnico.objects.filter(username = request.user.id)
-	visita = Visita.objects.all()
-	contexto = {'visitas' : visita, }
->>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
+	#visita = Visita.objects.all()
+	#contexto = {'visitas' : visita, }
 	return render (request,'gestionar_visitas.html', contexto)
 
 def agregar_vehiculo(request):
@@ -59,7 +64,8 @@ def almacenar_visita(request):
 	comentarios1 = request.POST['comentarios_visita']
 	slot_id1 = request.POST['id_slot_visita']
 	tecnico_id1 = request.POST['id_tecnico_visita']
-	vehiculo_id1 = request.POST['id_vehiculo_visita']
+	vehiculo_id1 = request.POST['id_vehiculo_visita']	
+
 
 	visita = Visita()
 	
@@ -94,11 +100,47 @@ def editar_vehiculo(request):
 
 	return redirect('vehiculos')
 
+
+def editar_slot(request):
+
+	slot = Slot.objects.get(pk=request.POST['id_edit'])
+	disponible1 = request.POST['disponible_edit']
+	reservacion1 = request.POST['reservacion_edit']
+	
+	if disponible1 == "Disponible":
+		variable = True
+	else:
+		variable = False
+
+	if reservacion1 == "Reservado":
+		variable2 = True
+	else:
+		variable2 = False
+
+	slot.disponible = variable
+	slot.reservacion = variable2
+
+	slot.save()
+
+	return redirect('gestionar_slots')
+
 def eliminar_vehiculo(request):
 
 	Vehiculo.objects.filter(id=request.POST['id_delete']).delete()
 
 	return redirect('vehiculos')
+
+def eliminar_visita(request):
+
+	Visita.objects.filter(id=request.POST['id_delete']).delete()
+
+	return redirect('gestionar_visitas')
+
+def eliminar_slot(request):
+
+	Slot.objects.filter(id=request.POST['id_delete']).delete()
+
+	return redirect('gestionar_slots')
 
 def detalle_vehiculo(request,vehiculo_id):
 

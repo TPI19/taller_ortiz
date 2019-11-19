@@ -4,7 +4,6 @@
 {% block title %}Gestionar visitas{% endblock %}
 
 {% block main_container %}
-<<<<<<< HEAD
 
     <style>
     #scroll{
@@ -19,8 +18,6 @@
 
 
 
-=======
->>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
 	<div class="col-md-11 py-3 px-4 main-container">
 
 		<h4>Visitas</h4>
@@ -49,18 +46,13 @@
 			<div class="col-md-10"></div>
 			<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#exampleModal2">Agregar visita<i class="fas fa-plus-circle"></i></button>
 		</div>
-<<<<<<< HEAD
 		<div class="scroll">
-=======
-		
->>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
 		<div class="row mt-4 justify-content-md-center">
 
 			<table class="table table-hover col-12">
 				<thead>
 					<tr class="d-flex bg-primary text-white text-center">
 						<th class="col-1">N°</th>
-<<<<<<< HEAD
 						<th class="col-1">Vehiculo</th>
 						<th class="col-1">Tecnico</th>
 						<th class="col-1">Slot</th>
@@ -68,33 +60,16 @@
 						<th class="col-2">Caracter</th>
 						<th class="col-2">Comentario</th>
 						<th class="col-1">Opciones</th>
-=======
-						<th class="col-2">Vehiculo</th>
-						<th class="col-2">Tecnico</th>
-						<th class="col-2">Slot</th>
-						<th class="col-2">Fecha</th>
-						<th class="col-2">Caracter</th>
-						<th class="col-2">Comentario</th>
-						<th class="col-2">Opciones</th>
->>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
 					</tr>
 				</thead>
 				<tbody>
 					{% for visita in visitas %}
 						<tr class="d-flex text-center">
-<<<<<<< HEAD
 							<td class="col-1">{{ forloop.counter }}</td>
 							<td class="col-1 font-weight-bold">{{visita.vehiculo.placa}}</td>
 							<td class="col-1">{{visita.tecnico.user.first_name}}</td>
 							<td class="col-1">{{visita.slot.id}}</td>
 							<td class="col-1">{{visita.fecha}}</td>
-=======
-							<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-							<td class="col-2 font-weight-bold">{{visita.vehiculo.placa}}</td>
-							<td class="col-2">{{visita.tecnico.user.first_name}}</td>
-							<td class="col-2">{{visita.slot.id}}</td>
-							<td class="col-2">{{visita.fecha}}</td>
->>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
 							<td class="col-2">{{visita.caracter}}</td>
 							<td class="col-2">{{visita.comentario}}</td>
 							<td class="col-3">
@@ -102,7 +77,7 @@
 
 								<button class="btn btn-success" title="Editar Información del Veh&iacute;culo" data-toggle="modal" data-target="#editar-vehiculo-modal" data-id="{{vehiculo.id}}" data-placa="{{vehiculo.placa}}" data-tipo="{{vehiculo.tipo}}" data-marca="{{vehiculo.marca}}" data-modelo="{{vehiculo.modelo}}" data-anio="{{vehiculo.anio}}">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
 
-								<button class="btn btn-danger" title="Eliminar el Veh&iacute;culo" data-toggle="modal" data-target="#eliminar-vehiculo-modal" data-id="{{vehiculo.id}}" data-placa="{{vehiculo.placa}}">Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i></button>
+								<button class="btn btn-danger" title="Eliminar la visita" data-toggle="modal" data-target="#eliminar-visita-modal" data-id="{{visita.id}}" data-fecha="{{visita.fecha}}">Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i></button>
 							</td>
 						</tr>
 					{% empty %}
@@ -115,63 +90,6 @@
 				</tbody>
 			</table> 
 		</div>
-<<<<<<< HEAD
-		</div>
-=======
->>>>>>> 3114fee4a61990da5fae0868f01b7cee3c11f86a
-	</div>
-
-	<!-- Modal Agregar Vehiculo -->
-	<div class="modal fade" id="agregar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<form action="{% url 'agregar_vehiculo' %}" method="POST">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Agregar nuevo Veh&iacute;culo.</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						{% csrf_token %}
-						<div class="form-group row">
-							<label for="placa" class="col-sm-2 col-form-label">Placa</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="placa" name="placa" placeholder="">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="tipo" class="col-sm-2 col-form-label">Tipo</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="tipo" name="tipo" placeholder="">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="marca" class="col-sm-2 col-form-label">Marca</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="marca" name="marca" placeholder="">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="modelo" class="col-sm-2 col-form-label">Modelo</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="modelo" name="modelo" placeholder="">
-							</div>
-						</div>
-						<div class="form-group row">
-							<label for="anio" class="col-sm-2 col-form-label">Año</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="anio" name="anio" placeholder="">
-							</div>
-						</div>
-						
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-						<input type="submit" class="btn btn-success" value="Guardar">
-					</div>
-				</form>
-			</div>
 		</div>
 	</div>
 
@@ -191,7 +109,7 @@
 						<div class="form-group row d-none">
 							<label for="id-edit" class="col-sm-2 col-form-label">ID de Veh&iacute;culo</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="id-edit" name="id_edit" placeholder="">
+								<input type="text" class="form-control" id="id-edit" name="id_deleteedit" placeholder="">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -236,29 +154,29 @@
 	</div>
 
 	<!-- Modal Eliminar Vehiculo -->
-	<div class="modal fade" id="eliminar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="eliminar-visita-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<form action="{% url 'eliminar_vehiculo' %}" method="POST">
+				<form action="{% url 'eliminar_visita' %}" method="POST">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">Eliminar Veh&iacute;culo.</h5>
+						<h5 class="modal-title" id="exampleModalLabel">Eliminar Visita.</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						{% csrf_token %}
-						<div class="form-group row d-none">
-							<label for="id-delete" class="col-sm-2 col-form-label">ID de Veh&iacute;culo</label>
+						<div class="form-group ">
+							<label for="id-delete" class="col-sm-2 col-form-label">ID de visita</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="id-delete" name="id_delete" placeholder="">
 							</div>
 						</div>
 						<div class="form-group row justify-content-md-center">
-							<h4>¿Estás seguro que quieres eliminar el veh&iacute;culo?</h4>
-							<label for="placa-delete" class="col-sm-2 col-form-label">Placa</label>
+							<h4>¿Estás seguro que quiere eliminar la visita?</h4>
+							<label for="fecha-delete" class="col-sm-2 col-form-label">Fecha</label>
 							<div class="col-sm-3">
-								<input type="text" readonly="" class="form-control-plaintext" id="placa-delete" name="placa_delete" placeholder="">
+								<input type="text" readonly="" class="form-control-plaintext" id="fecha-delete" name="placa_delete" placeholder="">
 							</div>
 						</div>
 					</div>
@@ -274,7 +192,7 @@
 {% endblock %}
 
 {% block extra_js %}
-	<script src="{% static 'js/vehiculos/vehiculos.js' %}"></script>
+	<script src="{% static 'js/visitas/visitas.js' %}"></script>
 {% endblock %}
 
 
