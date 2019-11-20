@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from .models import Vehiculo, Visita, Cliente
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
 	contexto = {}	
 	return render(request, 'index.html', contexto)
 
+@login_required
 def vehiculos(request):
 
 	cliente = Cliente.objects.get(user=request.user.id)
