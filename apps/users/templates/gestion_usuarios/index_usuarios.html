@@ -1,0 +1,88 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title%}Taller Ortiz - Gestión de Usuarios{% endblock %}
+
+{% block extra_header %}
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+	<!-- Start Carousel -->
+	<div class="carousel-inner" role="listbox">
+
+		<div class="carousel-caption d-none d-md-block carousel-message">
+			{% if request.user.rol == 0 %}
+			<!-- Vista para Admin -->
+			<h3>{{request.user.first_name}}&nbsp;{{request.user.last_name}}</h3>
+			<p class="float-right p-carousel">&#8212;&nbsp;Administrador</p>
+			{% elif request.user.rol == 1 %}
+			<!-- Vista para Técnico -->
+			<h3>{{request.user.first_name}}&nbsp;{{request.user.last_name}}</h3>
+			<p class="float-right p-carousel">&#8212;&nbsp;T&eacute;cnico</p>
+			{% elif request.user.rol == 2 %}
+			<!-- Vista para Cliente -->
+			<h3>{{request.user.first_name}}&nbsp;{{request.user.last_name}}</h3>
+			<p class="float-right p-carousel">&#8212;&nbsp;Cliente</p>
+			{% else %}
+			<!-- Vista para Visitante -->
+			<h2>Taller Ort&iacute;z</h2>
+			{% endif %}
+		</div>
+
+		<!-- Slide One - Set the background image for this slide in the line below -->
+		<div class="carousel-item active" style="background-image: url({% static 'img/carousel/c1.jpg' %})">
+		</div>
+
+		<!-- Slide Two - Set the background image for this slide in the line below -->
+		<div class="carousel-item" style="background-image: url({% static 'img/carousel/c2.jpg' %})">
+		</div>
+
+		<!-- Slide Three - Set the background image for this slide in the line below -->
+		<div class="carousel-item" style="background-image: url({% static 'img/carousel/c3.jpg' %})">
+		</div>
+
+	</div>
+</div> <!-- End Carousel -->
+{% endblock %}
+
+{% block main_container %}
+
+<div class="row my-4 justify-content-md-between">
+
+	<a href="" class="card-link">
+		<div class="card-index border-success col-sm-4">
+			<div class="card-body">
+				<h4 class="card-title">Gestión de Clientes</h4>
+				<div class="row">
+					<p class="card-text col-sm-10 text-justify">Gestione los Clientes que se han registrado en su taller.</p>
+					<i class="fas fa-user-friends fa-3x"></i>
+				</div>
+			</div>
+		</div>
+	</a>
+
+	<a href="{% url 'gestion_tecnicos' %}" class="card-link">
+		<div class="card-index border-success col-sm-4">
+			<div class="card-body">
+				<h4 class="card-title">Gestion de Técnicos</h4>
+				<div class="row">
+					<p class="card-text col-sm-10 text-justify">Gestione los miembros del cuerpo de técnicos de su taller.</p>
+					<i class="fas fa-wrench fa-3x"></i>
+				</div>
+			</div>
+		</div>
+	</a>
+
+	<a href="" class="card-link">
+		<div class="card-index border-success col-sm-4">
+			<div class="card-body">
+				<h4 class="card-title">Gestion de Administrativo</h4>
+				<div class="row">
+					<p class="card-text col-sm-10 text-justify">Gestione los miembros del cuerpo administrativo.</p>
+					<i class="fas fa-user-tie fa-3x"></i>
+				</div>
+			</div>
+		</div>
+	</a>
+
+</div>
+{% endblock %}
