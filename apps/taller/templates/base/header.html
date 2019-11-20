@@ -20,13 +20,13 @@
 					<a class="nav-link" href="{% url 'index' %}">Inicio <span class="sr-only">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Instalaciones</a>
+					<a class="nav-link" href="{% url 'instalaciones' %}">Instalaciones</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Servicios</a>
+					<a class="nav-link" href="{% url 'servicios' %}">Servicios</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#">Contacto</a>
+					<a class="nav-link" href="{% url 'contactos' %}">Contacto</a>
 				</li>
 			</ul>
 					
@@ -36,9 +36,6 @@
 					<a href="#" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Registrate&nbsp;&nbsp;&nbsp;<i class="fas fa-user-plus"></i></a>&nbsp;&nbsp;&nbsp;
 					<a href="#" id="login-btn" onclick="openNav()" class="btn btn-success">Ingresa&nbsp;&nbsp;&nbsp;<i class="fas fa-sign-in-alt"></i></a>
 				{% else %}
-					
-					
-
 					<a href="" class="btn btn-success">{{request.user.first_name}}&nbsp;&nbsp;&nbsp;<i class="fas fa-user"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="{% url 'logout' %}" class="btn btn-danger">Salir&nbsp;&nbsp;&nbsp;<i class="fas fa-running"></i></a>
 				{% endif %}

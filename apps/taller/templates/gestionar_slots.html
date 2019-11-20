@@ -1,0 +1,177 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Gestionar Slot{% endblock %}
+
+{% block main_container %}
+	<div class="col-md-11 py-3 px-4 main-container">
+
+		<h4>Slots</h4>
+
+		<p class="lead">Estos son los slots con los que cuenta la empresa.</p>	
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo slot</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{% include 'nuevo_slot.html' %}
+			</div>
+		</div>
+	</div>
+</div>
+
+		<div class="row text-center">
+			<div class="col-md-10"></div>
+			<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#exampleModal2">Agregar Slot<i class="fas fa-plus-circle"></i></button>
+		</div>
+		
+		<div class="row mt-4 justify-content-md-center">
+			<table class="table table-hover col-12">
+				<thead>
+					<tr class="d-flex bg-primary text-white text-center">
+						<th class="col-1">N°</th>
+						<th class="col-2">Disponible</th>
+						<th class="col-2">Reservacion</th>
+						<th class="col-3">Opciones</th>						
+					</tr>
+				</thead>
+				<tbody>
+					{% for slot in slots %}
+						<tr class="d-flex text-center">							
+							<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
+							{% if slot.disponible == True %}
+							<td class="col-2 font-weight-bold">Disponible</td>
+							{% else %}
+							<td class="col-2 font-weight-bold">No disponible</td>
+							{% endif %}
+
+							{% if slot.reservacion == True %}
+							<td class="col-2">Reservado</td>
+							{% else %}
+							<td class="col-2">No reservado</td>
+							{% endif %}
+							<td class="col-3">
+								<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
+
+								<button class="btn btn-success" title="Editar Información del Slot" data-toggle="modal" data-target="#editar-slot-modal" data-id="{{slot.id}}" data-disponible="{{slot.disponible}}" data-reservacion="{{slot.reservacion}}">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
+
+								<button class="btn btn-danger" title="Eliminar el Slot" data-toggle="modal" data-target="#eliminar-slot-modal" data-id="{{slot.id}}">Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i></button>
+							</td>
+						</tr>
+					{% empty %}
+						<tr>
+							<td colspan="6">
+								<h4>Aun no registras slots.</h4>								
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table> 
+		</div>
+	</div>
+
+	<!-- Modal Editar Slot -->
+	<div class="modal fade" id="editar-slot-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="{% url 'editar_slot' %}" method="POST">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Editar Slot.</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{% csrf_token %}
+							<div class="form-group row d-none">
+							<label for="id-edit" class="col-sm-2 col-form-label">ID de Slot</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="id-edit" name="id_edit" placeholder="">
+							</div>
+						</div>
+
+
+
+		<div class="form-group row">
+			<label for="tecnico" class="col-sm-2 col-form-label">Disponible</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="disponible-edit" name="disponible_edit" placeholder="">
+				{% if sloted.disponible == True %}
+  				<option value="Disponible">Disponible</option>
+ 				<option value="No-disponible">No disponible</option>
+ 				{% else %}
+ 				<option value="No-disponible">No disponible</option>
+ 				<option value="Disponible">Disponible</option>
+ 				{% endif %}
+				</select>				
+			</div>
+		</div>
+		
+		<div class="form-group row">
+			<label for="Reservacion" class="col-sm-2 col-form-label">Reservacion</label>
+			<div class="col-sm-10">
+				<select class="form-control" id="reservacion-edit" name="reservacion_edit" placeholder="">
+				{% if sloted.reservacion == True %}
+  				<option value="Reservado">Reservado</option>
+ 				<option value="No-reservado">No reservado</option>
+ 				{% else %}
+ 				<option value="No-reservado">No reservado</option>
+ 				<option value="Reservado">Reservado</option>
+ 				{% endif %}
+				</select>				
+			</div>
+		</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class="btn btn-success" value="Editar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Eliminar Vehiculo -->
+	<div class="modal fade" id="eliminar-slot-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<form action="{% url 'eliminar_slot' %}" method="POST">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Eliminar slot.</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						{% csrf_token %}
+						<div class="form-group row justify-content-md-center">
+							<h4>¿Estás seguro que quieres eliminar el slot?</h4>
+						</div>
+						<div class="form-group">
+							<label for="id-delete" class="col-sm-5 col-form-label">ID de slot</label>
+							<div class="col-sm-7">
+								<input type="text" class="form-control" id="id-delete" name="id_delete" placeholder="">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+						<input type="submit" class="btn btn-danger" value="Eliminar">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block extra_js %}
+	<script src="{% static 'js/slots/slots.js' %}"></script>
+{% endblock %}
+
+

@@ -4,7 +4,7 @@ from django.contrib import messages
 from .models import User
 from django.core import mail
 
-from apps.taller.models import Cliente
+from apps.taller.models import Cliente,Visita
 
 # Create your views here.
 
@@ -53,6 +53,7 @@ def almacenar_cliente(request):
 
 	return redirect('/')
 
+
 def login(request):
 
 	if(request.method == 'POST'):
@@ -66,8 +67,8 @@ def login(request):
 			auth.login(request, user)
 			return redirect('/')
 		else:
-			messages.info(request,'invalidad credentials')
-			return redirect('login')
+			messages.error(request,'Credenciales inválidas')
+			return redirect('/')
 
 	else:
 		return render(request,'users/login.html')
@@ -75,3 +76,6 @@ def login(request):
 def logout(request):
 	auth.logout(request)
 	return redirect('/')
+
+
+

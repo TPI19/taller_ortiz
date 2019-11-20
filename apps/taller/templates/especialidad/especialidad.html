@@ -1,0 +1,207 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block main_container %}
+<div class="col-md-11 py-3 px-4 main-container">
+
+	<h4>Administraci&oacute;n de especialidades</h4>
+
+	<p class="lead">Estas son las diferentes especialidades con las que cuenta el taller.</p>
+
+	<div class="row text-center">
+		<div class="col-md-10"></div>
+		<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#agregar-especialidad-modal">Agregar
+			Especialidad&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
+	</div>
+
+	<div class="row mt-4 justify-content-md-center">
+
+		<table class="table table-hover col-12">
+			<thead>
+				<tr class="d-flex bg-primary text-white text-center">
+					<th class="col-1">N°</th>
+					<th class="col-2">Nombre</th>
+					<th class="col-6">Descripcion</th>
+					<th class="col-3">Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for especialidad in especializaciones %}
+				<tr class="d-flex text-center">
+					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
+					<td class="col-2 font-weight-bold">{{especialidad.nombre}}</td>
+					<td class="col-6">{{especialidad.descripcion}}</td>
+					<td class="col-3">
+						<button class="btn btn-info" title="Ver detalles de la especialidad">Ver&nbsp;&nbsp;<i
+								class="fas fa-info-circle"></i></button>
+
+						<button class="btn btn-success" title="Editar Información de la Especialidad"
+							data-toggle="modal" data-target="#editar-especialidad-modal" data-id="{{especialidad.id}}"
+							data-nombre="{{especialidad.nombre}}" data-descripcion="{{especialidad.descripcion}}">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
+
+						<button class="btn btn-danger" title="Eliminar la especialidad" data-toggle="modal"
+							data-target="#eliminar-especialidad-modal" data-id="{{especialidad.id}}"
+							data-nombre="{{especialidad.nombre}}">Eliminar&nbsp;&nbsp;<i
+								class="far fa-trash-alt"></i></button>
+					</td>
+				</tr>
+				{% empty %}
+				<tr>
+					<td colspan="6">
+						<h4>Aun no registras especialidades.</h4>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+<!-- Modal mensaje de error -->
+{% if messages %}
+<div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Error al guardar la especialidad</h3>
+			</div>
+			{% for message in messages %}
+			<div class="modal-body">
+				<h4 {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</h4>
+			</div>
+			{% endfor %}
+			<div class="modal-footer">
+				<a href="#" data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+
+<!-- Modal Agregar Especialidad -->
+<div class="modal fade" id="agregar-especialidad-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'agregar_especialidad' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Agregar nueva especializaci&oacute;n.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{% csrf_token %}
+					<div class="form-group row">
+						<label for="nombre" class="col-sm-3 col-form-label">Especialidad</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="nombre" name="nombre" placeholder="">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="descripcion" class="col-sm-3 col-form-label">Descripcion</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-success" value="Guardar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Editar Especialidad -->
+<div class="modal fade" id="editar-especialidad-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'editar_especialidad' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Editar Especialidad.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{% csrf_token %}
+					<div class="form-group row d-none">
+						<label for="id-edit" class="col-sm-2 col-form-label">ID de Especialidad</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="id-edit" name="id_edit" placeholder="">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="nombre-edit" class="col-sm-3 col-form-label">Especialidad</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="nombre-edit" name="nombre_edit" placeholder="">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="descripcion-edit" class="col-sm-3 col-form-label">Descripcion</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="descripcion-edit" name="descripcion_edit" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-success" value="Editar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Eliminar Especialidad -->
+<div class="modal fade" id="eliminar-especialidad-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'eliminar_especialidad' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Eliminar Especialidad.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					{% csrf_token %}
+					<div class="form-group row d-none">
+						<label for="id-delete" class="col-sm-2 col-form-label">ID de la Especialidad</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="id-delete" name="id_delete" placeholder="">
+						</div>
+					</div>
+					<div class="form-group row justify-content-md-center">
+						<h4>¿Estás seguro que quieres eliminar la especialidad?</h4>
+						<label for="nombre-delete" class="col-sm-2 col-form-label">Nombre de la especialidad</label>
+						<div class="col-sm-3">
+							<input type="text" readonly="" class="form-control-plaintext" id="nombre-delete"
+								name="nombre_delete" placeholder="">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-danger" value="Eliminar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		$("#mostrarmodal").modal("show");
+	});
+</script>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/especialidades/especialidades.js' %}"></script>
+{% endblock %}

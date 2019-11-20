@@ -1,0 +1,12 @@
+<h3>Detalle de Especialidad</h3>
+
+<form action="{% url 'edicion_especialidad' especialidad.id %}" method="POST">
+
+	{% csrf_token %}
+	<label for="especialidad">Nombre: </label><br>
+	<input type="text" name="especialidad" id="especialidad" value="{{especialidad.nombre}}"><br><br>
+	<label for="especialidad">Descripcion: </label><br>
+	<input type="text" name="descripcion" id="descripcion" value="{{especialidad.descripcion}}"><br><br>
+	<input type="submit" value="Editar">
+	
+</form>
