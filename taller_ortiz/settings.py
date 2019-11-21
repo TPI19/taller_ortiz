@@ -77,8 +77,8 @@ WSGI_APPLICATION = 'taller_ortiz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # 'ENGINE': 'mysql_cymysql',
+        # 'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql_cymysql',
         'NAME': 'taller',
         'USER': 'root',
         'PASSWORD': '',

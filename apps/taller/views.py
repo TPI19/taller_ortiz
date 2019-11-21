@@ -78,6 +78,9 @@ def clientes(request):
 	return render(request, 'empleados/empleados.html', contexto)
 
 
+
+# --- GESTIÓN DE ESPECIALIDADES ---
+
 # Muestra las diferentes especializaciones en el template
 
 def especializaciones(request):	
@@ -101,13 +104,8 @@ def almacenar_especialidad(request):
 # Edita las diferentes especialidades
 def editar_especialidad(request):
 	especialidad = Especializacion.objects.get(pk=request.POST['id_edit'])
-	especialidad.nombre = request.POST['nombre_edit'] # Se asignan los valores a los atributos del objeto
-	especialidad.descripcion = request.POST['descripcion_edit']
-	if Especializacion.objects.filter(nombre = request.POST['nombre_edit']).exists():
-		messages.error(request,'Ya existe esa especialidad')
-	else:
-
-		especialidad.save() # Se guardan los valores
+	especialidad.descripcion = request.POST['descripcion_edit'] # Se asignan los valores a los atributos del objeto
+	especialidad.save() # Se guardan los valores
 	return redirect('especialidad')
 
 
@@ -124,6 +122,9 @@ def eliminar_especialidad(request):
 	Especializacion.objects.filter(id=request.POST['id_delete']).delete()
 	return redirect('especialidad')
 
+
+# --- GESTIÓN DE SLOTS ---
+
 def slot_list(request):
 	slot = Slot.objects.all()
 	contexto = {'slots' : slot, }
@@ -135,6 +136,58 @@ def slot_edit(request):
 	contexto = {'sloted' : sloted, }
 	#return render (request,'gestionar_visitas.html', contexto)
 	return render (request,'gestionar_slots.html', contexto)
+
+def editar_slot(request):
+
+	slot = Slot.objects.get(pk=request.POST['id_edit'])
+	disponible1 = request.POST['disponible_edit']
+	reservacion1 = request.POST['reservacion_edit']
+	
+	if disponible1 == "Disponible":
+		variable = True
+	else:
+		variable = False
+
+	if reservacion1 == "Reservado":
+		variable2 = True
+	else:
+		variable2 = False
+
+	slot.disponible = variable
+	slot.reservacion = variable2
+
+	slot.save()
+
+	return redirect('gestionar_slots')
+
+
+def eliminar_slot(request):
+
+	Slot.objects.filter(id=request.POST['id_delete']).delete()
+
+	return redirect('gestionar_slots')
+	
+
+def almacenar_slots(request):
+	disponible1 = request.POST['Disponible']
+	reservacion1 = request.POST['Reservacion']
+	if disponible1 == "Disponible":
+		variable = True
+	else:
+		variable = False
+
+	if reservacion1 == "Reservado":
+		variable2 = True
+	else:
+		variable2 = False
+	slot = Slot()	
+	slot.disponible = variable
+	slot.reservacion = variable2
+	slot.save()
+	return redirect('gestionar_slots')
+
+
+# --- GESTIÓN DE VISITAS ---
 
 
 def visita_list(request):
@@ -184,37 +237,6 @@ def eliminar_visita(request):
 	return redirect('gestionar_visitas')
 
 
-def editar_slot(request):
-
-	slot = Slot.objects.get(pk=request.POST['id_edit'])
-	disponible1 = request.POST['disponible_edit']
-	reservacion1 = request.POST['reservacion_edit']
-	
-	if disponible1 == "Disponible":
-		variable = True
-	else:
-		variable = False
-
-	if reservacion1 == "Reservado":
-		variable2 = True
-	else:
-		variable2 = False
-
-	slot.disponible = variable
-	slot.reservacion = variable2
-
-	slot.save()
-
-	return redirect('gestionar_slots')
-
-
-def eliminar_slot(request):
-
-	Slot.objects.filter(id=request.POST['id_delete']).delete()
-
-	return redirect('gestionar_slots')
-
-
 def nuevavisita(request):
 	slot1 = Slot.objects.all()
 	contexto = {'slots' : slot1, }
@@ -235,22 +257,3 @@ def contactos(request):
 #def gestionar_slots(request):
 #	contexto = {}	
 #	return render(request, 'gestionar_slots.html', contexto)
-
-
-def almacenar_slots(request):
-	disponible1 = request.POST['Disponible']
-	reservacion1 = request.POST['Reservacion']
-	if disponible1 == "Disponible":
-		variable = True
-	else:
-		variable = False
-
-	if reservacion1 == "Reservado":
-		variable2 = True
-	else:
-		variable2 = False
-	slot = Slot()	
-	slot.disponible = variable
-	slot.reservacion = variable2
-	slot.save()
-	return redirect('gestionar_slots')
