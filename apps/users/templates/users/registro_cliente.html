@@ -1,3 +1,72 @@
+<script>
+       $(document).ready(function() {
+            $("#Registrar").click(function(){
+
+                var nombre = $("#nombre").val();
+                var apellido = $("#apellido").val();
+                var usuario = $("#usuario").val();
+                var email = $("#correo").val();
+                var contraseña = $("#password").val();
+                var contraseña2 = $("#password-2").val();
+                var telefono = $("#telefono").val();
+                var direccion = $("#direccion").val();
+                var letra, correo, numero;
+
+                 letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+                 correo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                 numero = /^([0-9])*$/;
+
+                if(nombre === "" || apellido === "" || usuario === "" || email === "" || contraseña2 === "" || contraseña2 === "" || telefono === "" || direccion === ""  ){
+
+                	alert("Todos los campos son obligatorios");
+
+                	return false;
+              	    }
+                	if(!letra.test(nombre)){
+                		alert("El nombre es incorrecto");
+                		return false;
+                		
+                	}else if(nombre.length > 30){
+                		alert("El nombre es demasiado largo");
+                		return false;
+                	}
+             		
+             		if(!letra.test(apellido)){
+             			alert("El apellido es incorrecto");
+             			return false;
+             		}else if(apellido.length > 30){
+                		alert("El apellido es demasiado largo");
+                		return false;
+                	}
+                	if(usuario.length > 15){
+                		alert("El nombre de usuario es demasiado largo");
+                		return false;
+                	}
+                	
+                	if(!correo.test(email)){
+                		alert("El correo ingresado es incorrecto");
+                		return false;
+                	}
+                	//if(contraseña != contraseña2  ){
+                	//	alert("Las contraseñas no coinciden");
+                	//	return false;
+                	}
+					
+					if(!numero.test(telefono) || telefono.length > 8){
+						alert("El numero de telefono es incorrecto");
+						return false;
+					}
+					if(!letra.test(direccion)){
+						alert("La direccion es incorecta");
+						return false;
+
+					}
+				});
+        	});
+</script>
+
+
+
 <form method="POST" action="{% url 'almacenar_cliente' %}" class="post-form">
 
 	<fieldset>
@@ -52,7 +121,7 @@
 		</div>
 		<div class="form-group row justify-content-md-center">
 			{% csrf_token %}
-			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrarse</button>
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label" id="Registrar">Registrarse</button>
 		</div>		    
 	</fieldset>
 

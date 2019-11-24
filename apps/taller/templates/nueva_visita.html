@@ -1,3 +1,31 @@
+<script>
+       $(document).ready(function() {
+            $("#Registrar").click(function(){
+
+            	var vehiculo = $("#vehiculo").val();
+            	var tecnico = $("#tecnico").val();
+            	var slot = $("#slot").val();
+            	var fecha = $("#fecha").val();
+            	var caracter = $("#caracter").val();
+            	var comentarios = $("#comentarios").val();
+                var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+            	if(vehiculo === "" || tecnico === "" || slot === "" || fecha === "" || caracter === "" || comentarios === "" ){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!letra.test(caracter) || !letra.test(comentarios)){
+            		alert("Solo se permiten letras");
+            		return false;
+            	}else if(caracter > 30){
+            		alert("Excede el numero de letras permitidas");
+            		return false;
+            	}
+            	
+            });
+        });
+</script>
+
 <form method="POST" action="{% url 'almacenar_visita' %}" class="post-form">
 
 	<fieldset>
@@ -58,7 +86,7 @@
 
 		<div class="form-group row justify-content-md-center">
 			{% csrf_token %}
-			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrar</button>
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label" id="Registrar">Registrar</button>
 		</div>	 
 	</fieldset>
 
