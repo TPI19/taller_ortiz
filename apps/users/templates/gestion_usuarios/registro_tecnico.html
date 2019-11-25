@@ -48,12 +48,14 @@
                 		alert("El correo es incorrecto");
                 		return false;
                 	}
-                	//if(contraseña != contraseña2  ){
-                	//	alert("Las contraseñas son diferentes");
-                	//	return false;
+                	if( !(contraseña === contraseña2) ){
+                		alert("Las contraseñas son diferentes");
+                		return false;
+                	}if( contraseña.length < 8){
+                		alert("Contraseña demasiado corta");
+                		return false;
                 	}
-					
-					if(!numero.test(telefono) || telefono.length > 8){
+					if(!numero.test(telefono) || telefono.length > 9 || telefono.length > 8){
 						alert("El numero de telefono es incorrecto");
 						return false;
 					}

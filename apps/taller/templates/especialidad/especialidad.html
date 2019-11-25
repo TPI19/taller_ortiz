@@ -24,9 +24,44 @@
             	if(!letra.test(descripcion)){
             		alert("Tipo de descripcion incorrecta");
             		return false;
+            	}if(descripcion.length > 30){
+            		alert("Descripcion demasiado larga");
+            		return false;
             	}
 
             });
+        });
+</script>
+<script>
+       $(document).ready(function() {
+            $("#Editar").click(function(){	
+            	var id = $("#id-edit").val();
+            	var nombre = $("#nombre-edit").val();
+            	var descripcion = $("#descripcion-edit").val();
+            	var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+            	if(nombre === "" || descripcion === "" || id === ""){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!letra.test(nombre)){
+            		alert("Nombre de la especialidad es incorrecto");
+            		return false;
+
+            	}else if(nombre.length > 30){
+            		alert("Nombre de especialidad es demasiado largo");
+            		return false;
+            	}
+            	if(!letra.test(descripcion)){
+            		alert("Tipo de descripcion incorrecta");
+            		return false;
+            	}
+            	if(descripcion.length > 30){
+            		alert("Descripcion demasiado larga");
+            		return false;
+            	}
+
+             });  
         });
 </script>
 
@@ -178,7 +213,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Editar">
+					<input type="submit" class="btn btn-success" value="Editar" id="Editar">
 				</div>
 			</form>
 		</div>

@@ -7,7 +7,7 @@
                 var usuario = $("#usuario").val();
                 var email = $("#correo").val();
                 var contraseña = $("#password").val();
-                var contraseña2 = $("#password-2").val();
+                var contraseña2 = $("#password2").val();
                 var telefono = $("#telefono").val();
                 var direccion = $("#direccion").val();
                 var letra, correo, numero;
@@ -21,7 +21,10 @@
                 	alert("Todos los campos son obligatorios");
 
                 	return false;
-              	    }
+              	    }/*if( !(contraseña === contraseña2) ){
+                		alert("Las contraseñas son diferentes");
+                		return false;
+                	}*/
                 	if(!letra.test(nombre)){
                 		alert("El nombre es incorrecto");
                 		return false;
@@ -47,11 +50,7 @@
                 		alert("El correo ingresado es incorrecto");
                 		return false;
                 	}
-                	//if(contraseña != contraseña2  ){
-                	//	alert("Las contraseñas no coinciden");
-                	//	return false;
-                	}
-					
+                	
 					if(!numero.test(telefono) || telefono.length > 8){
 						alert("El numero de telefono es incorrecto");
 						return false;
@@ -61,6 +60,7 @@
 						return false;
 
 					}
+
 				});
         	});
 </script>
@@ -104,7 +104,7 @@
 		<div class="form-group row align-items-center">
 			<label for="password-2" class="col-sm-2 col-form-label">Confirmar Contraseña</label>
 			<div class="col-sm-10">
-				<input type="password" class="form-control" id="password-2" name="password-2" placeholder="">					
+				<input type="password" class="form-control" id="password2" name="password2" placeholder="">					
 			</div>
 		</div>
 		<div class="form-group row">
