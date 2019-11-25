@@ -8,50 +8,6 @@ from apps.taller.models import *
 
 # Create your views here.
 
-def registro_cliente(request):
-
-	contexto={}
-
-	return render(request, 'users/registro_cliente.html', contexto)
-
-def almacenar_cliente(request):
-
-	nombre = request.POST['nombre']
-	apellido = request.POST['apellido']
-	usuario = request.POST['usuario']
-	correo = request.POST['correo']
-	password = request.POST['password']
-	password_2 = request.POST['password-2']
-	telefono = request.POST['telefono']
-	direccion = request.POST['direccion']
-	activo = True
-	staff = True
-	rol = 2
-
-	user, cliente = User.objects.get_or_create(
-		username = usuario,
-		first_name = nombre,
-		last_name = apellido,
-		email = correo,
-		password = password,
-		telefono = telefono,
-		direccion = direccion,
-		rol = rol,
-		is_active = activo,
-		is_staff = staff
-	)
-	
-	if cliente:
-		user.set_password(password)
-		user.save()
-
-	cliente_taller = Cliente()
-
-	cliente_taller.user = user
-
-	cliente_taller.save()
-
-	return redirect('/')
 
 def gestion_usuarios(request):
 	contexto = {}
@@ -140,10 +96,81 @@ def eliminar_tecnico(request):
 
 	return redirect('gestion_tecnicos')
 
-def clientes(request):	
+#	-- Vistas para Gestión de Clientes --
+
+def gestion_clientes(request):	
 	clientes = Cliente.objects.all()
 	contexto = {'clientes': clientes,}
-	return render(request, 'empleados/empleados.html', contexto)
+	return render(request, 'gestion_usuarios/gestion_clientes.html', contexto)
+
+def registrar_cliente(request):
+
+	nombre = request.POST['nombre']
+	apellido = request.POST['apellido']
+	usuario = request.POST['usuario']
+	correo = request.POST['correo']
+	password = request.POST['password']
+	password_2 = request.POST['password-2']
+	telefono = request.POST['telefono']
+	direccion = request.POST['direccion']
+	activo = True
+	staff = True
+	rol = 2
+
+	user, cliente = User.objects.get_or_create(
+		username = usuario,
+		first_name = nombre,
+		last_name = apellido,
+		email = correo,
+		password = password,
+		telefono = telefono,
+		direccion = direccion,
+		rol = rol,
+		is_active = activo,
+		is_staff = staff
+	)
+	
+	if cliente:
+		user.set_password(password)
+		user.save()
+
+	cliente_taller = Cliente()
+
+	cliente_taller.user = user
+
+	cliente_taller.save()
+
+	if request.user.is_authenticated:
+
+		return redirect('gestion_clientes')
+
+	else:
+		
+		return redirect('/')
+
+def editar_cliente(request):
+
+	cliente = Cliente.objects.get(pk=request.POST['id_edit'])
+
+	cliente.user.first_name = request.POST['nombre_edit']
+	cliente.user.last_name = request.POST['apellido_edit']
+	cliente.user.username = request.POST['usuario_edit']
+	cliente.user.email = request.POST['correo_edit']
+	cliente.user.telefono = request.POST['telefono_edit']
+	cliente.user.direccion = request.POST['direccion_edit']
+	cliente.user.save()
+	cliente.save()
+
+	return redirect('gestion_clientes')
+
+def eliminar_cliente(request):
+
+	Cliente.objects.filter(id=request.POST['id_delete']).delete()
+	User.objects.filter(pk=request.POST['user_delete']).delete()
+
+	return redirect('gestion_clientes')
+
+#	-- Vistas para Login y LogOut --
 
 def login(request):
 
@@ -168,5 +195,8 @@ def logout(request):
 	auth.logout(request)
 	return redirect('/')
 
+def registro_cliente(request):	#Para desplegar Formulario en Login
 
+	contexto={}
 
+	return render(request, 'users/registro_cliente.html', contexto)

@@ -3,13 +3,13 @@
 {% block main_container %}
 <div class="col-md-11 py-3 px-4 main-container">
 	{% csrf_token %}
-	<h4>Administraci&oacute;n de T&eacute;cnicos</h4>
+	<h4>Administraci&oacute;n de Clientes</h4>
 
-	<p class="lead">Estos son los T&eacute;cnicos que trabajan con nosotros.</p>
+	<p class="lead">Estos son los Clientes que se han registrado con nosotros.</p>
 
 	<div class="row text-center">
 		<div class="col-md-10"></div>
-		<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#agregar-tecnico-modal">Agregar T&eacute;cnico&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
+		<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#agregar-cliente-modal">Agregar Cliente<i class="fas fa-plus-circle"></i></button>
 	</div>
 
 	<div class="row mt-4 justify-content-md-center">
@@ -21,41 +21,40 @@
 					<th class="col-2">Nombre</th>
 					<th class="col-2">Apellido</th>
 					<th class="col-2">Telefono</th>
-					<th class="col-2">Especializaci&oacute;n</th>
+					<th class="col-2">Correo</th>
 					<th class="col-3">Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for tecnico in tecnicos %}
+				{% for cliente in clientes %}
 				<tr class="d-flex text-center">
 					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-					<td class="col-2 font-weight-bold">{{tecnico.user.first_name}}</td>
-					<td class="col-2">{{tecnico.user.last_name}}</td>
-					<td class="col-2">{{tecnico.user.telefono}}</td>
-					<td class="col-2">{{tecnico.especializacion.nombre}}</td>
+					<td class="col-2 font-weight-bold">{{cliente.user.first_name}}</td>
+					<td class="col-2">{{cliente.user.last_name}}</td>
+					<td class="col-2">{{cliente.user.telefono}}</td>
+					<td class="col-2">{{cliente.user.email}}</td>
 					<td class="col-3">
 
 						<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
 
 						<button class="btn btn-success" title="Editar Información del T&eacute;cnico"
-							data-toggle="modal" data-target="#editar-tecnico-modal"
-							data-id="{{tecnico.id}}"
-							data-nombre="{{tecnico.user.first_name}}"
-							data-apellido="{{tecnico.user.last_name}}"
-							data-usuario="{{tecnico.user.username}}"
-							data-correo="{{tecnico.user.email}}"
-							data-especializacion="{{tecnico.especializacion.id}}"
-							data-telefono="{{tecnico.user.telefono}}"
-							data-direccion="{{tecnico.user.direccion}}"
+							data-toggle="modal" data-target="#editar-cliente-modal"
+							data-id="{{cliente.id}}"
+							data-nombre="{{cliente.user.first_name}}"
+							data-apellido="{{cliente.user.last_name}}"
+							data-usuario="{{cliente.user.username}}"
+							data-correo="{{cliente.user.email}}"
+							data-telefono="{{cliente.user.telefono}}"
+							data-direccion="{{cliente.user.direccion}}"
 						>
 						Editar&nbsp;&nbsp;<i class="fas fa-pen"></i>
 						</button>
 
 						<button class="btn btn-danger" title="Eliminar el T&eacute;cnico"
-							data-toggle="modal" data-target="#eliminar-tecnico-modal" data-id="{{tecnico.id}}"
-							data-nombre="{{tecnico.user.first_name}}"
-							data-apellido="{{tecnico.user.last_name}}"
-							data-user="{{tecnico.user.id}}"
+							data-toggle="modal" data-target="#eliminar-cliente-modal" data-id="{{cliente.id}}"
+							data-nombre="{{cliente.user.first_name}}"
+							data-apellido="{{cliente.user.last_name}}"
+							data-user="{{cliente.user.id}}"
 						>
 							Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i>
 						</button>
@@ -94,15 +93,15 @@
 </div>
 {% endif %}
 
-<!-- Modal Agregar Técnico -->
-<div class="modal fade" id="agregar-tecnico-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Agregar Cliente -->
+<div class="modal fade" id="agregar-cliente-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 
 	<div class="modal-content">
-	<form action="{% url 'registrar_tecnico' %}" method="POST">
+	<form action="{% url 'registrar_cliente' %}" method="POST">
 
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Agregar nuevo t&eacute;cnico.</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Agregar nuevo Cliente.</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -133,17 +132,7 @@
 					<input type="text" class="form-control" id="correo" name="correo" placeholder="email@example.com">
 				</div>
 			</div>
-			<div class="form-group row">
-				<label for="especializacion" class="col-sm-3 col-form-label">Especialización</label>
-				<div class="col-sm-9">
-					<select class="form-control" id="especialidad_id" name="especialidad_id">
-						{% for especializacion in especializaciones %}
-						<option id='id_especialidad' name='id_especialidad' value="{{ especializacion.id }}">
-							{{ especializacion.nombre}}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</div>
+			
 			<div class="form-group row">
 				<label for="password" class="col-sm-2 col-form-label">Contraseña</label>
 				<div class="col-sm-10">
@@ -185,15 +174,15 @@
 </div>
 </div>
 
-<!-- Modal Editar Técnico -->
-<div class="modal fade" id="editar-tecnico-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Editar Cliente -->
+<div class="modal fade" id="editar-cliente-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 		
 	<div class="modal-content">
-	<form action="{% url 'editar_tecnico' %}" method="POST">
+	<form action="{% url 'editar_cliente' %}" method="POST">
 			
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Editar T&eacute;cnico.</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Editar Cliente.</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -201,7 +190,7 @@
 
 		<div class="modal-body">
 			<div class="form-group row d-none">
-				<label for="id-edit" class="col-sm-2 col-form-label">ID de T&eacute;cnico</label>
+				<label for="id-edit" class="col-sm-2 col-form-label">ID de Cliente</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" id="id-edit" name="id_edit" placeholder="">
 				</div>
@@ -232,17 +221,7 @@
 						placeholder="email@example.com">
 				</div>
 			</div>
-			<div class="form-group row">
-				<label for="especialidad-edit" class="col-sm-3 col-form-label">Especialización</label>
-				<div class="col-sm-9">
-					<select class="form-control" id="especialidad-edit" name="especialidad_edit">
-						{% for especializacion in especializaciones %}
-						<option id='id-especialidad-edit' name='id_especialidad-edit' value="{{ especializacion.id }}">
-							{{ especializacion.nombre}}</option>
-						{% endfor %}
-					</select>
-				</div>
-			</div>
+			
 			<div class="form-group row">
 				<label for="telefono-edit" class="col-sm-2 col-form-label">Telefono</label>
 				<div class="col-sm-10">
@@ -271,12 +250,12 @@
 </div>
 </div>
 
-<!-- Modal Eliminar Técnico -->
-<div class="modal fade" id="eliminar-tecnico-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<!-- Modal Eliminar Cliente -->
+<div class="modal fade" id="eliminar-cliente-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<form action="{% url 'eliminar_tecnico' %}" method="POST">
+			<form action="{% url 'eliminar_cliente' %}" method="POST">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">Eliminar T&eacute;cnico.</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -327,5 +306,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static '/js/tecnicos.js' %}"></script>
+<script src="{% static '/js/clientes.js' %}"></script>
 {% endblock %}
