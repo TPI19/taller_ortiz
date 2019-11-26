@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User
+from .models import Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, VisitaProceso
 from apps.users.views import registro_cliente
 from django.contrib import messages
 from django.urls import reverse_lazy
+from datetime import date, datetime
 
 # Create your views here.
 def index(request):
@@ -69,6 +70,125 @@ def detalle_vehiculo(request,vehiculo_id):
 
 	return render(request, 'vehiculo/detalle.html', {'vehiculo': vehiculo})
 
+# --- GESTIÓN DE VISITAS ---
+
+def gestion_visitas_cliente(request,cliente_id):
+
+	cliente = Cliente.objects.get(pk=cliente_id)
+
+	tecnicos = Tecnico.objects.all
+
+	slots = Slot.objects.all
+	
+	vehiculos = Vehiculo.objects.filter(cliente=cliente)
+
+	visitas_vehiculos = []
+
+	for vehiculo in vehiculos:
+		visitas_vehiculos.extend(Visita.objects.filter(vehiculo_id=vehiculo.id))
+
+
+	contexto = {
+		'tecnicos':tecnicos,
+		'cliente': cliente,
+		'slots':slots,
+		'vehiculos':vehiculos,
+		'visitas_vehiculos':visitas_vehiculos,
+	}
+
+	return render(request, 'visitas/index-visitas.html', contexto)
+
+def registrar_visita(request):
+
+	d = datetime.strptime(request.POST['fecha_visita'], '%d/%m/%Y %H:%M %p')
+	d.strftime('%Y/%m/%d %H:%M')
+
+	visita = Visita()
+	visita.fecha = d
+	visita.caracter = request.POST['caracter_visita']
+	visita.comentarios = request.POST['comentario_visita']
+	visita.finalizada = 0
+	visita.slot_id = request.POST['slot_visita']
+	visita.tecnico_id = request.POST['tecnico_visita']
+	visita.vehiculo_id = request.POST['vehiculo_visita']
+	visita.save()
+
+	Slot.objects.filter(pk=request.POST['slot_visita']).update(disponible=0)
+
+	return redirect('gestion_visitas_cliente',cliente_id=request.POST['cliente_visita'])
+
+# --- GESTIÓN DE PROCESOS ---
+
+def gestion_procesos_visita(request,visita_id):
+
+	visita = Visita.objects.get(pk=visita_id)
+
+	procesos = VisitaProceso.objects.filter(visita_id=visita_id)
+
+	contexto = {
+		'visita': visita,
+		'procesos':procesos,
+	}
+	
+	return render(request, 'procesos/index-procesos.html', contexto)
+
+def registrar_proceso(request,visita_id):
+
+	contexto = {}
+	
+	return render(request, 'procesos/index-procesos.html', contexto)
+
+# def visita_list(request):
+# 	visita1 = Visita.objects.all()
+# 	slot = Slot.objects.all()
+# 	tecnico = Tecnico.objects.all()
+# 	contexto = {'visitas' : visita1, 'slots' : slot, 'tecnicos' : tecnico}
+# 	#tecnico = Tecnico.objects.filter(username = request.user.id)
+# 	#visita = Visita.objects.all()
+# 	#contexto = {'visitas' : visita, }
+# 	return render (request,'visitas/gestionar_visitas.html', contexto)
+
+# def almacenar_visita(request):
+
+# 	fecha1 = request.POST['fecha_visita']
+# 	caracter1 = request.POST['caracter_visita']
+# 	comentarios1 = request.POST['comentarios_visita']
+# 	slot_id1 = request.POST['id_slot_visita']
+# 	tecnico_id1 = request.POST['id_tecnico_visita']
+# 	vehiculo_id1 = request.POST['id_vehiculo_visita']	
+
+
+# 	visita = Visita()
+	
+# 	visita.fecha = fecha1
+# 	visita.caracter = caracter1
+# 	visita.comentarios = comentarios1
+# 	visita.slot_id = slot_id1
+# 	visita.tecnico_id = tecnico_id1
+# 	visita.vehiculo_id = vehiculo_id1
+
+# 	#visita.fecha = "2019-03-03"
+# 	#visita.caracter = "hola"
+# 	#visita.comentarios = "Esta es una prueba para ver como meter esta onda"
+# 	#visita.slot_id = "58"
+# 	#visita.tecnico_id = "1"
+# 	#visita.vehiculo_id = "1"
+
+# 	visita.save()
+
+# 	return redirect('/')
+
+# def eliminar_visita(request):
+
+# 	Visita.objects.filter(id=request.POST['id_delete']).delete()
+
+# 	return redirect('visitas/gestionar_visitas')
+
+# def nuevavisita(request):
+# 	slot1 = Slot.objects.all()
+# 	contexto = {'slots' : slot1, }
+# 	return render(request, 'visitas/nueva_visita.html', contexto)
+
 
 #	-- GESTIÓN DE USUARIOS --
 
@@ -78,13 +198,14 @@ def clientes(request):
 	return render(request, 'empleados/empleados.html', contexto)
 
 
-# Muestra las diferentes especializaciones en el template
 
+# --- GESTIÓN DE ESPECIALIDADES ---
+
+# Muestra las diferentes especializaciones en el template
 def especializaciones(request):	
 	especializaciones = Especializacion.objects.all() # Obtiene todos los objetos de Especializacion
 	contexto = {'especializaciones': especializaciones,}
 	return render(request, 'especialidad/especialidad.html', contexto)
-
 
 # Almacena las diferentes especialidades
 def almacenar_especialidad(request):
@@ -97,19 +218,12 @@ def almacenar_especialidad(request):
 		especialidad.save() # Se guardan los valores
 	return redirect('especialidad')
 
-
 # Edita las diferentes especialidades
 def editar_especialidad(request):
 	especialidad = Especializacion.objects.get(pk=request.POST['id_edit'])
-	especialidad.nombre = request.POST['nombre_edit'] # Se asignan los valores a los atributos del objeto
-	especialidad.descripcion = request.POST['descripcion_edit']
-	if Especializacion.objects.filter(nombre = request.POST['nombre_edit']).exists():
-		messages.error(request,'Ya existe esa especialidad')
-	else:
-
-		especialidad.save() # Se guardan los valores
+	especialidad.descripcion = request.POST['descripcion_edit'] # Se asignan los valores a los atributos del objeto
+	especialidad.save() # Se guardan los valores
 	return redirect('especialidad')
-
 
 def detalle_especialidad(request,especialidad_id):
 	try:
@@ -119,10 +233,11 @@ def detalle_especialidad(request,especialidad_id):
 
 	return render(request, 'especialidad/detalle.html', {'especialidad': especialidad})
 
-
 def eliminar_especialidad(request):
 	Especializacion.objects.filter(id=request.POST['id_delete']).delete()
 	return redirect('especialidad')
+
+# --- GESTIÓN DE SLOTS ---
 
 def slot_list(request):
 	slot = Slot.objects.all()
@@ -135,54 +250,6 @@ def slot_edit(request):
 	contexto = {'sloted' : sloted, }
 	#return render (request,'gestionar_visitas.html', contexto)
 	return render (request,'gestionar_slots.html', contexto)
-
-
-def visita_list(request):
-	visita1 = Visita.objects.all()
-	slot = Slot.objects.all()
-	tecnico = Tecnico.objects.all()
-	contexto = {'visitas' : visita1, 'slots' : slot, 'tecnicos' : tecnico}
-	#tecnico = Tecnico.objects.filter(username = request.user.id)
-	#visita = Visita.objects.all()
-	#contexto = {'visitas' : visita, }
-	return render (request,'gestionar_visitas.html', contexto)
-
-def almacenar_visita(request):
-
-	fecha1 = request.POST['fecha_visita']
-	caracter1 = request.POST['caracter_visita']
-	comentarios1 = request.POST['comentarios_visita']
-	slot_id1 = request.POST['id_slot_visita']
-	tecnico_id1 = request.POST['id_tecnico_visita']
-	vehiculo_id1 = request.POST['id_vehiculo_visita']	
-
-
-	visita = Visita()
-	
-	visita.fecha = fecha1
-	visita.caracter = caracter1
-	visita.comentarios = comentarios1
-	visita.slot_id = slot_id1
-	visita.tecnico_id = tecnico_id1
-	visita.vehiculo_id = vehiculo_id1
-
-	#visita.fecha = "2019-03-03"
-	#visita.caracter = "hola"
-	#visita.comentarios = "Esta es una prueba para ver como meter esta onda"
-	#visita.slot_id = "58"
-	#visita.tecnico_id = "1"
-	#visita.vehiculo_id = "1"
-
-	visita.save()
-
-	return redirect('/')
-
-def eliminar_visita(request):
-
-	Visita.objects.filter(id=request.POST['id_delete']).delete()
-
-	return redirect('gestionar_visitas')
-
 
 def editar_slot(request):
 
@@ -207,35 +274,11 @@ def editar_slot(request):
 
 	return redirect('gestionar_slots')
 
-
 def eliminar_slot(request):
 
 	Slot.objects.filter(id=request.POST['id_delete']).delete()
 
 	return redirect('gestionar_slots')
-
-
-def nuevavisita(request):
-	slot1 = Slot.objects.all()
-	contexto = {'slots' : slot1, }
-	return render(request, 'nueva_visita.html', contexto)
-
-
-def servicios(request):
-	return render(request, 'servicios.html')
-
-
-def instalaciones(request):
-	return render(request, 'instalaciones.html')
-
-
-def contactos(request):
-	return render(request, 'contactos.html')
-
-#def gestionar_slots(request):
-#	contexto = {}	
-#	return render(request, 'gestionar_slots.html', contexto)
-
 
 def almacenar_slots(request):
 	disponible1 = request.POST['Disponible']
@@ -254,3 +297,18 @@ def almacenar_slots(request):
 	slot.reservacion = variable2
 	slot.save()
 	return redirect('gestionar_slots')
+
+
+
+def servicios(request):
+	return render(request, 'servicios.html')
+
+def instalaciones(request):
+	return render(request, 'instalaciones.html')
+
+def contactos(request):
+	return render(request, 'contactos.html')
+
+#def gestionar_slots(request):
+#	contexto = {}	
+#	return render(request, 'gestionar_slots.html', contexto)

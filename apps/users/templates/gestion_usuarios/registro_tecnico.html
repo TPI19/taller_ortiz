@@ -1,13 +1,14 @@
 <script>
        $(document).ready(function() {
-            $("#Registrar").click(function(){
+            $("#Registrar").click(function(){		
 
-                var nombre = $("#nombre").val();
+            	 var nombre = $("#nombre").val();
                 var apellido = $("#apellido").val();
                 var usuario = $("#usuario").val();
                 var email = $("#correo").val();
+                var especializacion = $("#especialidad_id").val();
                 var contraseña = $("#password").val();
-                var contraseña2 = $("#password2").val();
+                var contraseña2 = $("#password-2").val();
                 var telefono = $("#telefono").val();
                 var direccion = $("#direccion").val();
                 var letra, correo, numero;
@@ -16,15 +17,12 @@
                  correo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                  numero = /^([0-9])*$/;
 
-                if(nombre === "" || apellido === "" || usuario === "" || email === "" || contraseña2 === "" || contraseña2 === "" || telefono === "" || direccion === ""  ){
+                if(nombre === "" || apellido === "" || usuario === "" || email === "" || contraseña2 === "" || contraseña2 === "" || telefono === "" || direccion === "" || especializacion === ""  ){
 
                 	alert("Todos los campos son obligatorios");
 
                 	return false;
-              	    }/*if( !(contraseña === contraseña2) ){
-                		alert("Las contraseñas son diferentes");
-                		return false;
-                	}*/
+              	    }
                 	if(!letra.test(nombre)){
                 		alert("El nombre es incorrecto");
                 		return false;
@@ -47,11 +45,17 @@
                 	}
                 	
                 	if(!correo.test(email)){
-                		alert("El correo ingresado es incorrecto");
+                		alert("El correo es incorrecto");
                 		return false;
                 	}
-                	
-					if(!numero.test(telefono) || telefono.length > 8){
+                	if( !(contraseña === contraseña2) ){
+                		alert("Las contraseñas son diferentes");
+                		return false;
+                	}if( contraseña.length < 8){
+                		alert("Contraseña demasiado corta");
+                		return false;
+                	}
+					if(!numero.test(telefono) || telefono.length > 9 || telefono.length > 8){
 						alert("El numero de telefono es incorrecto");
 						return false;
 					}
@@ -61,66 +65,82 @@
 
 					}
 
-				});
-        	});
-</script>
+            });
+        });
+	</script>
 
-<form method="POST" action="{% url 'registrar_cliente' %}" class="post-form">
 
-	<fieldset>
-		<p>Registrate en nuestro taller y ten acceso a solicitar citas y a otras promociones. <br> Tu información nunca será compartida.</p>
+<form action="{% url 'registro_tecnico' %}" method="POST">
+	<div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Agregar nuevo t&eacute;cnico.</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		{% csrf_token %}
 		<div class="form-group row">
 			<label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="nombre" name="nombre" placeholder="">					
+				<input type="text" class="form-control" id="nombre" name="nombre" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="apellido" class="col-sm-2 col-form-label">Apellido</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="apellido" name="apellido" placeholder="">					
+				<input type="text" class="form-control" id="apellido" name="apellido" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="usuario" class="col-sm-2 col-form-label">Usuario</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="usuario" name="usuario" placeholder="">					
+				<input type="text" class="form-control" id="usuario" name="usuario" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="correo" class="col-sm-2 col-form-label">Correo</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="correo" name="correo" placeholder="email@example.com">				
+				<input type="text" class="form-control" id="correo" name="correo" placeholder="email@example.com">
 			</div>
-		</div>			
+		</div>
+		<div class="form-group row">
+			<label for="especializacion" class="col-sm-3 col-form-label">Especialización</label>
+			<div class="col-sm-9">
+				<select class="form-control" id="especialidad_id" name="especialidad_id">
+					{% for especializacion in especializaciones %}
+					<option id='id_especialidad' name='id_especialidad' value="{{ especializacion.id }}">
+						{{ especializacion.nombre}}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
 		<div class="form-group row">
 			<label for="password" class="col-sm-2 col-form-label">Contraseña</label>
 			<div class="col-sm-10">
-				<input type="password" class="form-control" id="password" name="password" placeholder="">					
+				<input type="password" class="form-control" id="password" name="password" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row align-items-center">
 			<label for="password-2" class="col-sm-2 col-form-label">Confirmar Contraseña</label>
 			<div class="col-sm-10">
-				<input type="password" class="form-control" id="password2" name="password2" placeholder="">					
+				<input type="password" class="form-control" id="password-2" name="password-2" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="telefono" class="col-sm-2 col-form-label">Telefono</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="telefono" name="telefono" placeholder="">					
+				<input type="text" class="form-control" id="telefono" name="telefono" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="direccion" class="col-sm-2 col-form-label">Dirección</label>
 			<div class="col-sm-10">
-				<input type="text" class="form-control" id="direccion" name="direccion" placeholder="">					
+				<input type="text" class="form-control" id="direccion" name="direccion" placeholder="">
 			</div>
 		</div>
 		<div class="form-group row justify-content-md-center">
 			{% csrf_token %}
 			<button type="submit" class="btn btn-primary col-sm-4 col-form-label" id="Registrar">Registrarse</button>
-		</div>		    
-	</fieldset>
-
+		</div>
+	</div>
 </form>

@@ -20,9 +20,9 @@
 					<th class="col-1">N°</th>
 					<th class="col-2">Nombre</th>
 					<th class="col-2">Apellido</th>
-					<th class="col-2">Telefono</th>
+					<th class="col-1">Telefono</th>
 					<th class="col-2">Correo</th>
-					<th class="col-3">Opciones</th>
+					<th class="col-4">Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -31,11 +31,13 @@
 					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
 					<td class="col-2 font-weight-bold">{{cliente.user.first_name}}</td>
 					<td class="col-2">{{cliente.user.last_name}}</td>
-					<td class="col-2">{{cliente.user.telefono}}</td>
+					<td class="col-1">{{cliente.user.telefono}}</td>
 					<td class="col-2">{{cliente.user.email}}</td>
-					<td class="col-3">
+					<td class="col-4">
 
-						<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i></button>
+						<a href="{% url 'gestion_visitas_cliente' cliente_id=cliente.id %}" class="btn btn-info" title="Ver detalles de las Visitas realizadas por el cliente al taller"
+						>Visitas&nbsp;&nbsp;<i class="fas fa-home"></i>
+						</a>
 
 						<button class="btn btn-success" title="Editar Información del T&eacute;cnico"
 							data-toggle="modal" data-target="#editar-cliente-modal"

@@ -1,6 +1,70 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block main_container %}
+<script>
+       $(document).ready(function() {
+            $("#Guardar").click(function(){	
+
+            	var nombre = $("#nombre").val();
+            	var descripcion = $("#descripcion").val();
+            	var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+            	if(nombre === "" || descripcion === "" ){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!letra.test(nombre)){
+            		alert("Nombre de la especialidad es incorrecto");
+            		return false;
+
+            	}else if(nombre.length > 30){
+            		alert("Nombre de especialidad es demasiado largo");
+            		return false;
+            	}
+            	if(!letra.test(descripcion)){
+            		alert("Tipo de descripcion incorrecta");
+            		return false;
+            	}if(descripcion.length > 30){
+            		alert("Descripcion demasiado larga");
+            		return false;
+            	}
+
+            });
+        });
+</script>
+<script>
+       $(document).ready(function() {
+            $("#Editar").click(function(){	
+            	var id = $("#id-edit").val();
+            	var nombre = $("#nombre-edit").val();
+            	var descripcion = $("#descripcion-edit").val();
+            	var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+            	if(nombre === "" || descripcion === "" || id === ""){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!letra.test(nombre)){
+            		alert("Nombre de la especialidad es incorrecto");
+            		return false;
+
+            	}else if(nombre.length > 30){
+            		alert("Nombre de especialidad es demasiado largo");
+            		return false;
+            	}
+            	if(!letra.test(descripcion)){
+            		alert("Tipo de descripcion incorrecta");
+            		return false;
+            	}
+            	if(descripcion.length > 30){
+            		alert("Descripcion demasiado larga");
+            		return false;
+            	}
+
+             });  
+        });
+</script>
+
 <div class="col-md-11 py-3 px-4 main-container">
 
 	<h4>Administraci&oacute;n de especialidades</h4>
@@ -107,7 +171,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Guardar">
+					<input type="submit" class="btn btn-success" value="Guardar" id="Guardar">
 				</div>
 			</form>
 		</div>
@@ -137,7 +201,7 @@
 					<div class="form-group row">
 						<label for="nombre-edit" class="col-sm-3 col-form-label">Especialidad</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="nombre-edit" name="nombre_edit" placeholder="">
+							<input type="text" class="form-control" id="nombre-edit" name="nombre_edit" placeholder="" readonly="true">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -149,7 +213,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Editar">
+					<input type="submit" class="btn btn-success" value="Editar" id="Editar">
 				</div>
 			</form>
 		</div>

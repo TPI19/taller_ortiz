@@ -53,6 +53,7 @@ class Visita(models.Model):
 	fecha = models.DateTimeField()
 	caracter = models.CharField(max_length=100)
 	comentarios = models.TextField()
+	finalizada = models.BooleanField(default=False)
 
 	def __str__(self):
 		visita_string = "{0} / {1} - {2} / {3}"
@@ -79,6 +80,11 @@ class Proceso(models.Model):
 	nombre = models.CharField(max_length=100)
 	caracter = models.CharField(max_length=100)
 	descripcion = models.TextField()
+
+class VisitaProceso(models.Model):
+
+	visita = models.ForeignKey(Visita, on_delete=models.CASCADE)
+	proceso = models.ForeignKey(Proceso, on_delete=models.CASCADE)
 
 class Pieza(models.Model):
 

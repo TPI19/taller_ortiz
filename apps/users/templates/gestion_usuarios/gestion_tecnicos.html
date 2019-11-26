@@ -1,6 +1,136 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block main_container %}
+
+<script>
+       $(document).ready(function() {
+            $("#Registrar").click(function(){		
+
+            	 var nombre = $("#nombre").val();
+                var apellido = $("#apellido").val();
+                var usuario = $("#usuario").val();
+                var email = $("#correo").val();
+                var especializacion = $("#especialidad_id").val();
+                var contraseña = $("#password").val();
+                var contraseña2 = $("#password-2").val();
+                var telefono = $("#telefono").val();
+                var direccion = $("#direccion").val();
+                var letra, correo, numero;
+
+                 letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+                 correo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                 numero = /^([0-9])*$/;
+
+                if(nombre === "" || apellido === "" || usuario === "" || email === "" || contraseña2 === "" || contraseña2 === "" || telefono === "" || direccion === "" || especializacion === ""  ){
+
+                	alert("Todos los campos son obligatorios");
+
+                	return false;
+              	    }
+                	if(!letra.test(nombre)){
+                		alert("El nombre es incorrecto");
+                		return false;
+                		
+                	}else if(nombre.length > 30){
+                		alert("El nombre es demasiado largo");
+                		return false;
+                	}
+             		
+             		if(!letra.test(apellido)){
+             			alert("El apellido es incorrecto");
+             			return false;
+             		}else if(apellido.length > 30){
+                		alert("El apellido es demasiado largo");
+                		return false;
+                	}
+                	if(usuario.length > 15){
+                		alert("El nombre de usuario es demasiado largo");
+                		return false;
+                	}
+                	
+                	if(!correo.test(email)){
+                		alert("El correo es incorrecto");
+                		return false;
+                	}
+                	if( !(contraseña === contraseña2) ){
+                		alert("Las contraseñas son diferentes");
+                		return false;
+                	}if( contraseña.length < 8){
+                		alert("Contraseña demasiado corta");
+                		return false;
+                	}
+					
+					if(!numero.test(telefono) || telefono.length > 8){
+						alert("El numero de telefono es incorrecto");
+						return false;
+					}
+					if(!letra.test(direccion)){
+						alert("La direccion es incorecta");
+						return false;
+
+					}
+
+            });
+        });
+	</script>
+	<script>      
+       $(document).ready(function() {
+            $("#Editar").click(function(){		
+            	var id = $("#id-edit").val();
+            	var nombre = $("#nombre-edit").val();
+                var apellido = $("#apellido-edit").val();
+                var email = $("#correo-edit").val();
+                var especializacion = $("#especialidad-edit").val();
+                var telefono = $("#telefono-edit").val();
+                var direccion = $("#direccion-edit").val();
+                var letra, correo, numero;
+
+                 letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+                 correo = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                 numero = /^([0-9])*$/;
+
+                if(id === "" || nombre === "" || apellido === ""  || email === "" || telefono === "" || direccion === "" || especializacion === ""  ){
+
+                	alert("Todos los campos son obligatorios");
+
+                	return false;
+              	    }if(!numero.test(id)){
+              	    	alert("Numero de ID incorrecto");
+              	    	return false;
+              	    }
+                	if(!letra.test(nombre)){
+                		alert("El nombre es incorrecto");
+                		return false;
+                		
+                	}else if(nombre.length > 30){
+                		alert("El nombre es demasiado largo");
+                		return false;
+                	}
+             		
+             		if(!letra.test(apellido)){
+             			alert("El apellido es incorrecto");
+             			return false;
+             		}else if(apellido.length > 30){
+                		alert("El apellido es demasiado largo");
+                		return false;
+                	}
+                	if(!correo.test(email)){
+                		alert("El correo es incorrecto");
+                		return false;
+                	}
+					if(!numero.test(telefono) || telefono.length > 9 || telefono.length < 8){
+						alert("El numero de telefono es incorrecto");
+						return false;
+					}
+					if(!letra.test(direccion)){
+						alert("La direccion es incorecta");
+						return false;
+					}
+            });
+        });
+	</script>
+
+
 <div class="col-md-11 py-3 px-4 main-container">
 	{% csrf_token %}
 	<h4>Administraci&oacute;n de T&eacute;cnicos</h4>
@@ -176,7 +306,8 @@
 		<div class="modal-footer">
 			{% csrf_token %}
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrar</button>
+
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label" id="Registrar">Registrarse</button>
 		</div>
 
 	</form>
@@ -262,7 +393,7 @@
 		<div class="modal-footer">
 			{% csrf_token %}
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			<input type="submit" class="btn btn-success" value="Editar">
+			<input type="submit" class="btn btn-success" value="Editar" id="Editar">
 		</div>
 
 	</form>

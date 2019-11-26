@@ -1,7 +1,96 @@
 {% extends 'base/base.html' %}
 {% load static %}
 {% block main_container %}
-<div class="col-md-11 py-3 px-4 main-container">
+
+<script>
+       $(document).ready(function() {
+            $("#Guardar").click(function(){
+            	
+
+            	var placa = $("#placa").val();
+            	var tipo = $("#tipo").val();
+            	var marca = $("#marca").val();
+            	var modelo = $("#modelo").val();
+            	var anio = $("#anio").val();
+            	var letra, numero;
+            	 letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+            	  numero = /^([0-9])*$/;
+
+            	  if(placa === "" || tipo === "" || marca === "" || modelo === "" || anio === "" ){
+            	  	alert("Todos los campos son obligatorios");
+            	  	return false;
+            	  }
+            	  if(!letra.test(tipo)){
+            	  	alert("El tipo de auto es incorrecto");
+            	  	return false;
+            	  }else if(tipo.length > 30){
+            	  	alert("El tipo del auto es demasiado largo");
+            	  	return false;
+            	  }
+            	  if(!letra.test(marca)){
+            	  	alert("La marca del auto es incorrecta");
+            	  	return false;
+            	  }else if(marca.length > 30){
+            	  	alert("La marca del auto es demasiado larga");
+            	  	return false;
+            	  }
+            	  if(modelo.length > 30){
+            	  	alert("El modelo del auto es demasiado largo");
+            	  	return false;
+            	  }
+            	  if(!numero.test(anio) || anio.length > 4){
+            	  	alert("El año del auto es incorrecto");
+            	  	return false;
+            	  }
+            	});
+        	});
+</script>
+<script>
+       $(document).ready(function() {
+            $("#Editar").click(function(){
+            	
+            	var placa = $("#placa-edit").val();
+            	var tipo = $("#tipo-edit").val();
+            	var marca = $("#marca-edit").val();
+            	var modelo = $("#modelo-edit").val();
+            	var anio = $("#anio-edit").val();
+            	var letra, numero;
+            	 letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+            	  numero = /^([0-9])*$/;
+
+            	   if(placa === "" || tipo === "" || marca === "" || modelo === "" || anio === "" ){
+            	  	alert("Todos los campos son obligatorios");
+            	  	return false;
+            	  }
+            	  if(!letra.test(tipo)){
+            	  	alert("El tipo de auto es incorrecto");
+            	  	return false;
+            	  }else if(tipo.length > 30){
+            	  	alert("El tipo del auto es demasiado largo");
+            	  	return false;
+            	  }
+            	  if(!letra.test(marca)){
+            	  	alert("La marca del auto es incorrecta");
+            	  	return false;
+            	  }else if(marca.length > 30){
+            	  	alert("La marca del auto es demasiado larga");
+            	  	return false;
+            	  }
+            	  if(modelo.length > 30){
+            	  	alert("El modelo del auto es demasiado largo");
+            	  	return false;
+            	  }
+            	  if(!numero.test(anio) || anio.length > 4){
+            	  	alert("El año del auto es incorrecto");
+            	  	return false;
+            	  }
+            	});
+        	});
+</script>
+
+
+
+<div class="col-md-12 py-3 px-4 main-container">
 
 	<h4>Vehiculos de {{request.user.first_name}} {{request.user.last_name}}</h4>
 
@@ -111,7 +200,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Guardar">
+					<input type="submit" class="btn btn-success" value="Guardar" id="Guardar">
 				</div>
 			</form>
 		</div>
@@ -172,7 +261,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Editar">
+					<input type="submit" class="btn btn-success" value="Editar" id="Editar">
 				</div>
 			</form>
 		</div>
@@ -180,12 +269,7 @@
 </div>
 
 <!-- Modal Eliminar Vehiculo -->
-<<<<<<< HEAD
-<div class="modal fade" id="eliminar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
-=======
 <div class="modal fade" id="eliminar-vehiculo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
->>>>>>> e7b238cdee5e653a2b830164b4f41996057d810b
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<form action="{% url 'eliminar_vehiculo' %}" method="POST">
@@ -205,11 +289,7 @@
 					</div>
 					<div class="form-group row justify-content-md-center">
 						<h4>¿Estás seguro que quieres eliminar el veh&iacute;culo?</h4>
-<<<<<<< HEAD
 						<label for="placa-delete" class="col-sm-2 col-form-label">Placa</label>
-=======
-						<label for="placa-delete" class="col-sm-2 col-form-label">Placajm</label>
->>>>>>> e7b238cdee5e653a2b830164b4f41996057d810b
 						<div class="col-sm-3">
 							<input type="text" readonly="" class="form-control-plaintext" id="placa-delete"
 								name="placa_delete" placeholder="">

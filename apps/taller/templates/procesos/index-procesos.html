@@ -1,0 +1,114 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block main_container %}
+<div class="col-md-11 py-3 px-4 main-container">
+
+	{% csrf_token %}
+
+	<div class="pt-3">
+		<h2>Procesos de Visita</h2>
+		<p class="lead">Procesos realizados en los visitas</p>
+	</div>
+
+	<div class="row justify-content-md-center">
+		<h4 class="col-1 text-success">Visita</h4>
+		<span class="col-11"></span>
+	</div>
+	<div class="row justify-content-md-center mb-3">
+
+		<div class="col-2">
+			<label for="fecha-visita" class="mb-0 pb-0">Fecha:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.fecha|date:'d-m-Y'}}">		
+		</div>
+		<div class="col-2">
+			<label for="fecha-visita" class="mb-0 pb-0">Caracter:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.caracter}}">		
+		</div>
+		<div class="col-5">
+			<label for="fecha-visita" class=" mb-0 pb-0">Comentarios:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.comentarios}}">		
+		</div>
+		<div class="col-3">
+			<label for="fecha-visita" class="mb-0 pb-0">Tecnico a Cargo:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.tecnico.user.first_name}}&nbsp;{{visita.tecnico.user.last_name}}">		
+		</div>
+		
+	</div>
+	<div class="row justify-content-md-center">
+		<h4 class="col-1 text-warning">Vehiculo</h4>
+		<span class="col-11"></span>
+	</div>
+	<div class="row justify-content-md-center mb-3">
+
+		<div class="col-2">
+			<label for="fecha-visita" class="mb-0 pb-0">Placa:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.placa}}">		
+		</div>
+		<div class="col-2">
+			<label for="fecha-visita" class="mb-0 pb-0">Marca:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.marca}}">		
+		</div>
+		<div class="col-3">
+			<label for="fecha-visita" class=" mb-0 pb-0">Modelo:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.modelo}}">		
+		</div>
+		<div class="col-3">
+			<label for="fecha-visita" class=" mb-0 pb-0">Tipo:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.tipo}}">		
+		</div>
+		<div class="col-2">
+			<label for="fecha-visita" class="mb-0 pb-0">Año:</label>
+			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.anio}}">		
+		</div>		
+	</div>
+	<div class="row justify-content-md-center mb-2">
+		<h4 class="col-3 text-info">Procesos Realizados</h4>
+		<span class="col-9 text-right">
+			<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-visita-modal">
+				Agregar Proceso&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+			</button>
+		</span>
+	</div>
+
+	<div class="row mt-0 justify-content-md-center">
+
+		<table class="table table-hover col-12">
+
+			<thead>
+				<tr class="d-flex bg-primary text-white text-center">
+					<th class="col-1">N°</th>
+					<th class="col-2">Proceso</th>
+					<th class="col-2">Caracter</th>
+					<th class="col-4">Descripcion</th>
+					<th class="col-3">Opciones</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for proceso in procesos %}
+				<tr class="d-flex text-center">
+					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
+					<td class="col-2 font-weight-bold">{{proceso.proceso.nombre}}</td>
+					<td class="col-2">{{proceso.proceso.caracter}}</td>
+					<td class="col-4">{{proceso.proceso.descripcion}}</td>
+					<td class="col-3">
+						<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i
+								class="fas fa-info-circle"></i></button>
+					</td>
+				</tr>
+				{% empty %}
+				<tr>
+					<td colspan="6">
+						<h4>Aun no registras Procesos en la visita.</h4>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+	</div>
+
+</div>
+{% endblock %}

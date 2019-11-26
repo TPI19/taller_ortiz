@@ -1,3 +1,32 @@
+<script>
+       $(document).ready(function() {
+            $("#Agregar").click(function(){	
+            	var nombre = $("#especialidad").val();
+            	var descripcion = $("#descripcion").val();
+            	var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+            	if(nombre === "" || descripcion === "" ){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!letra.test(nombre)){
+            		alert("Nombre de la especialidad es incorrecto");
+            		return false;
+
+            	}else if(nombre.length > 30){
+            		alert("Nombre de especialidad es demasiado largo");
+            		return false;
+            	}
+            	if(!letra.test(descripcion)){
+            		alert("Tipo de descripcion incorrecta");
+            		return false;
+            	}
+
+            });
+        });
+</script>
+
+
 <form action="{% url 'agregar_especialidad' %}" method="POST">
 	<div class="modal-header">
 		<h5 class="modal-title" id="exampleModalLabel">Agregar nueva especializaci&oacute;n.</h5>
@@ -22,6 +51,6 @@
 		</div>
 		<div class="form-group row justify-content-md-center">
 			{% csrf_token %}
-			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Agregar</button>
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label" id="Agregar">Agregar</button>
 		</div>
 </form>
