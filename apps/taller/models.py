@@ -21,11 +21,15 @@ class Cliente(models.Model):
 class Cita(models.Model):
 
 	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-	administrador = models.ForeignKey(Administrador, on_delete=models.CASCADE)
-	fecha_propuesta = models.DateTimeField()
+	#administrador = models.ForeignKey(Administrador, on_delete=models.CASCADE)
+	fecha_propuesta = models.DateField()
 	caracter = models.CharField(max_length=100)
 	estado = models.IntegerField()
 	mensaje = models.TextField()
+
+	def __str__(self):
+		cita_string = "{0} / {1} - {2} / {3}"
+		return cita_string.format(self.fecha_propuesta, self.caracter, self.estado, self.mensaje)
 
 class Slot(models.Model):
 

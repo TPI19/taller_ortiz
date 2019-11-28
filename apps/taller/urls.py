@@ -36,4 +36,16 @@ urlpatterns = [
     path('gestionar_slots/', views.slot_list, name='gestionar_slots'),
     path('almacenar-slots/', views.almacenar_slots, name='almacenar_slots'),
     path('gestionar_visitas/', views.visita_list, name='gestionar_visitas'),
+
+    #-------- GESTION DE CITAS ----------
+    path('citas/', views.citas, name='citas'),
+    path('citasA/', views.citasA, name='citasA'),
+
+    path('agregar-cita/', views.agregar_cita, name='agregar_cita'),
+    path('editar-cita/', views.editar_cita, name='editar_cita'),
+    path('editar-citaA/', views.editar_citaA, name='editar_citaA'),
+
+    
+    path('eliminar-cita/', views.eliminar_cita, name='eliminar_cita'),
+    path('detalle-cita/<int:cita_id>/', views.detalle_cita, name='detalle_cita'),
 ]
