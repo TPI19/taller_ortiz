@@ -15,6 +15,7 @@
 		<h4 class="col-1 text-success">Visita</h4>
 		<span class="col-11"></span>
 	</div>
+
 	<div class="row justify-content-md-center mb-3">
 
 		<div class="col-2">
@@ -25,15 +26,22 @@
 			<label for="fecha-visita" class="mb-0 pb-0">Caracter:</label>
 			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.caracter}}">		
 		</div>
-		<div class="col-5">
+		<div class="col-2">
+			<label for="estado-visita" class="mb-0 pb-0">Estado:</label>
+			{% if visita.finalizada == False %}
+				<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0 text-info" value="En Proceso">
+			{% else %}
+				<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0 text-danger" value="Finalizado">
+			{% endif %}
+		</div>
+		<div class="col-4">
 			<label for="fecha-visita" class=" mb-0 pb-0">Comentarios:</label>
 			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.comentarios}}">		
 		</div>
-		<div class="col-3">
+		<div class="col-2">
 			<label for="fecha-visita" class="mb-0 pb-0">Tecnico a Cargo:</label>
 			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.tecnico.user.first_name}}&nbsp;{{visita.tecnico.user.last_name}}">		
-		</div>
-		
+		</div>		
 	</div>
 	<div class="row justify-content-md-center">
 		<h4 class="col-1 text-warning">Vehiculo</h4>
@@ -62,39 +70,57 @@
 			<input type="text" id="fecha-visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.anio}}">		
 		</div>		
 	</div>
+
 	<div class="row justify-content-md-center mb-2">
 		<h4 class="col-3 text-info">Procesos Realizados</h4>
 		<span class="col-9 text-right">
-			<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-visita-modal">
-				Agregar Proceso&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
-			</button>
+			
+
+			{% if visita.finalizada == False %}
+				<button class="btn btn-warning col-md-3" data-toggle="modal" data-target="#finalizar-visita">
+					Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
+				</button>
+				<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-proceso-visita">
+					Agregar Proceso&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+				</button>
+			{% else %}
+				<button class="btn btn-info col-md-3" disabled="" title="La visita ha finalizado, no puede agregar más procesos">
+					Agregar Proceso&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+				</button>
+			{% endif %}
 		</span>
 	</div>
 
 	<div class="row mt-0 justify-content-md-center">
 
 		<table class="table table-hover col-12">
-
 			<thead>
 				<tr class="d-flex bg-primary text-white text-center">
 					<th class="col-1">N°</th>
 					<th class="col-2">Proceso</th>
 					<th class="col-2">Caracter</th>
-					<th class="col-4">Descripcion</th>
-					<th class="col-3">Opciones</th>
+					<th class="col-3">Detalles</th>
+					<th class="col-4">Opciones</th>
 				</tr>
 			</thead>
-
 			<tbody>
-				{% for proceso in procesos %}
+				{% for proceso_visita in procesos_visita %}
 				<tr class="d-flex text-center">
 					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-					<td class="col-2 font-weight-bold">{{proceso.proceso.nombre}}</td>
-					<td class="col-2">{{proceso.proceso.caracter}}</td>
-					<td class="col-4">{{proceso.proceso.descripcion}}</td>
-					<td class="col-3">
-						<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i
-								class="fas fa-info-circle"></i></button>
+					<td class="col-2 font-weight-bold overflow-hidden">{{proceso_visita.proceso.nombre}}</td>
+					<td class="col-2 overflow-hidden">{{proceso_visita.proceso.caracter}}</td>
+					<td class="col-3 overflow-hidden">{{proceso_visita.detalle}}</td>
+					<td class="col-4 text-right">
+						<a href="{%url 'piezas_proceso' proceso_visita_id=proceso_visita.id %}" class="btn btn-info" title="Detalles de Proceso">
+							Materiales&nbsp;&nbsp;<i class="fas fa-toolbox"></i>
+						</a>
+						<button class="btn btn-success" title="Editar Información del Material Agregado al proceso" data-toggle="modal" data-target="#editar-cliente-modal">
+							Editar&nbsp;&nbsp;<i class="fas fa-pen"></i>
+						</button>
+						<button class="btn btn-danger" title="Eliminar la Asignación de Material"
+							data-toggle="modal" data-target="#eliminar-cliente-modal">
+							Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i>
+						</button>
 					</td>
 				</tr>
 				{% empty %}
@@ -105,10 +131,149 @@
 				</tr>
 				{% endfor %}
 			</tbody>
-
 		</table>
 
 	</div>
-
 </div>
+
+<!-- Modal Agregar Proceso a Visita -->
+<div class="modal fade" id="agregar-proceso-visita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'registrar_proceso_visita' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Agregar un Proceso a Visita.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="d-none">
+						<label for="id-visita" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="id-visita" name="id_visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.id}}" readonly="">
+					</div>
+					
+					<div id="div-proceso-registrado" class="form-group row align-items-center">
+						<label for="proceso" class="col-sm-3 col-form-label">Proceso:</label>
+						<div class="col-sm-9">
+							<select class="form-control" id="proceso" name="proceso">
+								<option value="0" selected="">
+									Seleccione
+								</option>
+								{% for proceso in procesos %}
+									<option value="{{ proceso.id }}">
+										{{proceso.nombre}} - {{proceso.caracter}}
+									</option>
+								{% endfor %}
+							</select>
+						</div>
+					</div>
+					<div id="div-btn-agregar" class="col-12 text-right">
+						<button class="btn btn-outline-primary" id="btn-nuevo-proceso">
+							Otro proceso&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+						</button>
+					</div>
+
+					<div class="form-group row mt-3 d-none">
+							<label for="nuevo" class="col-sm-2 col-form-label">¿Habrá nuevo?:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="nuevo" name="nuevo" value="0">
+							</div>
+						</div>
+					
+
+					<div id="div-proceso" class="col-12 mt-3 pt-2 border d-none">
+						<h5>Nuevo Proceso</h5>
+						
+						<div class="form-group row mt-3">
+							<label for="nombre-nuevo" class="col-sm-2 col-form-label">Nombre:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="nombre-nuevo" name="nombre_nuevo">
+							</div>
+						</div>
+						<div class="form-group row align-items-center">
+							<label for="caracter-nuevo" class="col-sm-3 col-form-label">Caracter:</label>
+							<div class="col-sm-9">
+								<select class="form-control" id="caracter-nuevo" name="caracter_nuevo">
+									<option name='caracter_nuevo' value="Mantenimiento">Mantenimiento</option>
+									<option name='caracter_nuevo' value="Reparación">Reparación</option>
+									<option name='caracter_nuevo' value="Revisión">Revisión</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group row align-items-center">
+							<label for="descripcion-nuevo" class="col-sm-3 col-form-label">Descripción del Proceso:</label>
+							<div class="col-sm-9">
+								<textarea type='text' id="descripcion-nuevo" name="descripcion_nuevo" class="form-control"></textarea>
+							</div>
+						</div>
+						<div id="div-btn-quitar" class="col-12 text-right my-2">
+							<button class="btn btn-outline-danger" id="btn-quitar-proceso">
+								Quitar Proceso Nuevo&nbsp;&nbsp;&nbsp;<i class="fas fa-minus-circle"></i>
+							</button>
+						</div>
+					</div>
+
+					<div class="form-group row mt-3 align-items-center">
+						<label for="detalle-proceso" class="col-sm-4 col-form-label">Detalles de Proceso:</label>
+						<div class="col-sm-8">
+							<textarea type='text' id="detalle-proceso" name="detalle_proceso" class="form-control"></textarea>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					{% csrf_token %}
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-success" value="Guardar" id="Agregar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Finalizar Visita -->
+<div class="modal fade" id="finalizar-visita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'finalizar_visita' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Finalizar Visita.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="d-none">
+						<label for="id-visita-fin" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="id-visita-fin" name="id_visita_fin" class="form-control-plaintext mt-0 pt-0" value="{{visita.id}}" readonly="">
+						<label for="visita-index" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="visita-index" name="visita_index" class="form-control-plaintext mt-0 pt-0" value="0" readonly="">
+						<label for="cliente-visita" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="cliente-visita" name="cliente_visita" class="form-control-plaintext mt-0 pt-0" value="{{visita.vehiculo.cliente.id}}" readonly="">
+					</div>
+
+					<div class="form-group row mt-3 px-4 align-items-center">
+						<p class="lead"><i class="fas fa-exclamation-triangle text-warning"></i>&nbsp;&nbsp;&nbsp;¿Desea finalizar la visita? Esto significa que ya no podrá agregar u editar procesos en la visita actual.</p>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					{% csrf_token %}
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-warning" value="Finalizar" id="Agregar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{% static '/js/procesos/procesos.js' %}"></script>
 {% endblock %}

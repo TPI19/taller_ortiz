@@ -50,11 +50,16 @@
 							<td class="col-1">{{visita_vehiculo.caracter}}</td>
 							<td class="col-4">{{visita_vehiculo.comentarios}}</td>
 							<td class="col-2">{{visita_vehiculo.tecnico.user.first_name}}&nbsp;{{visita_vehiculo.tecnico.user.last_name}}</td>
-							<td class="col-3">
+							<td class="col-3 text-left">
 								<a href="{% url 'gestion_procesos_visita' visita_id=visita_vehiculo.id %}" class="btn btn-success" title="Ver detalles y procesos de la Visita"
 								>
-									Detalles y Procesos &nbsp;&nbsp;<i class="fas fa-info-circle"></i>
+									Procesos &nbsp;&nbsp;<i class="fas fa-info-circle"></i>
 								</a>
+								{% if visita_vehiculo.finalizada == False %}
+									<button class="btn btn-warning" data-id-visita="{{visita_vehiculo.id}}" data-toggle="modal" data-target="#finalizar-visita-modal">
+										Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
+									</button>
+								{% endif %}
 							</td>
 						</tr>
 					{% endif %}
@@ -190,8 +195,47 @@
 </div>
 </div>
 </div>
+
+<!-- Modal Finalizar Visita -->
+<div class="modal fade" id="finalizar-visita-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'finalizar_visita' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Finalizar Visita.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="d-none">
+						<label for="id-visita-fin" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="id-visita-fin" name="id_visita_fin" class="form-control-plaintext mt-0 pt-0" readonly="">
+						<label for="visita-index" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="visita-index" name="visita_index" class="form-control-plaintext mt-0 pt-0" value="1" readonly="">
+						<label for="cliente-visita" class="col-form-label mb-0 pb-0">Cliente ID:</label>
+						<input type="text" id="cliente-visita" name="cliente_visita" class="form-control-plaintext mt-0 pt-0" value="{{cliente.id}}">
+					</div>
+
+					<div class="form-group row mt-3 px-4 align-items-center">
+						<p class="lead"><i class="fas fa-exclamation-triangle text-warning"></i>&nbsp;&nbsp;&nbsp;¿Desea finalizar la visita? Esto significa que ya no podrá agregar u editar procesos en la visita actual.</p>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					{% csrf_token %}
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-warning" value="Finalizar" id="Agregar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 {% endblock %}
 
 {% block extra_js %}
-	<script src="{% static '/js/visitas/visitas_2.js' %}"></script>
+	<script src="{% static '/js/visitas/visitas.js' %}"></script>
 {% endblock %}

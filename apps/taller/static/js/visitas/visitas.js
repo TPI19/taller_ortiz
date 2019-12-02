@@ -1,40 +1,82 @@
 $(document).ready(function(){
 
-	$('#editar-visita-modal').on('show.bs.modal', function(event){
+	$('#agregar-visita-modal').on('show.bs.modal', function(event){
 
-        var link = $(event.relatedTarget);
+		var modal = $(this);
+		var link = $(event.relatedTarget);
 
-        var id = link.data('id');
-        var fecha = link.data('fecha');
-        var caracter = link.data('caracter');
-        var comentario = link.data('comentario');
-        var slot_id = link.data('slot_id');
-        var tecnico_id = link.data('tecnico_id');
-        var vehiculo_id = link.data('vehiculo_id');
+		var id_vehiculo = link.data('id-vehiculo');
+		var id_cliente = link.data('id-cliente');
+		var placa = link.data('placa');
+		var marca = link.data('marca');
+		var modelo = link.data('modelo');
+		var anio = link.data('anio');
 
-        var modal = $(this);
+		modal.find('.modal-body #vehiculo-visita').val(id_vehiculo);
+		modal.find('.modal-body #cliente-visita').val(id_cliente);
+		modal.find('.modal-body #placa-visita').val(placa);
+		modal.find('.modal-body #marca-visita').val(marca);
+		modal.find('.modal-body #modelo-visita').val(modelo);
+		modal.find('.modal-body #anio-visita').val(anio);
 
-        modal.find('.modal-body #id-edit').val(id);
-        modal.find('.modal-body #fecha-edit').val(placa);
-        modal.find('.modal-body #caracter-edit').val(tipo);
-        modal.find('.modal-body #comentario-edit').val(marca);
-        modal.find('.modal-body #slot-edit').val(modelo);
-        modal.find('.modal-body #tecnico-edit').val(anio);
 
-    });
+	});
 
-    $('#eliminar-visita-modal').on('show.bs.modal', function(event){
+	$('#finalizar-visita-modal').on('show.bs.modal', function(event){
 
-        var link = $(event.relatedTarget);
+		var modal = $(this);
+		var link = $(event.relatedTarget);
 
-        var id = link.data('id');
-        var fecha = link.data('fecha');
+		var id_visita = link.data('id-visita');
 
-        var modal = $(this);
+		modal.find('.modal-body #id-visita-fin').val(id_visita);
 
-        modal.find('.modal-body #id-delete').val(id);
-        modal.find('.modal-body #fecha-delete').val(fecha);
+	});
 
-    });
+	$('#fecha-visita').datetimepicker({
+		sideBySide: true,
+		format: 'DD/MM/YYYY HH:mm A',
+		icons:
+		{
+			time: "fa fa-clock-o",
+			date: "fa fa-calendar",
+			up: "fa fa-arrow-up",
+			down: "fa fa-arrow-down",
+			previous: "fa fa-chevron-left",
+			next: "fa fa-chevron-right",
+			today: "fa fa-clock-o",
+			clear: "fa fa-trash-o"
+		},
+
+	});
+
+
+	vehiculo_sin_visitas();
+	function vehiculo_sin_visitas(){
+
+		var visitas = document.getElementsByClassName('tbody-visitas');
+
+		for (var i = visitas.length - 1; i >= 0; i--) {
+
+			if(!(visitas[i].childNodes.length>1)){
+
+				var tr = document.createElement('tr');
+				tr.setAttribute('class','d-flex text-center');
+				
+				var td = document.createElement('td');
+				td.setAttribute('class','col-12');
+
+				var p = document.createElement('p');
+				p.setAttribute('class','lead');
+				p.innerHTML='No se han registrado visitas con el vehículo';
+
+				td.appendChild(p);
+
+				tr.appendChild(td);
+
+				visitas[i].appendChild(tr);
+			}
+		}
+	}
 
 })

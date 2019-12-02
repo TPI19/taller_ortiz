@@ -81,10 +81,11 @@ class Proceso(models.Model):
 	caracter = models.CharField(max_length=100)
 	descripcion = models.TextField()
 
-class VisitaProceso(models.Model):
+class ProcesoVisita(models.Model):
 
 	visita = models.ForeignKey(Visita, on_delete=models.CASCADE)
 	proceso = models.ForeignKey(Proceso, on_delete=models.CASCADE)
+	detalle = models.TextField(blank=True)
 
 class Pieza(models.Model):
 
@@ -93,7 +94,7 @@ class Pieza(models.Model):
 
 class ProcesoPieza(models.Model):
 
-	proceso = models.ForeignKey(Proceso,on_delete=models.CASCADE)
+	proceso_visita = models.ForeignKey(ProcesoVisita,on_delete=models.CASCADE)
 	pieza = models.ForeignKey(Pieza,on_delete=models.CASCADE)
 	cantidad = models.IntegerField()
 

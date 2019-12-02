@@ -1,0 +1,129 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block main_container %}
+
+<div class="col-md-11 py-3 px-4 main-container">
+
+	{% csrf_token %}
+
+	<div class="pt-3">
+		<h3>Materiales Utilizados en el Proceso</h3>
+		<p class="lead">Materiales del proceso {{proceso_visita.proceso.nombre}}</p>
+		<p class="lead">Para el vehículo con placas {{proceso_visita.visita.vehiculo.placa}}</p>
+	</div>
+
+	<div class="row justify-content-md-center mb-2">
+		<h4 class="col-3 text-info">Materiales</h4>
+		<span class="col-9 text-right">
+			<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-pieza-modal">
+				Agregar Material&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+			</button>
+		</span>
+	</div>
+
+	<div class="row mt-0 justify-content-md-center">
+
+		<table class="table table-hover col-12">
+			<thead>
+				<tr class="d-flex bg-primary text-white text-center">
+					<th class="col-1">N°</th>
+					<th class="col-2">Pieza</th>
+					<th class="col-1">Cantidad</th>
+					<th class="col-4">Descripción</th>
+					<th class="col-4">Opciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for proceso_pieza in proceso_piezas %}
+				<tr class="d-flex text-center">
+					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
+					<td class="col-2 font-weight-bold">{{proceso_pieza.pieza.nombre}}</td>
+					<td class="col-1">{{proceso_pieza.cantidad}}</td>
+					<td class="col-4">{{proceso_pieza.pieza.descripcion}}</td>
+					<td class="col-4 text-center">
+
+						<button class="btn btn-info" title="Editar Información del Material Agregado al proceso" data-toggle="modal" data-target="#editar-cliente-modal">
+							Ver&nbsp;&nbsp;<i class="fas fa-info-circle"></i>
+						</button>
+
+						<button class="btn btn-success" title="Editar Información del Material Agregado al proceso" data-toggle="modal" data-target="#editar-cliente-modal">
+							Editar&nbsp;&nbsp;<i class="fas fa-pen"></i>
+						</button>
+
+						<button class="btn btn-danger" title="Eliminar la Asignación de Material"
+							data-toggle="modal" data-target="#eliminar-cliente-modal">
+							Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i>
+						</button>
+					</td>
+				</tr>
+				{% empty %}
+				<tr>
+					<td colspan="6">
+						<h4>Aun no se utilizan materiales en este proceso.</h4>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+
+	</div>
+</div>
+
+<!-- Modal Agregar Pieza a Proceso -->
+<div class="modal fade" id="agregar-pieza-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+
+	<div class="modal-content">
+	<form action="{% url 'registrar_pieza_visita' %}" method="POST">
+
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Agregar Material al Proceso.</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="modal-body">
+			<div class="d-none">
+				<label for="id-proceso" class="col-sm-2 col-form-label">Proceso Visita ID:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="id-proceso" name="id_proceso" value="{{proceso_visita.id}}">
+				</div>				
+			</div>
+			<div id="div-piezas" class="form-group row align-items-center">
+				<label for="pieza" class="col-sm-3 col-form-label">Material:</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="pieza" name="pieza">
+						<option value="0" selected="">
+							Seleccione
+						</option>
+						{% for pieza in piezas %}
+							<option value="{{ pieza.id }}">
+								{{pieza.nombre}}
+							</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label for="cantidad" class="col-sm-2 col-form-label">Cantidad:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="cantidad" name="cantidad">
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal-footer">
+			{% csrf_token %}
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrar</button>
+		</div>
+
+	</form>
+	</div>
+
+</div>
+</div>
+
+{% endblock %}

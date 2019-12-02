@@ -29,19 +29,23 @@ urlpatterns = [
 
     path('gestion-visitas-cliente/<int:cliente_id>', views.gestion_visitas_cliente, name='gestion_visitas_cliente'),
     path('registrar-visita/', views.registrar_visita, name='registrar_visita'),
+    path('finalizar-visita/', views.finalizar_visita, name='finalizar_visita'),
 
     #   -- Gestión de Procesos (Por parte del Admin)  --
 
     path('gestion-procesos-visita/<int:visita_id>', views.gestion_procesos_visita, name='gestion_procesos_visita'),
-    path('registrar-proceso/', views.registrar_proceso, name='registrar_proceso'),
+    path('registrar-proceso-visita/', views.registrar_proceso_visita, name='registrar_proceso_visita'),
+
+    #   -- Gestión de Piezas en Proceso (Por parte del Admin)  --
+
+    path('piezas-proceso/<int:proceso_visita_id>', views.piezas_proceso, name='piezas_proceso'),
+    path('registrar-pieza-visita/', views.registrar_pieza_visita, name='registrar_pieza_visita'),
 
 
      #   -- Gestión de Slots --
 
     path('editar-slot/', views.editar_slot, name='editar_slot'),
     path('edit-slot/', views.slot_edit, name='slot_edits'),
-    
-    
     path('eliminar-slot/', views.eliminar_slot, name='eliminar_slot'),
     
     

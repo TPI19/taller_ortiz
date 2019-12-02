@@ -1,16 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, VisitaProceso
+from .models import Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza
 from apps.users.views import registro_cliente
 from django.contrib import messages
 from django.urls import reverse_lazy
 from datetime import date, datetime
 
 # Create your views here.
+
 def index(request):
 	contexto = {}	
 	return render(request, 'index.html', contexto)
-
 
 #	-- GESTIÓN DE VEHICULOS POR CLIENTE --
 
@@ -107,7 +107,7 @@ def registrar_visita(request):
 	visita.fecha = d
 	visita.caracter = request.POST['caracter_visita']
 	visita.comentarios = request.POST['comentario_visita']
-	visita.finalizada = 0
+	visita.finalizada = False
 	visita.slot_id = request.POST['slot_visita']
 	visita.tecnico_id = request.POST['tecnico_visita']
 	visita.vehiculo_id = request.POST['vehiculo_visita']
@@ -117,78 +117,108 @@ def registrar_visita(request):
 
 	return redirect('gestion_visitas_cliente',cliente_id=request.POST['cliente_visita'])
 
+def finalizar_visita(request):
+
+	visita = Visita.objects.get(pk=request.POST['id_visita_fin'])
+
+	slot = Slot.objects.get(pk=visita.slot.id)
+
+	visita.finalizada = True
+	slot.disponible = True
+
+	visita.save()
+	slot.save()
+
+	if((int)(request.POST['visita_index'])==1):
+
+		return redirect('gestion_visitas_cliente',cliente_id=request.POST['cliente_visita'])
+
+	else:
+		return redirect('gestion_procesos_visita',visita_id=request.POST['id_visita_fin'])
+
 # --- GESTIÓN DE PROCESOS ---
 
 def gestion_procesos_visita(request,visita_id):
 
 	visita = Visita.objects.get(pk=visita_id)
-
-	procesos = VisitaProceso.objects.filter(visita_id=visita_id)
+	procesos = Proceso.objects.all
+	procesos_visita = ProcesoVisita.objects.filter(visita_id=visita_id)
+	tecnicos = Tecnico.objects.all
+	piezas = Pieza.objects.all
+	procesos_piezas = ProcesoPieza.objects.all
 
 	contexto = {
+
+		'procesos_piezas':procesos_piezas,
+		'piezas':piezas,
+		'tecnicos':tecnicos,
 		'visita': visita,
+		'procesos_visita':procesos_visita,
 		'procesos':procesos,
 	}
 	
 	return render(request, 'procesos/index-procesos.html', contexto)
 
-def registrar_proceso(request,visita_id):
+def registrar_proceso_visita(request):
+
+	visita = Visita.objects.get(pk=request.POST['id_visita'])
+
+	proceso_visita = ProcesoVisita()
+
+	proceso_visita.visita = visita
+	proceso_visita.detalle = request.POST['detalle_proceso']
+
+	if((int)(request.POST['nuevo'])==0):
+
+		proceso = Proceso.objects.get(pk=request.POST['proceso'])
+
+		proceso_visita.proceso = proceso
+
+	else:
+
+		proceso = Proceso()
+		proceso.nombre=request.POST['nombre_nuevo']
+		proceso.caracter = request.POST['caracter_nuevo']
+		proceso.descripcion = request.POST['descripcion_nuevo']
+		proceso.save()
+
+		proceso_visita.proceso = proceso
+
+	proceso_visita.save()	
 
 	contexto = {}
 	
-	return render(request, 'procesos/index-procesos.html', contexto)
+	return redirect('gestion_procesos_visita',visita_id=request.POST['id_visita'])
 
-# def visita_list(request):
-# 	visita1 = Visita.objects.all()
-# 	slot = Slot.objects.all()
-# 	tecnico = Tecnico.objects.all()
-# 	contexto = {'visitas' : visita1, 'slots' : slot, 'tecnicos' : tecnico}
-# 	#tecnico = Tecnico.objects.filter(username = request.user.id)
-# 	#visita = Visita.objects.all()
-# 	#contexto = {'visitas' : visita, }
-# 	return render (request,'visitas/gestionar_visitas.html', contexto)
+# --- GESTIÓN DE PIEZAS EN PROCESOS ---
 
-# def almacenar_visita(request):
-
-# 	fecha1 = request.POST['fecha_visita']
-# 	caracter1 = request.POST['caracter_visita']
-# 	comentarios1 = request.POST['comentarios_visita']
-# 	slot_id1 = request.POST['id_slot_visita']
-# 	tecnico_id1 = request.POST['id_tecnico_visita']
-# 	vehiculo_id1 = request.POST['id_vehiculo_visita']	
-
-
-# 	visita = Visita()
+def piezas_proceso(request,proceso_visita_id):
 	
-# 	visita.fecha = fecha1
-# 	visita.caracter = caracter1
-# 	visita.comentarios = comentarios1
-# 	visita.slot_id = slot_id1
-# 	visita.tecnico_id = tecnico_id1
-# 	visita.vehiculo_id = vehiculo_id1
+	proceso_visita = ProcesoVisita.objects.get(pk=proceso_visita_id)
+	proceso_piezas = ProcesoPieza.objects.filter(proceso_visita_id=proceso_visita_id)
+	piezas = Pieza.objects.all
 
-# 	#visita.fecha = "2019-03-03"
-# 	#visita.caracter = "hola"
-# 	#visita.comentarios = "Esta es una prueba para ver como meter esta onda"
-# 	#visita.slot_id = "58"
-# 	#visita.tecnico_id = "1"
-# 	#visita.vehiculo_id = "1"
+	contexto = {
 
-# 	visita.save()
+		'proceso_visita':proceso_visita,
+		'proceso_piezas':proceso_piezas,
+		'piezas':piezas,
 
-# 	return redirect('/')
+	}
 
-# def eliminar_visita(request):
+	return render(request, 'piezas/piezas_proceso.html', contexto)
 
-# 	Visita.objects.filter(id=request.POST['id_delete']).delete()
+def registrar_pieza_visita(request):
+	
+	proceso_pieza = ProcesoPieza()
 
-# 	return redirect('visitas/gestionar_visitas')
+	proceso_pieza.pieza = Pieza.objects.get(pk=(int)(request.POST['pieza']))
+	proceso_pieza.proceso_visita = ProcesoVisita.objects.get(pk=(int)(request.POST['id_proceso']))
+	proceso_pieza.cantidad = request.POST['cantidad']
 
-# def nuevavisita(request):
-# 	slot1 = Slot.objects.all()
-# 	contexto = {'slots' : slot1, }
-# 	return render(request, 'visitas/nueva_visita.html', contexto)
+	proceso_pieza.save()
 
+	return redirect('piezas_proceso', proceso_visita_id=request.POST['id_proceso'])
 
 #	-- GESTIÓN DE USUARIOS --
 
@@ -196,8 +226,6 @@ def clientes(request):
 	clientes = Cliente.objects.all()
 	contexto = {'clientes': clientes,}
 	return render(request, 'empleados/empleados.html', contexto)
-
-
 
 # --- GESTIÓN DE ESPECIALIDADES ---
 
@@ -298,7 +326,7 @@ def almacenar_slots(request):
 	slot.save()
 	return redirect('gestionar_slots')
 
-
+# --- INFORMATIVAS ---
 
 def servicios(request):
 	return render(request, 'servicios.html')
