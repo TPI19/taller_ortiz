@@ -22,6 +22,43 @@ $(document).ready(function(){
 
 	});
 
+	$('#editar-visita-modal').on('show.bs.modal', function(event){
+
+		var modal = $(this);
+		var link = $(event.relatedTarget);
+
+		var id_vehiculo = link.data('id-vehiculo');
+		var id_cliente = link.data('id-cliente');
+		var placa = link.data('placa');
+		var marca = link.data('marca');
+		var modelo = link.data('modelo');
+		var anio = link.data('anio');
+
+		var tecnico=link.data('tecnico');
+		var caracter=link.data('caracter');
+		var fecha=link.data('fecha');
+		var slot=link.data('slot');
+		var comentario=link.data('comentario');
+
+		modal.find('.modal-body #vehiculo-visita-edit').val(id_vehiculo);
+		modal.find('.modal-body #cliente-visita-edit').val(id_cliente);
+		modal.find('.modal-body #placa-visita-edit').val(placa);
+		modal.find('.modal-body #marca-visita-edit').val(marca);
+		modal.find('.modal-body #modelo-visita-edit').val(modelo);
+		modal.find('.modal-body #anio-visita-edit').val(anio);
+
+		modal.find('.modal-body #tecnico-visita-edit').val(tecnico);
+		modal.find('.modal-body #caracter-visita-edit').val(caracter);
+		modal.find('.modal-body #fecha-visita-edit').val(fecha);
+		modal.find('.modal-body #slot-visita-edit').val(slot);
+		modal.find('.modal-body #comentario-visita-edit').text(comentario);
+		
+		
+		
+
+
+	});
+
 	$('#finalizar-visita-modal').on('show.bs.modal', function(event){
 
 		var modal = $(this);

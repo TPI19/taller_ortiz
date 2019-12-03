@@ -49,11 +49,11 @@
 					</th>
 				</tr>
 				<tr class="d-flex bg-primary text-white text-center ">
-					<th class="col-2 ">Fecha</th>
+					<th class="col-1 ">Fecha</th>
 					<th class="col-1 ">Caracter</th>
 					<th class="col-4 ">Detalles</th>
 					<th class="col-2 ">Técnico</th>
-					<th class="col-3 "></th>
+					<th class="col-4 "></th>
 				</tr>
 			</thead>
 			<tbody class="tbody-visitas">
@@ -61,12 +61,12 @@
 
 					{% if visita_vehiculo.vehiculo_id == vehiculo.id %}
 						<tr class="d-flex text-center">
-							<td class="col-2">{{visita_vehiculo.fecha|date:'d-m-Y'}}</td>
+							<td class="col-1">{{visita_vehiculo.fecha|date:'d-m-Y'}}</td>
 							<td class="col-1">{{visita_vehiculo.caracter}}</td>
 							<td class="col-4">{{visita_vehiculo.comentarios}}</td>
 							<td class="col-2">{{visita_vehiculo.tecnico.user.first_name}}&nbsp;{{visita_vehiculo.tecnico.user.last_name}}</td>
-							<td class="col-3 text-left">
-								<a href="{% url 'gestion_procesos_visita' visita_id=visita_vehiculo.id %}" class="btn btn-success" title="Ver detalles y procesos de la Visita">
+							<td class="col-4 text-left">
+								<a href="{% url 'gestion_procesos_visita' visita_id=visita_vehiculo.id %}" class="btn btn-info" title="Ver detalles y procesos de la Visita">
 									Procesos &nbsp;&nbsp;<i class="fas fa-cogs"></i>
 								</a>
 								{% if visita_vehiculo.finalizada == False and request.user.rol == 2 %}
@@ -75,9 +75,26 @@
 									&nbsp;&nbsp;<span class="text-success font-weight-bold">Visita Finalizada</span>
 								{% endif %}
 								{% if visita_vehiculo.finalizada == False and request.user.rol == 0 %}
+									<button class="btn btn-success" data-id-visita="{{visita_vehiculo.id}}"
+										data-toggle="modal" data-target="#editar-visita-modal"
+										data-id-cliente="{{cliente.id}}"
+										data-id-vehiculo="{{vehiculo.id}}"
+										data-placa="{{vehiculo.placa}}"
+										data-marca="{{vehiculo.marca}}"
+										data-modelo="{{vehiculo.modelo}}"
+										data-anio="{{vehiculo.anio}}"
+										data-tecnico="{{visita_vehiculo.tecnico.id}}"
+										data-caracter="{{visita_vehiculo.caracter}}"
+										data-fecha="{{visita_vehiculo.fecha|date:'d/m/Y H:i A'}}"
+										data-slot="{{visita_vehiculo.slot.id}}"
+										data-comentario="{{visita_vehiculo.comentarios}}"
+									>
+										Editar&nbsp;&nbsp;&nbsp;<i class="fas fa-pen"></i>
+									</button>
 									<button class="btn btn-warning" data-id-visita="{{visita_vehiculo.id}}" data-toggle="modal" data-target="#finalizar-visita-modal">
 										Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
 									</button>
+									
 								{% elif visita_vehiculo.finalizada == False and request.user.rol == 1%}
 									<button class="btn btn-warning" data-id-visita="{{visita_vehiculo.id}}" data-toggle="modal" data-target="#finalizar-visita-modal">
 										Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
@@ -103,6 +120,7 @@
 
 </div>
 
+<!-- Modal Agregar Visita -->
 <div class="modal fade" id="agregar-visita-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
@@ -211,6 +229,130 @@
 				<label for="comentario-visita" class="col-sm-3 col-form-label">Comentario:</label>
 				<div class="col-sm-9">
 					<textarea type='text' id="comentario-visita" name="comentario_visita" class="form-control"></textarea>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="modal-footer">
+			{% csrf_token %}
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			<input type="submit" class="btn btn-success" value="Agregar Visita">
+		</div>
+	</form>
+</div>
+</div>
+</div>
+
+<!-- Modal Editar Visita -->
+<div class="modal fade" id="editar-visita-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+
+	<form action="" method="POST">
+
+		<div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Editar Nueva Visita.</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<div class="modal-body">
+
+			<div class="form-group row px-4 justify-content-md-center">
+				
+				<h4>Editar la visita del vehículo</h4>
+
+				<div class="d-none">
+					<label for="vehiculo-visita-edit" class="col-form-label mb-0 pb-0">Vehículo ID:</label>
+					<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="vehiculo-visita-edit" name="vehiculo_visita_edit">
+					<label for="cliente-visita-edit" class="col-form-label mb-0 pb-0">Cliente ID:</label>
+					<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="cliente-visita-edit" name="cliente_visita_edit">
+				</div>
+
+				<div class="col-12 row justify-content-md-between">
+				
+					<div class="col-3 row">
+						<label for="placa-visita" class="col-form-label mb-0 pb-0">Placa:</label>
+						<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="placa-visita-edit" name="placa_visita" placeholder="">		
+					</div>
+					<div class=" col-3 row">
+						<label for="marca-visita" class="col-form-label mb-0 pb-0">Marca:</label>
+						<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="marca-visita-edit" name="marca_visita_edit" placeholder="">
+					</div>
+					<div class=" col-3 row">
+						<label for="modelo-visita" class="col-form-label mb-0 pb-0">Modelo:</label>
+						<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="modelo-visita-edit" name="modelo_visita_edit" placeholder="">
+					</div>
+					<div class=" col-3 row">
+						<label for="anio-visita" class="col-form-label mb-0 pb-0">Año:</label>
+						<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="anio-visita-edit" name="anio_visita_edit" placeholder="">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row align-items-center">
+				<label for="tecnico-visita-edit" class="col-sm-3 col-form-label">Técnico Encargado:</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="tecnico-visita-edit" name="tecnico_visita_edit">
+						{% for tecnico in tecnicos %}
+						{% if tecnico not in tecnicos_ocupados %}
+							<option value="{{ tecnico.id }}">
+								{{tecnico.user.first_name}}&nbsp;{{tecnico.user.last_name}}&nbsp;-&nbsp;{{tecnico.especializacion.nombre}}
+							</option>
+						{% else %}
+							<option value="{{ tecnico.id }}" class="bg-danger text-white"" disabled="">
+								{{tecnico.user.first_name}}&nbsp;{{tecnico.user.last_name}}&nbsp;-&nbsp;{{tecnico.especializacion.nombre}} - Ocupado
+							</option>
+						{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group row align-items-center">
+				<label for="caracter-visita-edit" class="col-sm-3 col-form-label">Caracter de Visita:</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="caracter-visita-edit" name="caracter_visita_edit">
+						<option name='caracter_visita' value="Mantenimiento">Mantenimiento</option>
+						<option name='caracter_visita' value="Reparación">Reparación</option>
+						<option name='caracter_visita' value="Revisión">Revisión</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group row align-items-center">
+				<label for="fecha-visita-edit" class="col-sm-3 col-form-label">Fecha de Visita:</label>
+				<div class="col-sm-9">
+					<div class='input-group date'>
+						<input type='text' id='fecha-visita-edit' name="fecha_visita_edit" class="form-control">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group row align-items-center">
+				<label for="slot-visita-edit" class="col-sm-3 col-form-label">Slot a Utilizar:</label>
+				<div class="col-sm-9">
+					<select class="form-control" id="slot-visita-edit" name="slot_visita_edit">
+						{% for slot in slots %}
+							{% if slot.disponible == 1 and slot.reservacion != 1 %}
+								<option id='' name='' value="{{ slot.id }}">
+									{{slot.id}}
+								</option>
+							{% else %}
+								<option disabled="" class="bg-danger text-white" value="{{ slot.id }}">
+									{{slot.id}} - Ocupado
+								</option>
+							{% endif %}
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			<div class="form-group row align-items-center">
+				<label for="comentario-visita-edit" class="col-sm-3 col-form-label">Comentario:</label>
+				<div class="col-sm-9">
+					<textarea type='text' id="comentario-visita-edit" name="comentario_visita_edit" class="form-control"></textarea>
 				</div>
 			</div>
 

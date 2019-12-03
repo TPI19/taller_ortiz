@@ -204,6 +204,10 @@ def registrar_visita(request):
 	d = datetime.strptime(request.POST['fecha_visita'], '%d/%m/%Y %H:%M %p')
 	d.strftime('%Y/%m/%d %H:%M')
 
+	expediente = Expediente.objects.get(vehiculo_id=request.POST['vehiculo_visita'])
+	expediente.ult_visita = d
+	expediente.save()
+
 	visita = Visita()
 	visita.fecha = d
 	visita.caracter = request.POST['caracter_visita']

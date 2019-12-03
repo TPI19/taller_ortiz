@@ -121,24 +121,25 @@
 			<thead>
 				<tr class="d-flex bg-primary text-white text-center">
 					<th class="col-1">N°</th>
-					<th class="col-2">Placa</th>
+					<th class="col-1">Placa</th>
 					<th class="col-2">Marca</th>
 					<th class="col-2">Modelo</th>
 					<th class="col-2">Año</th>
-					<th class="col-3">Opciones</th>
+					<th class="col-4">Opciones</th>
 				</tr>
 			</thead>
 			<tbody>
 				{% for vehiculo in vehiculos %}
 				<tr class="d-flex text-center">
 					<td class="col-1 font-weight-bold">{{ forloop.counter }}</td>
-					<td class="col-2 font-weight-bold">{{vehiculo.placa}}</td>
+					<td class="col-1 font-weight-bold">{{vehiculo.placa}}</td>
 					<td class="col-2">{{vehiculo.marca}}</td>
 					<td class="col-2">{{vehiculo.modelo}}</td>
 					<td class="col-2">{{vehiculo.anio}}</td>
-					<td class="col-3">
-						<button class="btn btn-info" title="Ver detalles del Veh&iacute;culo">Ver&nbsp;&nbsp;<i
-								class="fas fa-info-circle"></i></button>
+					<td class="col-4">
+						<a href="{% url 'expediente_vehiculo' vehiculo_id=vehiculo.id %}" class="btn btn-success" title="">
+							Expediente &nbsp;&nbsp;<i class="fas fa-file-invoice"></i>
+						</a>
 
 						<button class="btn btn-success" title="Editar Información del Veh&iacute;culo"
 							data-toggle="modal" data-target="#editar-vehiculo-modal" data-id="{{vehiculo.id}}"
@@ -198,10 +199,16 @@
 							<input type="text" class="form-control" id="placa" name="placa" placeholder="">
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="form-group row align-items-center">
 						<label for="tipo" class="col-sm-2 col-form-label">Tipo</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="tipo" name="tipo" placeholder="">
+							<select class="form-control" id="tipo" name="tipo">
+
+								<option name='tipo' value="Sedan">Sedan</option>
+								<option name='tipo' value="Pick Up">Pick Up</option>
+								<option name='tipo' value="Camioneta">Camioneta</option>
+								<option name='tipo' value="Deportivo">Deportivo</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -267,10 +274,16 @@
 							<input type="text" class="form-control" id="placa-edit" name="placa_edit" placeholder="">
 						</div>
 					</div>
-					<div class="form-group row">
+					<div class="form-group row align-items-center">
 						<label for="tipo-edit" class="col-sm-2 col-form-label">Tipo</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" id="tipo-edit" name="tipo_edit" placeholder="">
+							<select class="form-control" id="tipo-edit" name="tipo_edit">
+
+								<option name='' value="Sedan">Sedan</option>
+								<option name='' value="Pick Up">Pick Up</option>
+								<option name='' value="Camioneta">Camioneta</option>
+								<option name='' value="Deportivo">Deportivo</option>
+							</select>
 						</div>
 					</div>
 					<div class="form-group row">

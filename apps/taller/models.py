@@ -48,8 +48,8 @@ class Vehiculo(models.Model):
 class Visita(models.Model):
 
 	vehiculo = models.ForeignKey(Vehiculo, on_delete=models.CASCADE)
-	tecnico = models.ForeignKey(Tecnico, on_delete=models.CASCADE)
-	slot = models.ForeignKey(Slot, on_delete=models.CASCADE)
+	tecnico = models.ForeignKey(Tecnico, null=True, blank=True, on_delete=models.SET_NULL)
+	slot = models.ForeignKey(Slot, null=True, blank=True, on_delete=models.SET_NULL)
 	fecha = models.DateTimeField()
 	caracter = models.CharField(max_length=100)
 	comentarios = models.TextField()
@@ -100,5 +100,5 @@ class ProcesoPieza(models.Model):
 
 class ProcesoTecnico(models.Model):
 
-	proceso = models.ForeignKey(Proceso,on_delete=models.CASCADE)
-	tecnico = models.ForeignKey(Tecnico,on_delete=models.CASCADE)
+	proceso = models.ForeignKey(Proceso, on_delete=models.CASCADE)
+	tecnico = models.ForeignKey(Tecnico, null=True, blank=True, on_delete=models.SET_NULL)

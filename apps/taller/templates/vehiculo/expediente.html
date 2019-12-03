@@ -56,7 +56,7 @@
 				<fieldset {% if request.user.rol == 2%} disabled="disabled" {% endif %}>
 					<div class="form-group row">					
 						<label for="kilometraje" class="col-sm-2 col-form-label">Kilometraje: </label>
-						{% if expediente.ult_visita is null %}
+						{% if expediente.kilometraje is null %}
 							<div class="col-sm-3">
 								<input type="text" class="form-control" id="kilometraje" name="kilometraje" value="0">
 							</div>
@@ -81,11 +81,11 @@
 						<label for="ult-visita" class="col-sm-2 col-form-label">Última Visita: </label>
 						{% if expediente.ult_visita is null %}
 							<div class="col-sm-3 input-group date">
-								<input type="text" class="form-control" id="ult-visita" name="ult_visita" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente" readonly="">
+								<input type="text" class="form-control" id="ult-visita" name="ult_visita" value="{% now 'd/m/Y H:i A'%}" title="No se ha registrado esta fecha en el expediente" readonly="">
 							</div>
 						{% else %}
 							<div class="col-sm-3 input-group date">
-								<input type="text" class="form-control" id="ult-visita" name="ult_visita" value="{{expediente.ult_visita|date:'d/m/Y H:m A'}}" readonly="">
+								<input type="text" class="form-control" id="ult-visita" name="ult_visita" value="{{expediente.ult_visita|date:'d/m/Y H:i A'}}" readonly="">
 							</div>
 						{% endif %}
 					</div>
@@ -101,12 +101,12 @@
 									<div class='input-group date fecha-visita input-group date'>
 
 										{% if expediente.ult_aceite is null %}
-											<input type='text' id="ult-aceite" name="ult_aceite" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="ult-aceite" name="ult_aceite" class="form-control text-warning" value="{% now 'd/m/Y H:i A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>
 										{% else %}
-											<input type='text' id="ult-aceite" name="ult_aceite" class="form-control" value="{{expediente.ult_aceite|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="ult-aceite" name="ult_aceite" class="form-control" value="{{expediente.ult_aceite|date:'d/m/Y H:i A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>
@@ -120,12 +120,12 @@
 								<div class="col-sm-5">
 									<div class='input-group date fecha-visita input-group date'>
 										{% if expediente.prox_aceite is null %}
-											<input type='text' id="prox-aceite" name="prox_aceite" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="prox-aceite" name="prox_aceite" class="form-control text-warning" value="{% now 'd/m/Y H:i A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>									
 										{% else %}
-											<input type='text' id="prox-aceite" name="prox_aceite" class="form-control" value="{{expediente.prox_aceite|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="prox-aceite" name="prox_aceite" class="form-control" value="{{expediente.prox_aceite|date:'d/m/Y H:i A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>
@@ -140,12 +140,12 @@
 								<div class="col-sm-5">
 									<div class='input-group date fecha-visita input-group date'>
 										{% if expediente.ult_frenos is null %}
-											<input type='text' id="ult-frenos" name="ult_frenos" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="ult-frenos" name="ult_frenos" class="form-control text-warning" value="{% now 'd/m/Y H:i A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>
 										{% else %}
-											<input type='text' id="ult-frenos" name="ult_frenos" class="form-control" value="{{expediente.ult_frenos|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="ult-frenos" name="ult_frenos" class="form-control" value="{{expediente.ult_frenos|date:'d/m/Y H:i A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>
@@ -159,12 +159,12 @@
 								<div class="col-sm-5">
 									<div class='input-group date fecha-visita input-group date'>
 										{% if expediente.prox_frenos is null %}
-											<input type='text' id="prox-frenos" name="prox_frenos" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="prox-frenos" name="prox_frenos" class="form-control text-warning" value="{% now 'd/m/Y H:i A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>
 										{% else %}
-											<input type='text' id="prox-frenos" name="prox_frenos" class="form-control" value="{{expediente.prox_frenos|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type='text' id="prox-frenos" name="prox_frenos" class="form-control" value="{{expediente.prox_frenos|date:'d/m/Y H:i A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
 											<span class="input-group-addon">
 												<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 											</span>

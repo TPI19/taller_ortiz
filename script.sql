@@ -58,6 +58,12 @@ INSERT INTO users_user (password, is_superuser, username, first_name, last_name,
 VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Pablo','Pablo','Díaz','PabloDiaz@gmail.com',1,1,1,'70187106','Reparto Metropolitano #6A');
 
 INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
+VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Chepe','Chepe','Flores','ChepeFlores@gmail.com',1,1,1,'70187789','Reparto Metropolitano #45S');
+
+INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
+VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Kilmer','Kilmer','López','KilmerLopez@gmail.com',1,1,1,'70187459','Reparto Metropolitano #16X');
+
+INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
 VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Edwin','Edwin','Amaya','EdwinAmaya@gmail.com',1,1,1,'70187110','Reparto Escalon #45A');
 
 INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
@@ -72,26 +78,28 @@ VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWk
 INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(1,2);
 INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(1,3);
 INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(1,4);
-INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(2,5);
-INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(3,6);
+INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(1,5);
+INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(1,6);
+INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(2,7);
+INSERT INTO taller_tecnico (especializacion_id, user_id) VALUES(3,8);
 
 /*Inserción de Clientes*/
 
 		/*Cliente #1 - 1 Vehiculos - 0 Visitas */
 INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
 VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Gustavo','Gustavo','Carranza','GustavoCarranza@gmail.com',1,1,2,'70187107','Reparto Nica #7B');
-INSERT INTO taller_cliente (user_id) VALUES(7);
+INSERT INTO taller_cliente (user_id) VALUES(9);
 INSERT INTO taller_vehiculo (placa, tipo, marca, modelo, anio, cliente_id)	/*Vehiculo 1*/
-VALUES('P474-742','PickUp','Nissan', 'Frontier',1998,1);
+VALUES('P474-742','Pick Up','Nissan', 'Frontier',1998,1);
 
 INSERT INTO taller_expediente (vehiculo_id,detalle_mecanico,detalle_pintura,detalle_electrico,detalle_suspension,detalle_direccion) VALUES(1,'','','','','');	/*Expediente de Vehiculo 1*/
 
 		/*Cliente #2 - 3 Vehiculos - 2 Visitas (1 a los primeros dos) */
 INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
 VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Marina','Marina','Serrano','MarinaSerrano@gmail.com',1,1,2,'70187108','Reparto Zacate #8C');
-INSERT INTO taller_cliente (user_id) VALUES(8);
+INSERT INTO taller_cliente (user_id) VALUES(10);
 INSERT INTO taller_vehiculo (placa, tipo, marca, modelo, anio, cliente_id)	/*Vehiculo 2*/
-VALUES('P788-556','PickUp','Toyota', 'Hilux',1997,2);
+VALUES('P788-556','Pick Up','Toyota', 'Hilux',1997,2);
 INSERT INTO taller_expediente (vehiculo_id,detalle_mecanico,detalle_pintura,detalle_electrico,detalle_suspension,detalle_direccion) VALUES(2,'','','','','');	/*Expediente de Vehiculo 2*/
 INSERT INTO taller_vehiculo (placa, tipo, marca, modelo, anio, cliente_id)	/*Vehiculo 3*/
 VALUES('P788-789','Sedan','Nissan', 'Versa',2015,2);
@@ -112,14 +120,14 @@ UPDATE taller_slot SET disponible = 1 WHERE id = 3;
 
 INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
 VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Daniela','Daniela','Contreras','DanielaContreras@gmail.com',1,1,2,'70187109','Reparto Habana #9C');
-INSERT INTO taller_cliente (user_id) VALUES(9);
+INSERT INTO taller_cliente (user_id) VALUES(11);
 
 	/*Cliente #4 - 1 Vehiculos - 3 Visitas - 1 Activa */
 INSERT INTO users_user (password, is_superuser, username, first_name, last_name, email, is_staff, is_active, rol, telefono, direccion)
 VALUES('pbkdf2_sha256$150000$RYnHHjE3icRe$1WiEfMWWJp+WOYDMAcMEw4qU3Hk6fkH31ArWWkVobrQ=',0,'Oscar','Oscar','Rodriguez','OscarRodriguez@gmail.com',1,1,2,'70187125','Reparto Metropolitano #5D');
-INSERT INTO taller_cliente (user_id) VALUES(10);
+INSERT INTO taller_cliente (user_id) VALUES(12);
 INSERT INTO taller_vehiculo (placa, tipo, marca, modelo, anio, cliente_id)	/*Vehiculo 5*/
-VALUES('P788-571','PickUp','Toyota', 'Hilux',2000,4);
+VALUES('P788-571','Pick Up','Toyota', 'Hilux',2000,4);
 INSERT INTO taller_expediente (vehiculo_id,detalle_mecanico,detalle_pintura,detalle_electrico,detalle_suspension,detalle_direccion) VALUES(5,' ',' ',' ',' ',' ');	/*Expediente de Vehiculo 5*/
 
 INSERT INTO taller_visita (fecha, caracter, comentarios, slot_id, tecnico_id, vehiculo_id,finalizada)	/*Visita 3*/
