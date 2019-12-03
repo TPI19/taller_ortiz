@@ -12,7 +12,7 @@ def index(request):
 	contexto = {}	
 	return render(request, 'index.html', contexto)
 
-#	-- GESTIÓN DE VEHICULOS POR CLIENTE --
+#	-- GESTIÓN DE VEHICULOS --
 
 def vehiculos(request):
 
@@ -21,6 +21,20 @@ def vehiculos(request):
 	vehiculos = Vehiculo.objects.filter(cliente=cliente)
 
 	contexto = {
+		'cliente':cliente,
+        'vehiculos': vehiculos,
+    }
+	
+	return render(request, 'vehiculo/vehiculos.html', contexto)
+
+def vehiculos_admin(request,cliente_id):
+
+	cliente = Cliente.objects.get(pk=cliente_id)
+	
+	vehiculos = Vehiculo.objects.filter(cliente=cliente)
+
+	contexto = {
+		'cliente':cliente,
         'vehiculos': vehiculos,
     }
 	
@@ -28,7 +42,7 @@ def vehiculos(request):
 
 def agregar_vehiculo(request):
 
-	cliente = Cliente.objects.get(user = request.user.id)
+	cliente = Cliente.objects.get(user = request.POST['usuario_id'])
 
 	vehiculo = Vehiculo()
 	vehiculo.cliente = cliente
@@ -39,7 +53,10 @@ def agregar_vehiculo(request):
 	vehiculo.anio = int(request.POST['anio'])
 	vehiculo.save()
 
-	return redirect('vehiculos')
+	if(request.user.rol == 0):
+		return redirect('vehiculos_admin', cliente_id=request.POST['cliente_id'])
+	elif(request.user.rol == 2):
+		return redirect('vehiculos')
 
 def editar_vehiculo(request):
 
@@ -51,13 +68,19 @@ def editar_vehiculo(request):
 	vehiculo.anio = int(request.POST['anio_edit'])
 	vehiculo.save()
 
-	return redirect('vehiculos')
+	if(request.user.rol == 0):
+		return redirect('vehiculos_admin', cliente_id=request.POST['cliente_id'])
+	elif(request.user.rol == 2):
+		return redirect('vehiculos')
 
 def eliminar_vehiculo(request):
 
 	Vehiculo.objects.filter(id=request.POST['id_delete']).delete()
 
-	return redirect('vehiculos')
+	if(request.user.rol == 0):
+		return redirect('vehiculos_admin', cliente_id=request.POST['cliente_id'])
+	elif(request.user.rol == 2):
+		return redirect('vehiculos')
 
 def detalle_vehiculo(request,vehiculo_id):
 
@@ -75,18 +98,19 @@ def detalle_vehiculo(request,vehiculo_id):
 def gestion_visitas_cliente(request,cliente_id):
 
 	cliente = Cliente.objects.get(pk=cliente_id)
-
 	tecnicos = Tecnico.objects.all
-
-	slots = Slot.objects.all
-	
+	slots = Slot.objects.all	
 	vehiculos = Vehiculo.objects.filter(cliente=cliente)
 
 	visitas_vehiculos = []
-
 	for vehiculo in vehiculos:
 		visitas_vehiculos.extend(Visita.objects.filter(vehiculo_id=vehiculo.id))
 
+	visitas_activas = Visita.objects.filter(finalizada=0)
+
+	tecnicos_ocupados = []
+	for visita_activa in visitas_activas:
+		tecnicos_ocupados.append(visita_activa.tecnico)
 
 	contexto = {
 		'tecnicos':tecnicos,
@@ -94,9 +118,10 @@ def gestion_visitas_cliente(request,cliente_id):
 		'slots':slots,
 		'vehiculos':vehiculos,
 		'visitas_vehiculos':visitas_vehiculos,
+		'tecnicos_ocupados':tecnicos_ocupados,
 	}
 
-	return render(request, 'visitas/index-visitas.html', contexto)
+	return render(request, 'visitas/visitas-cliente.html', contexto)
 
 def registrar_visita(request):
 
@@ -133,8 +158,23 @@ def finalizar_visita(request):
 
 		return redirect('gestion_visitas_cliente',cliente_id=request.POST['cliente_visita'])
 
-	else:
+	elif((int)(request.POST['visita_index'])==0):
+
 		return redirect('gestion_procesos_visita',visita_id=request.POST['id_visita_fin'])
+
+	else:
+
+		return redirect('gestion_visitas')
+
+def gestion_visitas(request):
+
+	visitas_activas = Visita.objects.filter(finalizada=0)
+
+	contexto = {
+		'visitas_activas':visitas_activas,
+	}
+
+	return render(request, 'visitas/visitas.html', contexto)
 
 # --- GESTIÓN DE PROCESOS ---
 

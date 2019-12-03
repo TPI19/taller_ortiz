@@ -88,7 +88,7 @@ UPDATE taller_slot SET disponible = 0 WHERE id = 1;
 
 INSERT INTO taller_visita (fecha, caracter, comentarios, slot_id, tecnico_id, vehiculo_id,finalizada)	/*Visita 2*/
 VALUES('2019-11-24 00:00:00.000000','Mantenimiento','Se le realizó un cambio de aceite', 3, 1, 4, 1);
-UPDATE taller_slot SET disponible = 0 WHERE id = 3;
+UPDATE taller_slot SET disponible = 1 WHERE id = 3;
 
 	/*Cliente 3 - 0 Vehiculos - 0 Visitas */
 

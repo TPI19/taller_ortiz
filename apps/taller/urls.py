@@ -11,6 +11,7 @@ urlpatterns = [
     #   -- Gestión de Vehículos --
     
     path('vehiculos/', views.vehiculos, name='vehiculos'),
+    path('vehiculos-admin/<int:cliente_id>/', views.vehiculos_admin, name='vehiculos_admin'),
     path('agregar-vehiculo/', views.agregar_vehiculo, name='agregar_vehiculo'),
     path('editar-vehiculo/', views.editar_vehiculo, name='editar_vehiculo'),
     path('eliminar-vehiculo/', views.eliminar_vehiculo, name='eliminar_vehiculo'),
@@ -30,6 +31,8 @@ urlpatterns = [
     path('gestion-visitas-cliente/<int:cliente_id>', views.gestion_visitas_cliente, name='gestion_visitas_cliente'),
     path('registrar-visita/', views.registrar_visita, name='registrar_visita'),
     path('finalizar-visita/', views.finalizar_visita, name='finalizar_visita'),
+
+    path('gestion-visitas/', views.gestion_visitas, name='gestion_visitas'),
 
     #   -- Gestión de Procesos (Por parte del Admin)  --
 

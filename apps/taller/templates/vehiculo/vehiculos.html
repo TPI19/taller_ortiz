@@ -94,12 +94,27 @@
 
 	<h4>Vehiculos de {{request.user.first_name}} {{request.user.last_name}}</h4>
 
-	<p class="lead">Estos son los veh&iacute;culos que tienes registrados con nosotros.</p>
+	{% if request.user.rol == 0 %}
+		<p class="lead">Vista de Administrador</p>
+	{% elif request.user.rol == 1 %}
+		
+	{% elif request.user.rol == 2 %}
+		<p class="lead">Estos son los veh&iacute;culos que tienes registrados con nosotros.</p>
+	{% else %}
+	{% endif %}
 
-	<div class="row text-center">
-		<div class="col-md-10"></div>
-		<button class="btn btn-info col-md-2" data-toggle="modal" data-target="#agregar-vehiculo-modal">Agregar
-			Veh&iacute;culo&nbsp;&nbsp;<i class="fas fa-plus-circle"></i></button>
+	<div class="row text-right">
+		<div class="col-md-7"></div>
+		<div class="col-md-5">
+			{% if request.user.rol == 0 %}
+			<a href="{% url 'gestion_visitas_cliente' cliente_id=cliente.id %}" class="btn btn-success text-white">
+				Visitas del Cliente&nbsp;&nbsp;<i class="fas fa-home"></i>
+			</a>
+			{% endif %}
+			<button class="btn btn-info" data-toggle="modal" data-target="#agregar-vehiculo-modal">
+				Agregar Veh&iacute;culo&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+			</button>
+		</div>
 	</div>
 
 	<div class="row mt-4 justify-content-md-center">
@@ -166,6 +181,16 @@
 				</div>
 				<div class="modal-body">
 					{% csrf_token %}
+					<div class="form-group row d-none">
+						<label for="usuario-id" class="col-sm-2 col-form-label">Usuario ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="usuario-id" name="usuario_id" value="{{cliente.user.id}}">
+						</div>
+						<label for="cliente-id" class="col-sm-2 col-form-label">Cliente ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="cliente-id" name="cliente_id" value="{{cliente.id}}">
+						</div>
+					</div>
 					<div class="form-group row">
 						<label for="placa" class="col-sm-2 col-form-label">Placa</label>
 						<div class="col-sm-10">
@@ -226,6 +251,14 @@
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="id-edit" name="id_edit" placeholder="">
 						</div>
+						<label for="usuario-id" class="col-sm-2 col-form-label">Usuario ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="usuario-id" name="usuario_id" value="{{cliente.user.id}}">
+						</div>
+						<label for="cliente-id" class="col-sm-2 col-form-label">Cliente ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="cliente-id" name="cliente_id" value="{{cliente.id}}">
+						</div>
 					</div>
 					<div class="form-group row">
 						<label for="placa-edit" class="col-sm-2 col-form-label">Placa</label>
@@ -285,6 +318,14 @@
 						<label for="id-delete" class="col-sm-2 col-form-label">ID de Veh&iacute;culo</label>
 						<div class="col-sm-10">
 							<input type="text" class="form-control" id="id-delete" name="id_delete" placeholder="">
+						</div>
+						<label for="usuario-id" class="col-sm-2 col-form-label">Usuario ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="usuario-id" name="usuario_id" value="{{cliente.user.id}}">
+						</div>
+						<label for="cliente-id" class="col-sm-2 col-form-label">Cliente ID</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="cliente-id" name="cliente_id" value="{{cliente.id}}">
 						</div>
 					</div>
 					<div class="form-group row justify-content-md-center">

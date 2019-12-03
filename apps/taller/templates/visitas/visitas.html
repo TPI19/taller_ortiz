@@ -1,0 +1,107 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block main_container %}
+<div class="col-md-11 py-3 px-4 main-container">
+	<div class="pt-3">
+		<h2>Visitas</h2>
+		<p class="lead">Visitas que están siendo atendidas en el taller.</p>
+	</div>
+
+	<div class="row justify-content-md-center mb-2">
+		<span class="col-3"></span>
+		<span class="col-9 text-right">
+			<a href="{% url 'gestion_clientes' %}" class="btn btn-info text-white col-md-3" title="Para agregar visitas desde la Gestión de Clientes">
+				Gestión de Clientes&nbsp;&nbsp;&nbsp;<i class="fas fa-users"></i>
+			</a>
+		</span>
+	</div>
+
+	<div class="row mt-0 justify-content-md-center">
+
+		<table class="table table-hover col-12">
+
+			<thead class="">
+				<tr class="d-flex bg-primary text-white text-center ">
+					<th class="col-2 ">Fecha</th>
+					<th class="col-3 ">Vehículo</th>
+					<th class="col-1 ">Slot</th>
+					<th class="col-3 ">Técnico</th>
+					<th class="col-3 "></th>
+				</tr>
+			</thead>			
+			<tbody class="tbody-visitas">
+				{% for visita in visitas_activas %}
+					<tr class="d-flex text-center">
+						<td class="col-2">{{visita.fecha|date:'d-m-Y'}}</td>
+						<td class="col-3">{{visita.vehiculo.placa}}</td>
+						<td class="col-1">{{visita.slot.id}}</td>
+						<td class="col-3">{{visita.tecnico.user.first_name}}&nbsp;{{visita.tecnico.user.last_name}}</td>
+						<td class="col-3 text-left">
+							<a href="{% url 'gestion_procesos_visita' visita_id=visita.id %}" class="btn btn-success" title="Ver detalles y procesos de la Visita"
+							>
+								Procesos &nbsp;&nbsp;<i class="fas fa-info-circle"></i>
+							</a>
+							{% if visita.finalizada == False %}
+								<button class="btn btn-warning" data-id-visita="{{visita.id}}" data-toggle="modal" data-target="#finalizar-visita-modal">
+									Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
+								</button>
+							{% endif %}
+						</td>
+					</tr>
+				{% empty %}
+					<tr>
+						<td>Actualmente no se atienden visitas.</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+	</div>
+
+</div>
+
+<!-- Modal Finalizar Visita -->
+<div class="modal fade" id="finalizar-visita-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<form action="{% url 'finalizar_visita' %}" method="POST">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Finalizar Visita.</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
+					<div class="d-none">
+						<label for="id-visita-fin" class="col-form-label mb-0 pb-0">Visita ID:</label>
+						<input type="text" id="id-visita-fin" name="id_visita_fin" class="form-control-plaintext mt-0 pt-0" readonly="">
+						<label for="visita-index" class="col-form-label mb-0 pb-0">Visita Index:</label>
+						<input type="text" id="visita-index" name="visita_index" class="form-control-plaintext mt-0 pt-0" value="4" readonly="">
+						<label for="cliente-visita" class="col-form-label mb-0 pb-0">Cliente ID:</label>
+						<input type="text" id="cliente-visita" name="cliente_visita" class="form-control-plaintext mt-0 pt-0" value="">
+					</div>
+
+					<div class="form-group row mt-3 px-4 align-items-center">
+						<p class="lead"><i class="fas fa-exclamation-triangle text-warning"></i>&nbsp;&nbsp;&nbsp;¿Desea finalizar la visita? Esto significa que ya no podrá agregar u editar procesos en la visita actual.</p>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					{% csrf_token %}
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+					<input type="submit" class="btn btn-warning" value="Finalizar" id="Agregar">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+	<script src="{% static '/js/visitas/visitas.js' %}"></script>
+{% endblock %}
