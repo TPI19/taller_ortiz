@@ -17,6 +17,10 @@
 		<div class="form-group row justify-content-md-center">
 			{% csrf_token %}
 			<button type="submit" class="btn btn-success col-sm-5 col-form-label">Ingresar</button>
+		</div>
+		<div class="form-group row justify-content-md-center">
+			{% csrf_token %}
+			<a href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
 		</div>		    
 	</fieldset>
 
