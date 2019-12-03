@@ -17,22 +17,8 @@
             		alert("Todos los campos son obligatorios");
             		return false;
             	}
-            	if(!(letra.test(nombre))){
-            		alert("El nombre es incorrecto");
-            		return false;
-            	}
-            	if(!(letra.test(descripcion))){
-            		alert("La descripcion es incorrecta");
-            		return false;
-            	}
-            	if(!(letra.test(detalle))){
-            		alert("El detalle es incorrecto");
-            		return false;
-            	}
-
-
-
-				});
+            	return false;
+            	}});
         	});
 </script>
 <div class="col-md-11 py-3 px-4 main-container">
@@ -196,9 +182,7 @@
 						<label for="proceso" class="col-sm-3 col-form-label">Proceso:</label>
 						<div class="col-sm-9">
 							<select class="form-control" id="proceso" name="proceso">
-								<option value="0" selected="">
-									Seleccione
-								</option>
+								
 								{% for proceso in procesos %}
 									<option value="{{ proceso.id }}">
 										{{proceso.nombre}} - {{proceso.caracter}}
@@ -227,7 +211,7 @@
 						<div class="form-group row mt-3">
 							<label for="nombre-nuevo" class="col-sm-2 col-form-label">Nombre:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="nombre-nuevo" name="nombre_nuevo">
+								<input type="text" class="form-control" id="nombre-nuevo" name="nombre_nuevo" value="0">
 							</div>
 						</div>
 						<div class="form-group row align-items-center">
@@ -243,7 +227,7 @@
 						<div class="form-group row align-items-center">
 							<label for="descripcion-nuevo" class="col-sm-3 col-form-label">Descripción del Proceso:</label>
 							<div class="col-sm-9">
-								<textarea type='text' id="descripcion-nuevo" name="descripcion_nuevo" class="form-control"></textarea>
+								<textarea type='text' id="descripcion-nuevo" name="descripcion_nuevo" class="form-control">_</textarea>
 							</div>
 						</div>
 						<div id="div-btn-quitar" class="col-12 text-right my-2">
