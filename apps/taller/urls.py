@@ -35,6 +35,7 @@ urlpatterns = [
 
     path('gestion-visitas-cliente/<int:cliente_id>', views.gestion_visitas_cliente, name='gestion_visitas_cliente'),
     path('registrar-visita/', views.registrar_visita, name='registrar_visita'),
+    path('editar-visita/', views.editar_visita, name='editar_visita'),
     path('finalizar-visita/', views.finalizar_visita, name='finalizar_visita'),
 
     path('gestion-visitas/', views.gestion_visitas, name='gestion_visitas'),

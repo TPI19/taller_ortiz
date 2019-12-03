@@ -78,6 +78,7 @@
 									<button class="btn btn-success" data-id-visita="{{visita_vehiculo.id}}"
 										data-toggle="modal" data-target="#editar-visita-modal"
 										data-id-cliente="{{cliente.id}}"
+										data-id-visita="{{visita_vehiculo.id}}"
 										data-id-vehiculo="{{vehiculo.id}}"
 										data-placa="{{vehiculo.placa}}"
 										data-marca="{{vehiculo.marca}}"
@@ -249,10 +250,10 @@
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 
-	<form action="" method="POST">
+	<form action="{% url 'editar_visita' %}" method="POST">
 
 		<div class="modal-header">
-			<h5 class="modal-title" id="exampleModalLabel">Editar Nueva Visita.</h5>
+			<h5 class="modal-title" id="exampleModalLabel">Editar Visita.</h5>
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
@@ -269,6 +270,8 @@
 					<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="vehiculo-visita-edit" name="vehiculo_visita_edit">
 					<label for="cliente-visita-edit" class="col-form-label mb-0 pb-0">Cliente ID:</label>
 					<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="cliente-visita-edit" name="cliente_visita_edit">
+					<label for="visita-vehiculo-edit" class="col-form-label mb-0 pb-0">Visita ID:</label>
+					<input type="text" readonly="" class="form-control-plaintext mt-0 pt-0" id="visita-vehiculo-edit" name="visita_vehiculo_edit">
 				</div>
 
 				<div class="col-12 row justify-content-md-between">
@@ -302,7 +305,7 @@
 								{{tecnico.user.first_name}}&nbsp;{{tecnico.user.last_name}}&nbsp;-&nbsp;{{tecnico.especializacion.nombre}}
 							</option>
 						{% else %}
-							<option value="{{ tecnico.id }}" class="bg-danger text-white"" disabled="">
+							<option value="{{ tecnico.id }}" class="bg-danger text-white">
 								{{tecnico.user.first_name}}&nbsp;{{tecnico.user.last_name}}&nbsp;-&nbsp;{{tecnico.especializacion.nombre}} - Ocupado
 							</option>
 						{% endif %}
@@ -341,7 +344,7 @@
 									{{slot.id}}
 								</option>
 							{% else %}
-								<option disabled="" class="bg-danger text-white" value="{{ slot.id }}">
+								<option class="bg-danger text-white" value="{{ slot.id }}">
 									{{slot.id}} - Ocupado
 								</option>
 							{% endif %}
@@ -361,7 +364,7 @@
 		<div class="modal-footer">
 			{% csrf_token %}
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			<input type="submit" class="btn btn-success" value="Agregar Visita">
+			<input type="submit" class="btn btn-success" value="Editar Visita">
 		</div>
 	</form>
 </div>
