@@ -24,6 +24,9 @@
               	    }/*if( !(contraseña === contraseña2) ){
                 		alert("Las contraseñas son diferentes");
                 		return false;
+                	}if( contraseña.length < 8){
+                		alert("Contraseña demasiado corta");
+                		return false;
                 	}*/
                 	if(!letra.test(nombre)){
                 		alert("El nombre es incorrecto");
@@ -55,8 +58,8 @@
 						alert("El numero de telefono es incorrecto");
 						return false;
 					}
-					if(!letra.test(direccion)){
-						alert("La direccion es incorecta");
+					if(direccion.length > 50){
+						alert("La direccion es demasiado larga");
 						return false;
 
 					}

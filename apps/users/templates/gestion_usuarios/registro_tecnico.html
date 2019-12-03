@@ -59,8 +59,8 @@
 						alert("El numero de telefono es incorrecto");
 						return false;
 					}
-					if(!letra.test(direccion)){
-						alert("La direccion es incorecta");
+					if(direccion.length > 50){
+						alert("La direccion es demasiado larga");
 						return false;
 
 					}
@@ -68,6 +68,7 @@
             });
         });
 	</script>
+
 
 
 <form action="{% url 'registro_tecnico' %}" method="POST">

@@ -2,6 +2,42 @@
 {% load static %} 
 {% block title %}Cita{% endblock %}
 {% block main_container %}
+<script>
+       $(document).ready(function() {
+            $("#Guardar").click(function(){
+					var caracter = $("#caracter").val();
+					var  letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+					if(caracter === ""){
+						alert("Todos los campos son obligatorios");
+						return false;
+					}
+					if(!(letra.test(caracter))){
+						alert("Solo se permiten letras");
+						return false;
+					}
+
+				});
+        	});
+</script>   
+<script>
+       $(document).ready(function() {
+            $("#Editar").click(function(){
+					var caracter = $("#caracter-edit").val();
+					var  letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+					if(caracter === ""){
+						alert("Todos los campos son obligatorios");
+						return false;
+					}
+					if(!(letra.test(caracter))){
+						alert("Solo se permiten letras");
+						return false;
+					}
+
+				});
+        	});
+</script>   
 <div class="col-md-11 py-3 px-4 main-container">
 
 	<h4>Gestion de Citas</h4>
@@ -95,7 +131,7 @@
 					<div class="form-group row">
 						<label for="fecha_propuesta" class="col-sm-2 col-form-label">Fecha Propuesta</label>
 						<div class="col-sm-10">
-							<input type="date" class="form-control" id="fecha" name="fecha" placeholder="">
+							<input type="date" class="form-control" id="fecha" name="fecha" placeholder="" required="">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -121,7 +157,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Guardar">
+					<input type="submit" class="btn btn-success" value="Guardar" id="Guardar">
 				</div>
 			</form>
 		</div>
@@ -154,7 +190,7 @@
 			<div class="form-group row">
 				<label for="fecha-edit" class="col-sm-2 col-form-label">Fecha Propuesta Anterior</label>
 				<div class="col-sm-10">
-					<input type="text" class="form-control" id="fecha-edit" name="fecha_edit" placeholder="" readonly>
+					<input type="text" class="form-control" id="fecha-edit" name="fecha_edit" placeholder="" readonly required="">
 				</div>
 			</div>
 	
@@ -163,7 +199,7 @@
 					<div class="form-group row">
 						<label for="fecha-edit" class="col-sm-2 col-form-label">Fecha Propuesta</label>
 						<div class="col-sm-10">
-							<input type="date" class="form-control" id="fecha-edit" name="fecha_edit" placeholder="">
+							<input type="date" class="form-control" id="fecha-edit" name="fecha_edit" placeholder="" required="" required="">
 						</div>
 					</div>
 					<div class="form-group row">
@@ -189,7 +225,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-					<input type="submit" class="btn btn-success" value="Editar">
+					<input type="submit" class="btn btn-success" value="Editar" id="Editar">
 				</div>
 			</form>
 		</div>

@@ -2,6 +2,26 @@
 {% load static %}
 
 {% block main_container %}
+<script>
+       $(document).ready(function() {
+            $("#Agregar").click(function(){
+
+            	var fecha = $("#fecha-visita").val();
+            	var comentario = $("#comentario-visita-edit").val();
+            	var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+            	
+            	if(comentario === ""){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!(letra.test(comentario))){
+            		alert("Solo se permiten letras");
+            		return false;
+            	}
+
+				});
+        	});
+</script>
 <div class="col-md-11 py-3 px-4 main-container">
 
 	{% csrf_token %}
@@ -324,7 +344,7 @@
 				<label for="fecha-visita-edit" class="col-sm-3 col-form-label">Fecha de Visita:</label>
 				<div class="col-sm-9">
 					<div class='input-group date'>
-						<input type='text' id='fecha-visita-edit' name="fecha_visita_edit" class="form-control">
+						<input type='text' id='fecha-visita-edit' name="fecha_visita_edit" class="form-control" required="">
 						<span class="input-group-addon">
 							<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
 						</span>
@@ -361,7 +381,7 @@
 		<div class="modal-footer">
 			{% csrf_token %}
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			<input type="submit" class="btn btn-success" value="Agregar Visita">
+			<input type="submit" class="btn btn-success" value="Agregar Visita" id="Agregar">
 		</div>
 	</form>
 </div>

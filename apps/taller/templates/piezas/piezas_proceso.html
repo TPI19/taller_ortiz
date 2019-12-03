@@ -2,6 +2,27 @@
 {% load static %}
 
 {% block main_container %}
+<script>
+       $(document).ready(function() {
+            $("#Registrar").click(function(){
+				
+            	var cantidad = $("#cantidad").val();
+            	var  numero = /^([0-9])*$/;
+
+            	if(cantidad === ""){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!(numero.test(cantidad))){
+            		alert("Cantidad mal escrita");
+            		return false;
+            	}
+
+
+				});
+        	});
+</script>    
+
 
 <div class="col-md-11 py-3 px-4 main-container">
 
@@ -119,7 +140,7 @@
 		<div class="modal-footer">
 			{% csrf_token %}
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			<button type="submit" class="btn btn-primary col-sm-4 col-form-label">Registrar</button>
+			<button type="submit" class="btn btn-primary col-sm-4 col-form-label" id="Registrar">Registrar</button>
 		</div>
 
 	</form>

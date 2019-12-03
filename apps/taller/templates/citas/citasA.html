@@ -2,6 +2,29 @@
 {% load static %} 
 {% block title %}Cita{% endblock %}
 {% block main_container %}
+<script>
+       $(document).ready(function() {
+            $("#Editar").click(function(){
+					var caracter = $("#caracter-edit").val();
+					var mensaje = $("#mensaje-edit").val();
+					var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+					if(caracter === "" || mensaje === ""){
+						alert("Todos los campos son obligatorios");
+						return false;
+					}
+					if(!(letra.test(caracter))){
+						alert("Solo se permiten letras");
+						return false;
+					}
+					if(!(letra.test(mensaje))){
+						alert("Solo se permiten letras");
+						return false;
+					}
+
+				});
+        	});
+</script>   
 <div class="col-md-11 py-3 px-4 main-container">
 
 	<h4>Gestion de Citas</h4>

@@ -2,6 +2,39 @@
 {% load static %}
 
 {% block main_container %}
+<script>
+       $(document).ready(function() {
+            $("#Agregar").click(function(){
+
+            	
+            	var nombre = $("#nombre-nuevo").val();
+            	var descripcion = $("#descripcion-nuevo").val();
+            	var detalle = $("#detalle-proceso").val();
+
+            	var letra=/^[a-zA-ZáÁéÉíÍóÓúÚñÑüÜ\s]+$/;
+
+            	if(nombre === "" || descripcion === "" || detalle === "" ){
+            		alert("Todos los campos son obligatorios");
+            		return false;
+            	}
+            	if(!(letra.test(nombre))){
+            		alert("El nombre es incorrecto");
+            		return false;
+            	}
+            	if(!(letra.test(descripcion))){
+            		alert("La descripcion es incorrecta");
+            		return false;
+            	}
+            	if(!(letra.test(detalle))){
+            		alert("El detalle es incorrecto");
+            		return false;
+            	}
+
+
+
+				});
+        	});
+</script>
 <div class="col-md-11 py-3 px-4 main-container">
 
 	{% csrf_token %}

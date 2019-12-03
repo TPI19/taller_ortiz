@@ -64,8 +64,8 @@
 						alert("El numero de telefono es incorrecto");
 						return false;
 					}
-					if(!letra.test(direccion)){
-						alert("La direccion es incorecta");
+					if(direccion.length > 50){
+						alert("La direccion es demasiado larga");
 						return false;
 
 					}
@@ -122,13 +122,15 @@
 						alert("El numero de telefono es incorrecto");
 						return false;
 					}
-					if(!letra.test(direccion)){
-						alert("La direccion es incorecta");
+					if(direccion.length > 50){
+						alert("La direccion es demasiado larga");
 						return false;
+
 					}
             });
         });
 	</script>
+
 
 
 <div class="col-md-11 py-3 px-4 main-container">
