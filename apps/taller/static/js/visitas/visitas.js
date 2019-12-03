@@ -50,6 +50,23 @@ $(document).ready(function(){
 
 	});
 
+	$('.fecha-visita').datetimepicker({
+		sideBySide: true,
+		format: 'DD/MM/YYYY HH:mm A',
+		icons:
+		{
+			time: "fa fa-clock-o",
+			date: "fa fa-calendar",
+			up: "fa fa-arrow-up",
+			down: "fa fa-arrow-down",
+			previous: "fa fa-chevron-left",
+			next: "fa fa-chevron-right",
+			today: "fa fa-clock-o",
+			clear: "fa fa-trash-o"
+		},
+
+	});
+
 
 	vehiculo_sin_visitas();
 	function vehiculo_sin_visitas(){

@@ -1,0 +1,230 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block main_container %}
+<div class="col-md-11 py-3 px-4 main-container">
+
+	<div class="pt-3">
+		<h3>Expediente de Vehículo</h3>
+
+		<div class="row justify-content-md-center mt-4">
+			<h5 class="col-4 text-warning">Datos Generales del Vehiculo</h5>
+			<span class="col-8"></span>
+		</div>
+
+		<div class="row justify-content-md-center mb-3">
+
+			<div class="col-2">
+				<label for="" class="mb-0 pb-0">Placa:</label>
+				<input type="text" id="" class="form-control-plaintext mt-0 pt-0" value="{{vehiculo.placa}}">		
+			</div>
+			<div class="col-2">
+				<label for="" class="mb-0 pb-0">Marca:</label>
+				<input type="text" id="" class="form-control-plaintext mt-0 pt-0" value="{{vehiculo.marca}}">		
+			</div>
+			<div class="col-3">
+				<label for="" class=" mb-0 pb-0">Modelo:</label>
+				<input type="text" id="" class="form-control-plaintext mt-0 pt-0" value="{{vehiculo.modelo}}">		
+			</div>
+			<div class="col-3">
+				<label for="" class=" mb-0 pb-0">Tipo:</label>
+				<input type="text" id="" class="form-control-plaintext mt-0 pt-0" value="{{vehiculo.tipo}}">		
+			</div>
+			<div class="col-2">
+				<label for="" class="mb-0 pb-0">Año:</label>
+				<input type="text" id="" class="form-control-plaintext mt-0 pt-0" value="{{vehiculo.anio}}">		
+			</div>
+		</div>
+
+	</div>
+
+	<div class="">
+
+		<div class="mt-3">
+			<form action="{% url 'actualizar_expediente' %}" method="POST">
+				<div class="form-group row d-none">
+					<label for="vehiculo-id" class="col-sm-2 col-form-label">Vehículo ID: </label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control-plaintext" id="vehiculo-id" name="vehiculo_id" value="{{expediente.vehiculo_id}}" readonly="">
+					</div>
+					<label for="expediente-id" class="col-sm-2 col-form-label">Expediente ID: </label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control-plaintext" id="expediente-id" name="expediente_id" value="{{expediente.id}}" readonly="">
+					</div>
+				</div>
+				<div class="form-group row">					
+					<label for="kilometraje" class="col-sm-2 col-form-label">Kilometraje: </label>
+					{% if expediente.ult_visita is null %}
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="kilometraje" name="kilometraje" value="0">
+						</div>
+					{% else %}
+						<div class="col-sm-3">
+							<input type="text" class="form-control" id="kilometraje" name="kilometraje" value="{{expediente.kilometraje}}">
+						</div>
+					{% endif %}
+				</div>
+				<div class="form-group row align-items-center">
+					<label for="transmision" class="col-sm-2 col-form-label">Transmisión:</label>
+					<div class="col-sm-3">
+						<select class="form-control" id="transmision" name="transmision">
+
+							<option name='transmision' value="0" {% if expediente.transmision == 0 %} selected="" {% endif %}>Automático</option>
+							<option name='transmision' value="1" {% if expediente.transmision == 1 %} selected="" {% endif %}>Manual</option>
+							<option name='transmision' value="2" {% if expediente.transmision == 2 %} selected="" {% endif %}>Secuencial</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="ult-visita" class="col-sm-2 col-form-label">Última Visita: </label>
+					{% if expediente.ult_visita is null %}
+						<div class="col-sm-3 input-group date">
+							<input type="text" class="form-control" id="ult-visita" name="ult_visita" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente" readonly="">
+						</div>
+					{% else %}
+						<div class="col-sm-3 input-group date">
+							<input type="text" class="form-control" id="ult-visita" name="ult_visita" value="{{expediente.ult_visita|date:'d/m/Y H:m A'}}" readonly="">
+						</div>
+					{% endif %}
+				</div>
+				<div class="row">
+					<div class="col-md-12 row justify-content-md-center mt-4">
+						<h5 class="col-4 text-warning">Mantenimiento Básico:</h5>
+						<span class="col-8"></span>
+					</div>
+					<div class="col-md-6 pt-3">
+						<div class="form-group row align-items-center">
+							<label for="ult-aceite" class="col-sm-4 col-form-label">Último Cambio de Aceite: </label>
+							<div class="col-sm-5">
+								<div class='input-group date fecha-visita input-group date'>
+
+									{% if expediente.ult_aceite is null %}
+										<input type='text' id="ult-aceite" name="ult_aceite" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% else %}
+										<input type='text' id="ult-aceite" name="ult_aceite" class="form-control" value="{{expediente.ult_aceite|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% endif %}
+									
+								</div>
+							</div>							
+						</div>
+						<div class="form-group row align-items-center">
+							<label for="prox-aceite" class="col-sm-4 col-form-label">Próximo Cambio de Aceite: </label>
+							<div class="col-sm-5">
+								<div class='input-group date fecha-visita input-group date'>
+									{% if expediente.prox_aceite is null %}
+										<input type='text' id="prox-aceite" name="prox_aceite" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>									
+									{% else %}
+										<input type='text' id="prox-aceite" name="prox_aceite" class="form-control" value="{{expediente.prox_aceite|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 pt-3">
+						<div class="form-group row align-items-center">
+							<label for="ult-frenos" class="col-sm-4 col-form-label">Último Cambio de Frenos: </label>
+							<div class="col-sm-5">
+								<div class='input-group date fecha-visita input-group date'>
+									{% if expediente.ult_frenos is null %}
+										<input type='text' id="ult-frenos" name="ult_frenos" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% else %}
+										<input type='text' id="ult-frenos" name="ult_frenos" class="form-control" value="{{expediente.ult_frenos|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% endif %}
+									
+								</div>
+							</div>
+						</div>
+						<div class="form-group row align-items-center">
+							<label for="prox-frenos" class="col-sm-4 col-form-label">Próximo Cambio de Frenos: </label>
+							<div class="col-sm-5">
+								<div class='input-group date fecha-visita input-group date'>
+									{% if expediente.prox_frenos is null %}
+										<input type='text' id="prox-frenos" name="prox_frenos" class="form-control text-warning" value="{% now 'd/m/Y H:m A'%}" title="No se ha registrado esta fecha en el expediente">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% else %}
+										<input type='text' id="prox-frenos" name="prox_frenos" class="form-control" value="{{expediente.prox_frenos|date:'d/m/Y H:m A'}}">&nbsp;&nbsp;&nbsp;&nbsp;
+										<span class="input-group-addon">
+											<span class="glyphicon glyphicon-calendar">&nbsp;&nbsp;<i class="fas fa-calendar-day fa-2x"></i></span>
+										</span>
+									{% endif %}
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row justify-content-md-center mt-4">
+					<h5 class="col-4 text-warning">Detalles del Vehiculo</h5>
+					<span class="col-8"></span>
+				</div>
+				<div class="row justify-content-md-center mt-1">
+					<p class="col-8">Detalles sobre los aspectos más importantes del Vehiculo</p>
+					<span class="col-4"></span>
+				</div>
+				<div class="form-group row align-items-center">
+					<label for="detalle-mecanico" class="col-sm-2 col-form-label">Mecánico: </label>
+					<div class="col-sm-8">
+						<textarea type="text" class="form-control" id="detalle-mecanico" name="detalle_mecanico">{{expediente.detalle_mecanico}}</textarea>
+					</div>
+				</div>
+				<div class="form-group row align-items-center">
+					<label for="detalle-pintura" class="col-sm-2 col-form-label">Pintura: </label>
+					<div class="col-sm-8">
+						<textarea type="text" class="form-control" id="detalle-pintura" name="detalle_pintura">{{expediente.detalle_pintura}}</textarea>
+					</div>
+				</div>
+				<div class="form-group row align-items-center">
+					<label for="detalle-electrico" class="col-sm-2 col-form-label">Eléctrico: </label>
+					<div class="col-sm-8">
+						<textarea type="text" class="form-control" id="detalle-electrico" name="detalle_electrico">{{expediente.detalle_electrico}}</textarea>
+					</div>
+				</div>
+				<div class="form-group row align-items-center">
+					<label for="detalle-suspension" class="col-sm-2 col-form-label">Suspensión: </label>
+					<div class="col-sm-8">
+						<textarea type="text" class="form-control" id="detalle-suspension" name="detalle_suspension">{{expediente.detalle_suspension}}</textarea>
+					</div>
+				</div>
+				<div class="form-group row align-items-center">
+					<label for="detalle-direccion" class="col-sm-2 col-form-label">Dirección: </label>
+					<div class="col-sm-8">
+						<textarea type="text" class="form-control" id="detalle-direccion" name="detalle_direccion">{{expediente.detalle_direccion}}</textarea>
+					</div>
+				</div>
+				<div class="row">
+					<span class="col-md-5"></span>
+					{% csrf_token %}
+					<input type="submit" class="btn btn-success col-md-2" value="Actualizar Expediente">
+					<span class="col-md-5"></span>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</div>
+{% endblock %}
+
+
+{% block extra_js %}
+	<script src="{% static '/js/visitas/visitas.js' %}"></script>
+{% endblock %}

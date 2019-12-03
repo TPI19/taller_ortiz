@@ -102,6 +102,62 @@ def eliminar_vehiculo(request):
 	elif(request.user.rol == 2):
 		return redirect('vehiculos')
 
+def expediente_vehiculo(request,vehiculo_id):
+
+	vehiculo = Vehiculo.objects.get(pk=vehiculo_id)
+	expediente = Expediente.objects.get(vehiculo_id=vehiculo_id)
+
+	contexto = {
+		'vehiculo':vehiculo,
+		'expediente':expediente,
+	}
+
+	return render(request, 'vehiculo/expediente.html', contexto)
+
+def actualizar_expediente(request):
+
+	vehiculo = Vehiculo.objects.get(pk=request.POST['vehiculo_id'])
+
+	ult_visita = datetime.strptime(request.POST['ult_visita'], '%d/%m/%Y %H:%M %p')
+	ult_visita.strftime('%Y/%m/%d %H:%M %A')
+
+	ult_aceite = datetime.strptime(request.POST['ult_aceite'], '%d/%m/%Y %H:%M %p')
+	ult_aceite.strftime('%Y/%m/%d %H:%M %A')
+
+	prox_aceite = datetime.strptime(request.POST['prox_aceite'], '%d/%m/%Y %H:%M %p')
+	prox_aceite.strftime('%Y/%m/%d %H:%M %A')
+
+	ult_frenos = datetime.strptime(request.POST['ult_frenos'], '%d/%m/%Y %H:%M %p')
+	ult_frenos.strftime('%Y/%m/%d %H:%M %A')
+
+	prox_frenos = datetime.strptime(request.POST['prox_frenos'], '%d/%m/%Y %H:%M %p')
+	prox_frenos.strftime('%Y/%m/%d %H:%M %A')
+
+	expediente = Expediente.objects.get(pk=request.POST['expediente_id'])
+
+	expediente.kilometraje = (int)(request.POST['kilometraje'])
+	expediente.transmision = (int)(request.POST['transmision'])
+	expediente.ult_visita = ult_visita
+	expediente.ult_aceite = ult_aceite
+	expediente.prox_aceite = prox_aceite
+	expediente.ult_frenos = ult_frenos
+	expediente.prox_frenos = prox_frenos
+	expediente.detalle_mecanico = request.POST['detalle_mecanico']
+	expediente.detalle_pintura = request.POST['detalle_pintura']
+	expediente.detalle_electrico = request.POST['detalle_electrico']
+	expediente.detalle_suspension = request.POST['detalle_suspension']
+	expediente.detalle_direccion = request.POST['detalle_direccion']
+
+	expediente.save()
+
+	contexto = {
+		'vehiculo':vehiculo,
+		'expediente':expediente,
+	}
+
+	return render(request, 'vehiculo/expediente.html', contexto)
+
+
 def detalle_vehiculo(request,vehiculo_id):
 
 	try:

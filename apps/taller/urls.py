@@ -33,6 +33,8 @@ urlpatterns = [
     path('finalizar-visita/', views.finalizar_visita, name='finalizar_visita'),
 
     path('gestion-visitas/', views.gestion_visitas, name='gestion_visitas'),
+    path('expediente-vehiculo/<int:vehiculo_id>', views.expediente_vehiculo, name='expediente_vehiculo'),
+    path('actualizar-expediente/', views.actualizar_expediente, name='actualizar_expediente'),
 
     #   -- Gestión de Procesos (Por parte del Admin)  --
 
