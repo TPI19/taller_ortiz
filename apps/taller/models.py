@@ -21,7 +21,7 @@ class Cliente(models.Model):
 class Cita(models.Model):
 
 	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-	administrador = models.ForeignKey(Administrador, on_delete=models.CASCADE)
+	#administrador = models.ForeignKey(Administrador, on_delete=models.CASCADE)
 	fecha_propuesta = models.DateTimeField()
 	caracter = models.CharField(max_length=100)
 	estado = models.IntegerField()
