@@ -28,6 +28,9 @@
 					<th class="col-6 border-0 "><i class="fas fa-car-side"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{vehiculo.marca}}&nbsp;{{vehiculo.modelo}}&nbsp;-&nbsp;{{vehiculo.placa}}</th>
 					<th class="col-6 text-right border-0">
 						{% if request.user.rol == 0 %}
+						<a href="" class="btn btn-success" title="">
+							Actualizar Expediente &nbsp;&nbsp;<i class="fas fa-file-invoice"></i>
+						</a>&nbsp;&nbsp;
 						<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-visita-modal"
 							data-id-cliente="{{cliente.id}}"
 							data-id-vehiculo="{{vehiculo.id}}"
@@ -75,18 +78,6 @@
 			</tbody>
 
 		{% empty %}
-			<!-- <tbody>
-				<tr>
-					<td class="lead">El Cliente no cuenta con vehículos registrados</td>
-					<td></td>
-				</tr>
-				<tr>
-					<td class="lead">¿Desea Registrar uno? Ve a la Gestión de Vehículos</td>
-					<td><a href="" class="btn btn-success">Gestión de Vehículos&nbsp;&nbsp;<i class="fas fa-car-side"></i></a></td>
-				</tr>
-
-			</tbody> -->
-
 			<div class="col-md-12 text-center">
 				<p class="lead">El Cliente no cuenta con vehículos registrados</p>
 				<p class="lead">¿Desea Registrar uno? Ve a la Gestión de Vehículos</p>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Administrador, Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza
+from .models import Administrador, Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza, Expediente
 from apps.users.views import registro_cliente
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -63,6 +63,15 @@ def agregar_vehiculo(request):
 	vehiculo.modelo = request.POST['modelo']
 	vehiculo.anio = int(request.POST['anio'])
 	vehiculo.save()
+
+	expediente = Expediente()
+	expediente.vehiculo = vehiculo
+	expediente.detalle_mecanico = ''
+	expediente.detalle_pintura = ''
+	expediente.detalle_electrico = ''
+	expediente.detalle_suspension = ''
+	expediente.detalle_direccion = ''
+	expediente.save()
 
 	if(request.user.rol == 0):
 		return redirect('vehiculos_admin', cliente_id=request.POST['cliente_id'])

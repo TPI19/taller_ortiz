@@ -62,18 +62,18 @@ class Visita(models.Model):
 class Expediente(models.Model):
 
 	vehiculo = models.OneToOneField(Vehiculo, on_delete=models.CASCADE)
-	kilometraje = models.IntegerField()
-	transmision = models.IntegerField()
-	ult_visita = models.DateField()
-	ult_aceite = models.DateField()
-	prox_aceite = models.DateField()
-	ult_frenos = models.DateField()
-	prox_frenos = models.DateField()
-	detalle_mecanico = models.TextField()
-	detalle_pintura = models.TextField()
-	detalle_electrico = models.TextField()
-	detalle_suspension = models.TextField()
-	detalle_direccion = models.TextField()
+	kilometraje = models.IntegerField(null=True,blank=True)
+	transmision = models.IntegerField(null=True,blank=True)
+	ult_visita = models.DateField(null=True,blank=True)
+	ult_aceite = models.DateField(null=True,blank=True)
+	prox_aceite = models.DateField(null=True,blank=True)
+	ult_frenos = models.DateField(null=True,blank=True)
+	prox_frenos = models.DateField(null=True,blank=True)
+	detalle_mecanico = models.TextField(blank=True)
+	detalle_pintura = models.TextField(blank=True)
+	detalle_electrico = models.TextField(blank=True)
+	detalle_suspension = models.TextField(blank=True)
+	detalle_direccion = models.TextField(blank=True)
 
 class Proceso(models.Model):
 
