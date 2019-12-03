@@ -1,0 +1,20 @@
+<h3>Detalle de Cita</h3>
+
+<form action="{% url 'edicion_cita' cita.id %}" method="POST">
+
+	{% csrf_token %}
+	<label for="fecha">Fecha: </label><br>
+	<input type="text" name="fecha" id="fecha" value="{{cita.fecha}}"><br><br>
+
+	<label for="fecha">Caracter: </label><br>
+	<input type="text" name="tipo" id="tipo" value="{{cita.caracter}}"><br><br>
+
+	<label for="fecha">Estado: </label><br>
+	<input type="text" name="estado" id="estado" value="{{cita.estado}}"><br><br>
+
+	<label for="fecha">Mensaje: </label><br>
+	<input type="text" name="mensaje" id="mensaje" value="{{cita.mensaje}}"><br><br>
+
+	<input type="submit" value="Editar">
+	
+</form>

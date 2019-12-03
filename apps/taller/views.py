@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Administrador, Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza, Expediente
+from .models import Administrador, Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza, Expediente, Cita
 from apps.users.views import registro_cliente
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -456,3 +456,69 @@ def contactos(request):
 #def gestionar_slots(request):
 #	contexto = {}	
 #	return render(request, 'gestionar_slots.html', contexto)
+
+
+
+
+
+#	-- GESTIÓN DE CITAS POR CLIENTE --
+def citas(request):
+	cliente = Cliente.objects.get(user=request.user.id)
+	citas = Cita.objects.filter(cliente=cliente)
+	contexto = {
+        'citas': citas,
+    }
+	return render(request, 'citas/citas.html', contexto)
+
+def citasA(request):
+	citas = Cita.objects.filter()	
+	contexto = {
+        'citas': citas,
+    }
+	return render(request, 'citas/citasA.html', contexto)	
+
+
+def agregar_cita(request):
+
+	cliente = Cliente.objects.get(user = request.user.id)
+	cita = Cita()
+	cita.cliente = cliente
+	cita.fecha_propuesta = request.POST['fecha']
+	cita.caracter= request.POST['caracter']
+	cita.estado= request.POST['estado']
+	cita.mensaje= request.POST['mensaje']
+	cita.save()
+	return redirect('citas')
+
+def editar_cita(request):
+	cita = Cita.objects.get(pk=request.POST['id_edit'])
+	cita.fecha_propuesta = request.POST['fecha_edit'] 
+	cita.caracter= request.POST['caracter_edit'] 
+	cita.estado= int(request.POST['estado_edit'])
+	cita.mensaje= request.POST['mensaje_edit']
+	cita.save()
+	return redirect('citas')
+
+def editar_citaA(request):
+	cita = Cita.objects.get(pk=request.POST['id_edit'])
+	
+	cita.caracter= request.POST['caracter_edit'] 
+	cita.estado= int(request.POST['estado_edit'])
+	cita.mensaje= request.POST['mensaje_edit']
+	cita.save()
+	return redirect('citasA')
+
+
+
+
+def eliminar_cita(request):
+	Cita.objects.filter(id=request.POST['id_delete']).delete()
+	return redirect('citas')
+
+def detalle_cita(request,cita_id):
+	try:
+		cita = Cita.objects.get(pk=cita_id)
+	except Cita.DoesNotExist:
+		return render(request, 'base/not_found.html')
+	return render(request, 'cita/detalle.html', {'cita': cita})
+

@@ -17,14 +17,19 @@ urlpatterns = [
     path('eliminar-vehiculo/', views.eliminar_vehiculo, name='eliminar_vehiculo'),
     path('detalle-vehiculo/<int:vehiculo_id>/', views.detalle_vehiculo, name='detalle_vehiculo'),
 
-    #   -- Gestión de Citas (Por parte del Cliente)  --
+    #   -- Gestión de Citas ( --
 
-    # path('eliminar-visita/', views.eliminar_visita, name='eliminar_visita'),
-    # path('nueva-visita/', views.nuevavisita, name='nueva_visita'),
-    # path('almacenar-visita/', views.almacenar_visita, name='almacenar_visita'),
-    # path('gestionar_visitas/', views.visita_list, name='gestionar_visitas'),
+   path('citas/', views.citas, name='citas'),
+    path('citasA/', views.citasA, name='citasA'),
 
-    # path('citas/', views.citas, name='citas'),
+    path('agregar-cita/', views.agregar_cita, name='agregar_cita'),
+    path('editar-cita/', views.editar_cita, name='editar_cita'),
+    path('editar-citaA/', views.editar_citaA, name='editar_citaA'),
+
+    
+    path('eliminar-cita/', views.eliminar_cita, name='eliminar_cita'),
+    path('detalle-cita/<int:cita_id>/', views.detalle_cita, name='detalle_cita'),
+
 
     #   -- Gestión de Visitas (Por parte del Admin)  --
 
