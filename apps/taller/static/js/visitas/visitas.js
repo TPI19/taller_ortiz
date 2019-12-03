@@ -28,6 +28,7 @@ $(document).ready(function(){
 		var link = $(event.relatedTarget);
 
 		var id_vehiculo = link.data('id-vehiculo');
+		var id_visita = link.data('id-visita');
 		var id_cliente = link.data('id-cliente');
 		var placa = link.data('placa');
 		var marca = link.data('marca');
@@ -42,6 +43,7 @@ $(document).ready(function(){
 
 		modal.find('.modal-body #vehiculo-visita-edit').val(id_vehiculo);
 		modal.find('.modal-body #cliente-visita-edit').val(id_cliente);
+		modal.find('.modal-body #visita-vehiculo-edit').val(id_visita);
 		modal.find('.modal-body #placa-visita-edit').val(placa);
 		modal.find('.modal-body #marca-visita-edit').val(marca);
 		modal.find('.modal-body #modelo-visita-edit').val(modelo);
@@ -52,11 +54,6 @@ $(document).ready(function(){
 		modal.find('.modal-body #fecha-visita-edit').val(fecha);
 		modal.find('.modal-body #slot-visita-edit').val(slot);
 		modal.find('.modal-body #comentario-visita-edit').text(comentario);
-		
-		
-		
-
-
 	});
 
 	$('#finalizar-visita-modal').on('show.bs.modal', function(event){

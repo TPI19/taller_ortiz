@@ -222,6 +222,31 @@ def registrar_visita(request):
 
 	return redirect('gestion_visitas_cliente',cliente_id=request.POST['cliente_visita'])
 
+def editar_visita(request):
+
+	d = datetime.strptime(request.POST['fecha_visita_edit'], '%d/%m/%Y %H:%M %p')
+	d.strftime('%Y/%m/%d %H:%M')
+
+	expediente = Expediente.objects.get(vehiculo_id=request.POST['vehiculo_visita_edit'])
+	expediente.ult_visita = d
+	expediente.save()
+
+	visita = Visita.objects.get(pk=request.POST['visita_vehiculo_edit'])
+
+	Slot.objects.filter(pk=visita.slot_id).update(disponible=1)
+	
+	visita.fecha = d
+	visita.caracter = request.POST['caracter_visita_edit']
+	visita.comentarios = request.POST['comentario_visita_edit']
+	visita.slot_id = request.POST['slot_visita_edit']
+	visita.tecnico_id = request.POST['tecnico_visita_edit']
+	visita.vehiculo_id = request.POST['vehiculo_visita_edit']
+	visita.save()
+
+	Slot.objects.filter(pk=visita.slot_id).update(disponible=0)
+
+	return redirect('gestion_visitas_cliente',cliente_id=request.POST['cliente_visita_edit'])
+
 def finalizar_visita(request):
 
 	visita = Visita.objects.get(pk=request.POST['id_visita_fin'])
