@@ -124,7 +124,7 @@ INSERT INTO taller_expediente (vehiculo_id,detalle_mecanico,detalle_pintura,deta
 
 INSERT INTO taller_visita (fecha, caracter, comentarios, slot_id, tecnico_id, vehiculo_id,finalizada)	/*Visita 3*/
 VALUES('2019-11-27 00:00:00.000000','Mantenimiento','Se le realizó un cambio de aceite', 12, 1, 5, 1);
-UPDATE taller_slot SET disponible = 0 WHERE id = 1;
+UPDATE taller_slot SET disponible = 1 WHERE id = 1;
 
 INSERT INTO taller_visita (fecha, caracter, comentarios, slot_id, tecnico_id, vehiculo_id,finalizada)	/*Visita 4*/
 VALUES('2019-11-27 00:00:00.000000','Mantenimiento','Se le realizó un cambio de frenos', 3, 1, 5, 1);

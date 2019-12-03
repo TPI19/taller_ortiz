@@ -106,11 +106,9 @@
 	<div class="row text-right">
 		<div class="col-md-7"></div>
 		<div class="col-md-5">
-			{% if request.user.rol == 0 %}
 			<a href="{% url 'gestion_visitas_cliente' cliente_id=cliente.id %}" class="btn btn-success text-white">
 				Visitas del Cliente&nbsp;&nbsp;<i class="fas fa-home"></i>
 			</a>
-			{% endif %}
 			<button class="btn btn-info" data-toggle="modal" data-target="#agregar-vehiculo-modal">
 				Agregar Veh&iacute;culo&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
 			</button>
@@ -148,10 +146,13 @@
 							data-marca="{{vehiculo.marca}}" data-modelo="{{vehiculo.modelo}}"
 							data-anio="{{vehiculo.anio}}">Editar&nbsp;&nbsp;<i class="fas fa-pen"></i></button>
 
-						<button class="btn btn-danger" title="Eliminar el Veh&iacute;culo" data-toggle="modal"
-							data-target="#eliminar-vehiculo-modal" data-id="{{vehiculo.id}}"
-							data-placa="{{vehiculo.placa}}">Eliminar&nbsp;&nbsp;<i
-								class="far fa-trash-alt"></i></button>
+							{% if request.user.rol != 2%}
+								<button class="btn btn-danger" title="Eliminar el Veh&iacute;culo" data-toggle="modal"
+								data-target="#eliminar-vehiculo-modal" data-id="{{vehiculo.id}}"
+								data-placa="{{vehiculo.placa}}">
+									Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i>
+								</button>
+							{% endif %}
 					</td>
 				</tr>
 				{% empty %}

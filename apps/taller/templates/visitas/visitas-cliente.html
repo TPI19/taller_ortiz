@@ -27,20 +27,24 @@
 				<tr class="d-flex bg-primary text-white text-left mt-4 align-items-center">
 					<th class="col-6 border-0 "><i class="fas fa-car-side"></i>&nbsp;&nbsp;&nbsp;&nbsp;{{vehiculo.marca}}&nbsp;{{vehiculo.modelo}}&nbsp;-&nbsp;{{vehiculo.placa}}</th>
 					<th class="col-6 text-right border-0">
-						{% if request.user.rol == 0 %}
-						<a href="{% url 'expediente_vehiculo' vehiculo_id=vehiculo.id %}" class="btn btn-success" title="">
-							Actualizar Expediente &nbsp;&nbsp;<i class="fas fa-file-invoice"></i>
-						</a>&nbsp;&nbsp;
-						<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-visita-modal"
-							data-id-cliente="{{cliente.id}}"
-							data-id-vehiculo="{{vehiculo.id}}"
-							data-placa="{{vehiculo.placa}}"
-							data-marca="{{vehiculo.marca}}"
-							data-modelo="{{vehiculo.modelo}}"
-							data-anio="{{vehiculo.anio}}"
-						>
-							Agregar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
-						</button>
+						{% if request.user.rol == 0 or request.user.rol == 1 %}
+							<a href="{% url 'expediente_vehiculo' vehiculo_id=vehiculo.id %}" class="btn btn-success" title="">
+								Actualizar Expediente &nbsp;&nbsp;<i class="fas fa-file-invoice"></i>
+							</a>&nbsp;&nbsp;
+							<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-visita-modal"
+								data-id-cliente="{{cliente.id}}"
+								data-id-vehiculo="{{vehiculo.id}}"
+								data-placa="{{vehiculo.placa}}"
+								data-marca="{{vehiculo.marca}}"
+								data-modelo="{{vehiculo.modelo}}"
+								data-anio="{{vehiculo.anio}}"
+							>
+								Agregar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
+							</button>
+						{% else %}
+							<a href="{% url 'expediente_vehiculo' vehiculo_id=vehiculo.id %}" class="btn btn-success" title="">
+								Ver Expediente &nbsp;&nbsp;<i class="fas fa-file-invoice"></i>
+							</a>&nbsp;&nbsp;
 						{% endif %}
 					</th>
 				</tr>
@@ -63,12 +67,18 @@
 							<td class="col-2">{{visita_vehiculo.tecnico.user.first_name}}&nbsp;{{visita_vehiculo.tecnico.user.last_name}}</td>
 							<td class="col-3 text-left">
 								<a href="{% url 'gestion_procesos_visita' visita_id=visita_vehiculo.id %}" class="btn btn-success" title="Ver detalles y procesos de la Visita">
-									Procesos &nbsp;&nbsp;<i class="fas fa-info-circle"></i>
+									Procesos &nbsp;&nbsp;<i class="fas fa-cogs"></i>
 								</a>
 								{% if visita_vehiculo.finalizada == False and request.user.rol == 2 %}
 									&nbsp;&nbsp;<span class="text-warning font-weight-bold">Visita en Proceso</span>
+								{% elif visita_vehiculo.finalizada == True and request.user.rol == 2 %}
+									&nbsp;&nbsp;<span class="text-success font-weight-bold">Visita Finalizada</span>
 								{% endif %}
 								{% if visita_vehiculo.finalizada == False and request.user.rol == 0 %}
+									<button class="btn btn-warning" data-id-visita="{{visita_vehiculo.id}}" data-toggle="modal" data-target="#finalizar-visita-modal">
+										Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
+									</button>
+								{% elif visita_vehiculo.finalizada == False and request.user.rol == 1%}
 									<button class="btn btn-warning" data-id-visita="{{visita_vehiculo.id}}" data-toggle="modal" data-target="#finalizar-visita-modal">
 										Finalizar Visita&nbsp;&nbsp;&nbsp;<i class="fas fa-check-double"></i>
 									</button>

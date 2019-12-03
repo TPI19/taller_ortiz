@@ -75,7 +75,7 @@
 		<h4 class="col-3 text-info">Procesos Realizados</h4>
 		<span class="col-9 text-right">
 
-			{% if request.user.rol == 0 %}
+			{% if request.user.rol == 0 or request.user.rol == 1 %}
 
 			{% if visita.finalizada == False %}
 				<button class="btn btn-warning col-md-3" data-toggle="modal" data-target="#finalizar-visita">
@@ -116,7 +116,7 @@
 						<a href="{%url 'piezas_proceso' proceso_visita_id=proceso_visita.id %}" class="btn btn-info" title="Detalles de Proceso">
 							Materiales&nbsp;&nbsp;<i class="fas fa-toolbox"></i>
 						</a>
-						{%if request.user.rol == 0 %}
+						{%if request.user.rol == 0 or request.user.rol == 1%}
 						<button class="btn btn-success" title="Editar Información del Material Agregado al proceso" data-toggle="modal" data-target="#editar-cliente-modal">
 							Editar&nbsp;&nbsp;<i class="fas fa-pen"></i>
 						</button>
