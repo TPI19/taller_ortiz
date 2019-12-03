@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza
+from .models import Administrador, Vehiculo, Visita, Cliente, Tecnico, Especializacion, Slot, User, ProcesoVisita, Proceso, Pieza, ProcesoPieza
 from apps.users.views import registro_cliente
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -9,7 +9,18 @@ from datetime import date, datetime
 # Create your views here.
 
 def index(request):
-	contexto = {}	
+	if(request.user.is_authenticated and request.user.rol == 0):
+		administrador = Administrador.objects.get(user_id=request.user.id)
+		contexto = {'administrador':administrador}
+	elif(request.user.is_authenticated and request.user.rol == 1):
+		tecnico = Tecnico.objects.get(user_id=request.user.id)
+		contexto = {'tecnico':tecnico}
+	elif(request.user.is_authenticated and request.user.rol == 2):
+		cliente = Cliente.objects.get(user_id=request.user.id)
+		contexto = {'cliente':cliente}
+	else:
+		contexto = {}
+		
 	return render(request, 'index.html', contexto)
 
 #	-- GESTIÓN DE VEHICULOS --

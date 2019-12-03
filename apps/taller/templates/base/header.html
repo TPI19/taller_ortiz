@@ -36,7 +36,7 @@
 					<a href="#" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Registrate&nbsp;&nbsp;&nbsp;<i class="fas fa-user-plus"></i></a>&nbsp;&nbsp;&nbsp;
 					<a href="#" id="login-btn" onclick="openNav()" class="btn btn-success">Ingresa&nbsp;&nbsp;&nbsp;<i class="fas fa-sign-in-alt"></i></a>
 				{% else %}
-					<button class="btn btn-success">
+					<span class="btn btn-success" id="btn-login">
 						{{request.user.first_name}}&nbsp;&nbsp;&nbsp;-&nbsp;
 						{% if request.user.rol == 0 %}
 							Administrador&nbsp;&nbsp;<i class="fas fa-user-tie"></i>
@@ -44,9 +44,10 @@
 							Técnico&nbsp;&nbsp;<i class="fas fa-user-ninja"></i>
 						{% elif request.user.rol == 2%}
 							Cliente&nbsp;&nbsp;<i class="fas fa-user-check"></i>
+						{% else %}
 						{% endif %}
 						
-					</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="{% url 'logout' %}" class="btn btn-danger">Salir&nbsp;&nbsp;&nbsp;<i class="fas fa-running"></i></a>
 				{% endif %}
 			</form>

@@ -24,9 +24,10 @@
 			<thead class="">
 				<tr class="d-flex bg-primary text-white text-center ">
 					<th class="col-2 ">Fecha</th>
-					<th class="col-3 ">Vehículo</th>
+					<th class="col-2 ">Cliente</th>
+					<th class="col-2 ">Vehículo</th>
 					<th class="col-1 ">Slot</th>
-					<th class="col-3 ">Técnico</th>
+					<th class="col-2 ">Técnico</th>
 					<th class="col-3 "></th>
 				</tr>
 			</thead>			
@@ -34,9 +35,10 @@
 				{% for visita in visitas_activas %}
 					<tr class="d-flex text-center">
 						<td class="col-2">{{visita.fecha|date:'d-m-Y'}}</td>
-						<td class="col-3">{{visita.vehiculo.placa}}</td>
+						<td class="col-2">{{visita.vehiculo.cliente.user.first_name}}&nbsp;{{visita.vehiculo.cliente.user.last_name}}</td>
+						<td class="col-2">{{visita.vehiculo.placa}}</td>
 						<td class="col-1">{{visita.slot.id}}</td>
-						<td class="col-3">{{visita.tecnico.user.first_name}}&nbsp;{{visita.tecnico.user.last_name}}</td>
+						<td class="col-2">{{visita.tecnico.user.first_name}}&nbsp;{{visita.tecnico.user.last_name}}</td>
 						<td class="col-3 text-left">
 							<a href="{% url 'gestion_procesos_visita' visita_id=visita.id %}" class="btn btn-success" title="Ver detalles y procesos de la Visita"
 							>

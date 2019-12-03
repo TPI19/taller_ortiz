@@ -16,9 +16,11 @@
 	<div class="row justify-content-md-center mb-2">
 		<h4 class="col-3 text-info">Materiales</h4>
 		<span class="col-9 text-right">
+			{% if request.user.rol == 0 %}
 			<button class="btn btn-info col-md-3" data-toggle="modal" data-target="#agregar-pieza-modal">
 				Agregar Material&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
 			</button>
+			{% endif %}
 		</span>
 	</div>
 

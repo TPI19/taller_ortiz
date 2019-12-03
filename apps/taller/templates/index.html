@@ -50,15 +50,14 @@
 {% block main_container %}
 
 {% if request.user.rol == 0 %}
-<!-- Vista para Admin -->
-{% include 'index_admin.html' %}
+	<!-- Vista para Admin -->
+	{% include 'index_admin.html' %}
 {% elif request.user.rol == 1 %}
-<!-- Vista para Técnico -->
-{% include 'index_tecnico.html' %}
+	<!-- Vista para Técnico -->
+	{% include 'index_tecnico.html' %}
 {% elif request.user.rol == 2 %}
-<!-- Vista para Cliente -->
-
-{% include 'index_cliente.html' %}
+	<!-- Vista para Cliente -->
+	{% include 'index_cliente.html' %}
 
 {% else %}
 

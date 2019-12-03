@@ -74,7 +74,8 @@
 	<div class="row justify-content-md-center mb-2">
 		<h4 class="col-3 text-info">Procesos Realizados</h4>
 		<span class="col-9 text-right">
-			
+
+			{% if request.user.rol == 0 %}
 
 			{% if visita.finalizada == False %}
 				<button class="btn btn-warning col-md-3" data-toggle="modal" data-target="#finalizar-visita">
@@ -87,6 +88,7 @@
 				<button class="btn btn-info col-md-3" disabled="" title="La visita ha finalizado, no puede agregar más procesos">
 					Agregar Proceso&nbsp;&nbsp;&nbsp;<i class="fas fa-plus-circle"></i>
 				</button>
+			{% endif %}
 			{% endif %}
 		</span>
 	</div>
@@ -110,10 +112,11 @@
 					<td class="col-2 font-weight-bold overflow-hidden">{{proceso_visita.proceso.nombre}}</td>
 					<td class="col-2 overflow-hidden">{{proceso_visita.proceso.caracter}}</td>
 					<td class="col-3 overflow-hidden">{{proceso_visita.detalle}}</td>
-					<td class="col-4 text-right">
+					<td class="col-4 text-center">
 						<a href="{%url 'piezas_proceso' proceso_visita_id=proceso_visita.id %}" class="btn btn-info" title="Detalles de Proceso">
 							Materiales&nbsp;&nbsp;<i class="fas fa-toolbox"></i>
 						</a>
+						{%if request.user.rol == 0 %}
 						<button class="btn btn-success" title="Editar Información del Material Agregado al proceso" data-toggle="modal" data-target="#editar-cliente-modal">
 							Editar&nbsp;&nbsp;<i class="fas fa-pen"></i>
 						</button>
@@ -121,6 +124,7 @@
 							data-toggle="modal" data-target="#eliminar-cliente-modal">
 							Eliminar&nbsp;&nbsp;<i class="far fa-trash-alt"></i>
 						</button>
+						{% endif %}
 					</td>
 				</tr>
 				{% empty %}
