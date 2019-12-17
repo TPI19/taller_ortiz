@@ -1,8 +1,15 @@
 {% extends 'base/base.html' %}
 
+{%block desc1 %}Registrate en nuestro taller y ten acceso a solicitar citas y a otras promociones. Tu información nunca será compartida.{%endblock%}
+{%block titulo1 %}Inicio - Taller Ortiz El Salvador{%endblock%}
+{%block titulo2 %}Inicio - Taller Ortiz El Salvador{%endblock%}
+{%block desc2 %}Registrate en nuestro taller y ten acceso a solicitar citas y a otras promociones. Tu información nunca será compartida.{%endblock%}
+{%block desc3 %}Registrate en nuestro taller y ten acceso a solicitar citas y a otras promociones. Tu información nunca será compartida.{%endblock%}
+{%block image1 %}https://www.thecubanhistory.com/wp-content/uploads/2019/03/carro-viejo-01-modesto-gutierrez-cabo.jpg{%endblock%}
+
 {% load static %}
 
-{% block title%}Taller Ortiz - Inicio{% endblock %}
+{% block title%}Inicio - Taller Ortiz El Salvador{% endblock %}
 
 {% block extra_header %}
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -25,7 +32,7 @@
 			<p class="float-right p-carousel">&#8212;&nbsp;Cliente</p>
 			{% else %}
 			<!-- Vista para Visitante -->
-			<h2>Taller Ort&iacute;z</h2>
+			<h2 class="animated infinite bounce pulse">Taller Ort&iacute;z</h2>
 			{% endif %}
 
 
@@ -48,7 +55,13 @@
 {% endblock %}
 
 {% block main_container %}
-
+<!-- Vista para un anonimo -->
+{% if request.user.username == "" %}
+<h1 class="animated pulse" style="color: blue;">¡Somos tu mejor opción en todo lo que respecta a vehículos!</h1>
+<div class="embed-responsive embed-responsive-16by9">
+  <iframe class="embed-responsive-item" src="/html/estilo/estilo.html"></iframe>
+</div>
+{% endif %}
 {% if request.user.rol == 0 %}
 	<!-- Vista para Admin -->
 	{% include 'index_admin.html' %}
@@ -97,7 +110,7 @@
 	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 	{% include 'users/login.html' %}
 	<p>¿A&uacute;n no ten&eacute;s cuenta? ¡Registrate!</p>
-	<a href="#" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">Registrate&nbsp;&nbsp;&nbsp;<i
+	<a href="#" class="btn btn-info animated pulse" data-toggle="modal" data-target="#exampleModal">Registrate&nbsp;&nbsp;&nbsp;<i
 			class="fas fa-user-plus"></i></a>
 </div>
 

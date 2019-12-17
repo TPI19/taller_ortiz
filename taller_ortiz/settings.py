@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'taller',
         'USER': 'root',
         #'PASSWORD': '',
-         'PASSWORD': '',
+         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT':3306,
         #'PORT':8889,
