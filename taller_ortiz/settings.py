@@ -80,10 +80,10 @@ DATABASES = {
         #'ENGINE': 'django.db.backends.mysql',
          'ENGINE': 'mysql_cymysql',
         'NAME': 'taller',
-        'USER': 'hdp115',
+        'USER': '',
         #'PASSWORD': '',
-         'PASSWORD': 'Covid19HDP115',
-        'HOST': 'covidsv.tk',
+         'PASSWORD': '',
+        'HOST': '',
         'PORT':3306,
         #'PORT':8889,
         'OPTIONS': {
