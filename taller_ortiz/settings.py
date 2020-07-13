@@ -25,7 +25,7 @@ SECRET_KEY = '0u&q%dq(3_84v1ryt1!kl_4#w+g-kqf1-#c54h^+6p3lt0c9eo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -77,13 +77,13 @@ WSGI_APPLICATION = 'taller_ortiz.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        # 'ENGINE': 'mysql_cymysql',
+        #'ENGINE': 'django.db.backends.mysql',
+         'ENGINE': 'mysql_cymysql',
         'NAME': 'taller',
-        'USER': 'root',
+        'USER': 'hdp115',
         #'PASSWORD': '',
-         'PASSWORD': 'root',
-        'HOST': 'localhost',
+         'PASSWORD': 'Covid19HDP115',
+        'HOST': 'covidsv.tk',
         'PORT':3306,
         #'PORT':8889,
         'OPTIONS': {
